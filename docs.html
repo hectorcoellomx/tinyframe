@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TinyApp | Documentación</title>
+    <style> @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;400&display=swap'); </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="logo">TinyApp</div>
+        <span class="text-logo">For small projects</span>
+        <br>
+        <br>
+        <div>Documentación</div>
+        <ul>
+            <li>Primeros pasos</li>
+            <li>Controladores</li>
+            <li>Rutas</li>
+            <li>Vistas</li>
+            <li>Modelos</li>
+            <li>Bases de datos</li>
+            <li>Middlewares</li>
+            <li>Validaciones</li>
+            <li>Almacenamiento</li>
+            <li>Helpers</li>
+            <li>Librerías</li>
+        </ul>
+    </div>
+    <div class="container">
+
+<section class="section" style="margin-top: 0;">
+    <div class="title">Primeros pasos</div>
+    <p>Una vez descargado el proyecto debes ir al archivo <span class="color-main">/app/Config.php</span> para configurar la URL de tu proyecto, lo harás modificando la propiedad <span class="color-main">$base_url</span>.</p>
+    <p>Si deseas configurar una base de datos (Mysql), deberás modificar la propiedad <span class="color-main">$databases</span> en el mismo archivo, como se muestra acontinuación.</p>
+                    
+<pre>
+<code>
+    <span class="reser">class</span> Config
+    {
+
+        <span class="comm">/* URL del proyecto */</span>
+
+        <span class="reser">public</span> <span class="vars">$base_url</span> = 'http://localhost/tinyapp/';
+
+
+        <span class="comm">/* Bases de datos */</span>
+
+        <span class="reser">public</span> <span class="vars">$databases</span> = <span class="reser">array</span>(
+
+            'mysql' => <span class="reser">array</span>(
+                'host' => "localhost",
+                'user' => "root",
+                'password' => "",
+                'database' => "tinyapp",
+                'type' => 'mysql'
+            )
+
+        );
+
+
+    ...
+</code>
+</pre>
+
+<br><br>
+
+<p>Si deseas realizar pruebas con el modelo App que viene de prueba en el proyecto, deberás crear la siguiente base de datos:</p>
+    
+<pre>
+
+    CREATE DATABASE tinyapp;
+    USE tinyapp;
+
+    CREATE TABLE `users` (
+    `id` int(5) PRIMARY KEY AUTO_INCREMENT,
+    `fullname` varchar(500) NOT NULL,
+    `status` tinyint(1) NOT NULL DEFAULT 1
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+    INSERT INTO `users` (`fullname`) VALUES
+    ('Elizabeth Thompson'),
+    ('George Williams'),
+    ('Mary Jones'),
+    ('David Smith');
+
+</pre>
+
+<br><br>
+
+<p>Ahora puedes crear tus controladores.</p>
+ 
+
+</section>
+
+
+
+<section class="section">
+    <div class="title">Controladores</div>
+    ...
+    <br>
+</section>
+
+
+<section class="section">
+    <div class="title">Rutas</div>
+    <p>Rutas tipo GET, POST, PUT y DELETE.</p>
+    <p>/app/routes.php</p>
+            
+<pre>
+
+    <span class="reser">require_once</span> './app/controllers/HomeController.php';
+
+    ... 
+
+
+    <span class="comm">/* Rutas */</span>
+
+    Route::<span class="reser">get</span>("/", HomeController::<span class="reser">class</span>, 'index' , [ 'test' ] );
+    Route::<span class="reser">post</span>("/login", HomeController::<span class="reser">class</span>, 'login' );
+
+
+    <span class="comm">/* Rutas con parámetros */</span>
+
+    Route::<span class="reser">get</span>("/student/{id}", StudentController::<span class="reser">class</span>, 'show' );
+    Route::<span class="reser">delete</span>("/student", StudentController::<span class="reser">class</span>, 'destroy' );
+    Route::<span class="reser">put</span>("/student/{id}/status/{status}", StudentController::<span class="reser">class</span>, 'update' );
+
+
+    <span class="comm">/* Rutas para API */</span>
+
+    Route::<span class="reser">get</span>("/api/student", StudentApiController::<span class="reser">class</span>, 'index' );
+
+</pre>
+</section>
+
+
+
+    </div>
+
+    
+    <style>
+        
+        html{
+            height: 100%;
+        }
+        body {
+            font-family: 'Nunito';
+            margin: 0;
+            padding: 0;
+            font-size: 15px;
+            color: white;
+            background-color: #32333f;
+            height: 100%;
+        }
+        .color-main{
+            color: #4af0f0;
+        }
+        .logo{
+            font-size: 29px;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+        }
+        .text-logo{
+            color: white;
+            text-align: center;
+            display: block;
+            font-size: 14px;
+        }
+        .title{
+            font-size: 19px;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+        .container{
+            width: calc( 100% - 275px);
+            display: inline-block;
+            vertical-align: top;
+            padding: 30px;
+            box-sizing: border-box;
+            margin-left: 270px;
+        }
+        .section{
+            margin: 20px 0 40px;
+        }
+        .sidebar{
+            height: 100%;
+            width: 270px;
+            display: inline-block;
+            background-color: #1f2123;
+            padding: 20px;
+            box-sizing: border-box;
+            position: fixed;
+            color: #4af0f0;
+        }
+
+        pre { max-width: 80%; margin: 10px 0 20px; padding: 30px 60px 30px 0px; background-color: #333232; color: #4af0f0; display: inline-block; border-color: #0e0e0e; border-style: solid; border-width: 33px 0px 0px 0px; position: relative; }
+        pre::before{ content: ''; width: 12px; height: 12px; border-radius: 6px; background-color: #7ef904; display: inline-block; position: absolute; top: 0; top: -22px; right: 12px; }
+        pre::after{ content: ''; width: 12px; height: 12px; border-radius: 6px; background-color:#d9193f; display: inline-block; position: absolute; top: 0; top: -22px; right: 30px; }
+        pre .vars{ color: #5bfd00; }
+        pre .comm{ color: gainsboro; }
+        pre .reser{ color: #ff45d9; }
+    </style>
+
+</body>
+
+</html>

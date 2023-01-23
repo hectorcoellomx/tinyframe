@@ -1,0 +1,3 @@
+- Rutas protegidas de archivos
+- Idiomas
+- Completar documentación

@@ -1,0 +1,12 @@
+RewriteEngine On
+Options All -Indexes
+
+<files .htaccess>
+    order allow,deny
+    deny from all
+</files>
+
+RewriteCond %{REQUEST_URI} !^([0-9a-zA-Z-_@./]+)/assets/([0-9a-zA-Z-_@./]+)$
+RewriteCond %{REQUEST_URI} !^([0-9a-zA-Z-_@./]+)/upload/([0-9a-zA-Z-_@./]+)$
+
+RewriteRule ^([0-9a-zA-Z-_@./]+)$ index.php?route=$1 [QSA]
