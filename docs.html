@@ -17,22 +17,22 @@
         <br>
         <div>Documentación</div>
         <ul>
-            <li>Primeros pasos</li>
-            <li>Controladores</li>
-            <li>Rutas</li>
-            <li>Vistas</li>
-            <li>Modelos</li>
-            <li>Bases de datos</li>
-            <li>Middlewares</li>
-            <li>Validaciones</li>
-            <li>Almacenamiento</li>
-            <li>Helpers</li>
-            <li>Librerías</li>
+            <li><a href="#primerospasos">Primeros pasos</a></li>
+            <li><a href="#controladores">Controladores</a></li>
+            <li><a href="#rutas">Rutas</a></li>
+            <li class="opacity">Vistas</li>
+            <li class="opacity">Modelos</li>
+            <li class="opacity">Bases de datos</li>
+            <li class="opacity">Middlewares</li>
+            <li class="opacity">Validaciones</li>
+            <li class="opacity">Almacenamiento</li>
+            <li class="opacity">Helpers</li>
+            <li class="opacity">Librerías</li>
         </ul>
     </div>
     <div class="container">
 
-<section class="section" style="margin-top: 0;">
+<section id="primerospasos" class="section" style="margin-top: 0;">
     <div class="title">Primeros pasos</div>
     <p>Una vez descargado el proyecto debes ir al archivo <span class="color-main">/app/Config.php</span> para configurar la URL de tu proyecto, lo harás modificando la propiedad <span class="color-main">$base_url</span>.</p>
     <p>Si deseas configurar una base de datos (Mysql), deberás modificar la propiedad <span class="color-main">$databases</span> en el mismo archivo, como se muestra acontinuación.</p>
@@ -99,14 +99,28 @@
 
 
 
-<section class="section">
+<section id="controladores" class="section">
     <div class="title">Controladores</div>
-    ...
+    <p>Debes crear tus controladores con el namespace App\Controllers. Se sugiere nombrar a los controladores en formato CamelCase con la palabra Controllers al final.</p>
+    <p>/app/controllers/HomeController.php</p>
     <br>
+
+<pre>
+<code>
+    <span class="reser">namespace</span> App\Controllers;
+
+
+    <span class="reser">class</span> HomeController
+    {
+
+
+    }
+</code>
+</pre>
 </section>
 
 
-<section class="section">
+<section id="rutas" class="section">
     <div class="title">Rutas</div>
     <p>Rutas tipo GET, POST, PUT y DELETE.</p>
     <p>/app/routes.php</p>
@@ -120,20 +134,20 @@
 
     <span class="comm">/* Rutas */</span>
 
-    Route::<span class="reser">get</span>("/", HomeController::<span class="reser">class</span>, 'index' , [ 'test' ] );
-    Route::<span class="reser">post</span>("/login", HomeController::<span class="reser">class</span>, 'login' );
+    Route::<span class="reser">register</span>("get", "/", HomeController::<span class="reser">class</span>, 'index' , [ 'test' ] );
+    Route::<span class="reser">register</span>("post", "/login", HomeController::<span class="reser">class</span>, 'login' );
 
 
     <span class="comm">/* Rutas con parámetros */</span>
 
-    Route::<span class="reser">get</span>("/student/{id}", StudentController::<span class="reser">class</span>, 'show' );
-    Route::<span class="reser">delete</span>("/student", StudentController::<span class="reser">class</span>, 'destroy' );
-    Route::<span class="reser">put</span>("/student/{id}/status/{status}", StudentController::<span class="reser">class</span>, 'update' );
+    Route::<span class="reser">register</span>("get", "/student/{id}", StudentController::<span class="reser">class</span>, 'show' );
+    Route::<span class="reser">register</span>("delete", "/student", StudentController::<span class="reser">class</span>, 'destroy' );
+    Route::<span class="reser">register</span>("put", "/student/{id}/status/{status}", StudentController::<span class="reser">class</span>, 'update' );
 
 
     <span class="comm">/* Rutas para API */</span>
 
-    Route::<span class="reser">get</span>("/api/student", StudentApiController::<span class="reser">class</span>, 'index' );
+    Route::<span class="reser">register</span>("get", "/api/student", StudentApiController::<span class="reser">class</span>, 'index' );
 
 </pre>
 </section>
@@ -166,6 +180,9 @@
             color: white;
             text-align: center;
         }
+        .opacity{
+            opacity: 0.5;
+        }
         .text-logo{
             color: white;
             text-align: center;
@@ -197,6 +214,10 @@
             box-sizing: border-box;
             position: fixed;
             color: #4af0f0;
+        }
+        .sidebar a{
+            color: inherit !important;
+            text-decoration: none;
         }
 
         pre { max-width: 80%; margin: 10px 0 20px; padding: 30px 60px 30px 0px; background-color: #333232; color: #4af0f0; display: inline-block; border-color: #0e0e0e; border-style: solid; border-width: 33px 0px 0px 0px; position: relative; }
