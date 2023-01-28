@@ -54,8 +54,7 @@ class Route
                 $method = $controller[1];
                 $object->$method();
 
-                $db = DB::getInstance();
-                $db->close();
+                DB::db_close();
 
                 exit;
 

@@ -11,11 +11,6 @@ class User{
         return $db->db_select_row("SELECT * FROM users WHERE id=?", [ $id ]);
     }
 
-    public function close(){
-        $db = DB::getInstance();
-        $db->close();
-    }
-
     public function list($status){
         $db = DB::getInstance();
         return $db->db_select("SELECT * FROM users WHERE status=?", [ $status ]);

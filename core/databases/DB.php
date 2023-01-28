@@ -77,9 +77,10 @@ class DB
 
     }
 
-    public function close()
-    {
-        $this->db = null;
+    public static function db_close(){
+        if (self::$instance) {
+            self::$instance->db = null;
+        }
     }
 
 }
