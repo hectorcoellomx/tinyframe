@@ -16,11 +16,11 @@
 
     <style>
         body{
-            background-color: #e5e5f7;
+            background-color: #f7f7ff;
             color: gray;
             font-size: 30px;
             opacity: 1;
-            background-image: linear-gradient(#e1e1e1 1px, transparent 1px), linear-gradient(to right, #e1e1e1 1px, #e5e5f7 1px);
+            background-image: linear-gradient(#f1f1f1 1px, transparent 1px), linear-gradient(to right, #f1f1f1 1px, #f7f7ff 1px);
             background-size: 20px 20px;
         }
         .center {
