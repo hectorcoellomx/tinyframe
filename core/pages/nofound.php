@@ -6,6 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Not found</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -18,7 +21,8 @@
         body{
             background-color: #f7f7ff;
             color: gray;
-            font-size: 30px;
+            font-size: 18px;
+            font-family: 'Poppins', sans-serif;
             opacity: 1;
             background-image: linear-gradient(#f1f1f1 1px, transparent 1px), linear-gradient(to right, #f1f1f1 1px, #f7f7ff 1px);
             background-size: 20px 20px;
