@@ -21,3 +21,35 @@
         </form>
     </div>
 </div>
+
+<style>
+    .login{
+        position: absolute;
+        width: 400px;
+        left: 50%;
+        top: 20%;
+        margin-left: -200px;
+        text-align: center;
+        background-color: white;
+        padding: 48px 20px 50px;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+
+    .login input[type=text],
+    .login input[type=password]{
+        border: 1px solid #e6e6e6;
+        padding: 7px 12px;
+        border-radius: 3px;
+        background: #f0eeee;
+        width: 200px;
+        margin-top: 8px;
+        margin-bottom: 15px;
+    }
+
+    .login input[type=submit]{
+        padding: 10px 20px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+</style>
