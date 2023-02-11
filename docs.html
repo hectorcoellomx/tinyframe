@@ -76,17 +76,17 @@
     
 <pre>
 
-    CREATE DATABASE tinyapp;
-    USE tinyapp;
+    <span class="reser">CREATE DATABASE</span> tinyapp;
+    <span class="reser">USE</span> tinyapp;
 
-    CREATE TABLE `users` (
+    <span class="reser">CREATE TABLE</span> `users` (
     `id` int(5) PRIMARY KEY AUTO_INCREMENT,
-    `fullname` varchar(500) NOT NULL,
-    `status` tinyint(1) NOT NULL DEFAULT 1
+    `fullname` VARCHAR(500) NOT NULL,
+    `status` TINYINT(1) NOT NULL DEFAULT 1
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
-    INSERT INTO `users` (`fullname`) VALUES
+    <span class="reser">INSERT INTO</span> `users` (`fullname`) <span class="reser">VALUES</span>
     ('Elizabeth Thompson'),
     ('George Williams'),
     ('Mary Jones'),
