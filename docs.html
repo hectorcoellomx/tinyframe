@@ -20,14 +20,14 @@
             <li><a href="#primerospasos">Primeros pasos</a></li>
             <li><a href="#controladores">Controladores</a></li>
             <li><a href="#rutas">Rutas</a></li>
-            <li class="opacity">Vistas</li>
+            <li><a href="#vistas">Vistas</a></li>
             <li><a href="#modelos">Modelos</a></li>
             <li><a href="#basededatos">Bases de datos</a></li>
-            <li class="opacity">Middlewares</li>
-            <li class="opacity">Validaciones</li>
+            <li><a href="#middlewares">Middlewares</a></li>
+            <li><a href="#validaciones">Validaciones</a></li>
             <li><a href="#almacenamiento">Almacenamiento</a></li>
-            <li class="opacity">Helpers</li>
-            <li class="opacity">Librerías</li>
+            <li><a href="#helpers">Helpers</a></li>
+            <li><a href="#librerias">Librerías</a></li>
         </ul>
     </div>
     <div class="container">
@@ -184,6 +184,46 @@
 </pre>
 </section>
 
+
+<section id="vistas" class="section">
+    <div class="title">Vistas</div>
+    <p>Las vistas se debe llamar en los controladores con el método View::get().</p>
+            
+<pre>
+<code>
+    <span class="reser">namespace</span> App\Controllers;
+
+    <span class="reser">use</span> Core\Validator;
+    <span class="reser">use</span> Core\File;
+
+    <span class="reser">class</span> HomeController 
+    {
+
+        <span class="reser">public function</span> index(){
+
+            <span class="comm">/* Vistas siendo llamadas */</span>
+
+            <span class="reser">View</span>::<span class="reser">get</span>('partials/header');
+            <span class="reser">View</span>::<span class="reser">get</span>('home');
+            <span class="reser">View</span>::<span class="reser">get</span>('partials/footer');
+
+
+            <span class="comm">/* Llamadas con parámetros */</span>
+
+            <span class="vars">$data</span> = <span class="reser">array</span>(
+                'app' => "TinyApp",
+                'message' => $message,
+            );
+            
+
+            <span class="reser">View</span>::<span class="reser">get</span>('home', <span class="vars">$data</span>);
+
+        }
+    }
+</code>
+</pre>
+</section>
+
 <section id="modelos" class="section">
     <div class="title">Modelos</div>
     <p>Debes crear tus modelos con el namespace App\Models, como se ve a continuación.</p>
@@ -248,6 +288,80 @@
 </section>
 
 
+
+<section id="middlewares" class="section">
+    <div class="title">Middlewares</div>
+    <p>Los middlewares se pueden implementar en el tercer párametro del método "Route::register()".</p>
+    <p>/app/routes.php</p>
+            
+<pre>
+
+    <span class="reser">require_once</span> './app/controllers/HomeController.php';
+
+    ... 
+
+
+    <span class="comm">/* Middleware "test" */</span>
+
+    Route::<span class="reser">register</span>("get", "/", HomeController::<span class="reser">class</span>, 'index' , [ 'test' ] );
+
+</pre>
+
+<p>Los archivos middlewares se deben crear en la carpeta "app/middlewares/", por ejemplo "app/middlewares/Test.php, el archivo debe tener el siguiente formato:</p>
+
+<pre>
+
+    <span class="reser">namespace</span> App\Middlewares;
+
+    <span class="reser">class</span> Test {
+
+        <span class="reser">public static function</span> run()
+        {
+            <span class="comm">// Acá deben ir el código propio del middleware</span>
+            <span class="comm">// Validación de sesiones, tokens y redireción</span>
+
+            return true;
+        }
+    
+    }
+    
+    <span class="reser">Test</span>::run();
+</pre>
+
+</section>
+
+
+<section id="validaciones" class="section">
+    <div class="title">Validaciones</div>
+    <p>Para usar las validaciones en los controladores se debe implementar "use Core\Validator;".</p>
+<pre>
+<code>
+    <span class="reser">namespace</span> App\Controllers;
+
+    <span class="reser">use</span> Core\Validator;
+
+    <span class="reser">class</span> HomeController 
+    {
+
+        <span class="reser">public function</span> index(){
+
+            <span class="reser">Validator</span>::<span class="reser">check</span>([
+                [ 'user', [ 'string' ] ],
+                [ 'email', [ 'email', 'min(8)' ] ],
+            ]);
+            
+            ...
+        }
+    }
+</code>
+</pre>
+
+<p>El primer parámetro del método Validator::check() recibe un arreglo de dos dimensiones. La primer dimensión tiene el nombre del valor que se está recibiendo (input). La segunda dimensión es un arreglo con las validaciones aplicables a ese valor. </p>
+<p>Las validaciones aplicables son las siguientes: string, numeric, integer, float, boolean, email, file, max(5), min(4), val(1, 0), allows_null. </p>
+<p>El método Validator::check() recibe un segundo parámetro, este es tipo booleano y sirve para habilitar o deshabilitar la redireción automática en la validación. Por defecto es true.</p>
+</section>
+
+
 <section id="almacenamiento" class="section">
     <div class="title">Almacenamiento</div>
     <p>Para guardar archivos se debe usar la librería Core\File, de igual manera si se desea validar el envío de la imagen, se puede validar con el tipo 'file', como se ve a continuación.</p>
@@ -284,6 +398,43 @@
 </pre>
 </section>
 <p>La configuración para habilitar el almacenamiento de archivos ($load_upload_files) se realiza en app/Config.php</p>
+
+<br>
+<section id="helpers" class="section">
+    <div class="title">Helpers</div>
+    <p>Los Helpers son funciones globales que se deben agregar en el archivo app/helpers.php. Para que los Helpers estén habilitados, se deben precargar ($load_helper = true) desde el archivo de configuración app/Config.php</p>
+<pre>
+<code>
+
+    <span class="reser">public function</span> format_email(){
+        ...
+    }
+
+</code>
+</pre>
+<p>Para usar este modelo en un controlador, debes hacer un require_once del archivo ( require_once './app/models/App.php'; ) y usarlo con "use App\Models\App".</p>
+</section>
+
+<br>
+
+<section id="librerias" class="section">
+    <div class="title">Librerías</div>
+    <p>Las librerías son archivos de clases que se deben agregar en la carpeta app/libreries/ y requerirlos en el respectivo controlador o modelo.</p>
+<pre>
+<code>
+    <span class="reser">namespace</span> App\Libraries;
+
+    <span class="reser">class</span> Test 
+    {
+
+        ...
+
+    }
+</code>
+</pre>
+</section>
+
+
 
 
     </div>
