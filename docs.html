@@ -21,11 +21,11 @@
             <li><a href="#controladores">Controladores</a></li>
             <li><a href="#rutas">Rutas</a></li>
             <li class="opacity">Vistas</li>
-            <li class="opacity">Modelos</li>
-            <li class="opacity">Bases de datos</li>
+            <li><a href="#modelos">Modelos</a></li>
+            <li><a href="#basededatos">Bases de datos</a></li>
             <li class="opacity">Middlewares</li>
             <li class="opacity">Validaciones</li>
-            <li class="opacity">Almacenamiento</li>
+            <li><a href="#almacenamiento">Almacenamiento</a></li>
             <li class="opacity">Helpers</li>
             <li class="opacity">Librerías</li>
         </ul>
@@ -105,7 +105,7 @@
 
 <section id="controladores" class="section">
     <div class="title">Controladores</div>
-    <p>Debes crear tus controladores con el namespace App\Controllers. Se sugiere nombrar a los controladores en formato CamelCase con la palabra Controllers al final.</p>
+    <p>Debes crear tus controladores con el namespace App\Controllers. Se pueden obtener los datos enviados por GET, POST o parámetro URL, con la función input(). Se sugiere nombrar a los controladores en formato CamelCase con la palabra Controllers al final.</p>
     <p>/app/controllers/HomeController.php</p>
     <br>
 
@@ -117,7 +117,8 @@
     <span class="reser">class</span> HomeController
     {
 
-
+        <span class="vars">$username</span> = <span class="reser">input</span>('username'); <span class="comm">// GET or POST or URL Param</span>
+    
     }
 </code>
 </pre>
@@ -131,16 +132,19 @@
 
     <span class="reser">class</span> StudentApiController <span class="reser">extends</span> Response
     {
+        <span class="reser">public function</span> index(){
 
-        <span class="vars">$students</span> = <span class="reser">array</span>(
-            array('id' => 100, "name" => 'Mary Jones' ),
-            array('id' => 101, "name" => 'David Williams' ),
-            array('id' => 102, "name" => 'Matt Smith' ),
-            array('id' => 103, "name" => 'Cris Brown' )
-        );
-        
-        <span class="vars">$data</span> = <span class="reser">array</span>( 'success' => true, 'data' => <span class="vars">$students</span>, 'message' => "" );
-        return $this-><span class="reser">json</span>(<span class="vars">$data</span>, 200);
+            <span class="vars">$students</span> = <span class="reser">array</span>(
+                array('id' => 100, "name" => 'Mary Jones' ),
+                array('id' => 101, "name" => 'David Williams' ),
+                array('id' => 102, "name" => 'Matt Smith' ),
+                array('id' => 103, "name" => 'Cris Brown' )
+            );
+            
+            <span class="vars">$data</span> = <span class="reser">array</span>( 'success' => true, 'data' => <span class="vars">$students</span>, 'message' => "" );
+            return $this-><span class="reser">json</span>(<span class="vars">$data</span>, 200);
+            
+        }
     }
 </code>
 </pre>
@@ -177,6 +181,106 @@
 
     Route::<span class="reser">register</span>("get", "/api/student", StudentApiController::<span class="reser">class</span>, 'index' );
 
+</pre>
+</section>
+
+<section id="modelos" class="section">
+    <div class="title">Modelos</div>
+    <p>Debes crear tus modelos con el namespace App\Models, como se ve a continuación.</p>
+<pre>
+<code>
+    <span class="reser">namespace</span> App\Models;
+
+    <span class="reser">class</span> App 
+    {
+
+        <span class="reser">public function</span> index(){
+            ...
+        }
+
+    }
+</code>
+</pre>
+<p>Para usar este modelo en un controlador, debes hacer un require_once del archivo ( require_once './app/models/App.php'; ) y usarlo con "use App\Models\App".</p>
+</section>
+
+<section id="basededatos" class="section">
+    <div class="title">Base de datos</div>
+    <p>Para conectarte a la base de datos debes usar la librería Core\Databases\DB, como se ve a continuación.</p>
+<pre>
+<code>
+    <span class="reser">namespace</span> App\Models;
+
+    <span class="reser">use</span> Core\Databases\DB;
+
+    <span class="reser">class</span> User
+    {
+
+        <span class="reser">public function</span> single(<span class="vars">$id</span>){
+            <span class="vars">$db</span> = DB::getInstance();
+            return <span class="vars">$db</span>-><span class="reser">db_select_row</span>("SELECT * FROM users WHERE id=?", [ <span class="vars">$id</span> ]);
+        }
+
+        <span class="reser">public function</span> list(<span class="vars">$status</span>){
+            <span class="vars">$db</span> = DB::getInstance();
+            return <span class="vars">$db</span>-><span class="reser">db_select</span>("SELECT * FROM users WHERE status=?", [ <span class="vars">$status</span> ]);
+        }
+
+        <span class="reser">public function</span> insert(<span class="vars">$name</span>){
+            <span class="vars">$db</span> = DB::getInstance();
+            return <span class="vars">$db</span>-><span class="reser">db_insert_lastid</span>("INSERT INTO users (fullname) VALUES (?)", [ <span class="vars">$name</span> ]);
+        }
+
+        <span class="reser">public function</span> update(<span class="vars">$id</span>, <span class="vars">$name</span>){
+            <span class="vars">$db</span> = DB::getInstance();
+            return <span class="vars">$db</span>-><span class="reser">db_update</span>("UPDATE users SET fullname = ? WHERE id = ?", [ <span class="vars">$id</span>, <span class="vars">$name</span> ]);
+        }
+
+        <span class="reser">public function</span> delete(<span class="vars">$id</span>){
+            <span class="vars">$db</span> = DB::getInstance();
+            return <span class="vars">$db</span>-><span class="reser">db_delete</span>("DELETE from users WHERE id = ?", [ <span class="vars">$id</span> ]);
+        }
+
+    }
+</code>
+</pre>
+<p>La configuración de la base de datos se realiza en el archivo app/Config.php</p>
+</section>
+
+
+<section id="almacenamiento" class="section">
+    <div class="title">Almacenamiento</div>
+    <p>Para guardar archivos se debe usar la librería Core\File, de igual manera si se desea validar el envío de la imagen, se puede validar con el tipo 'file', como se ve a continuación.</p>
+<pre>
+<code>
+    <span class="reser">namespace</span> App\Controllers;
+
+    <span class="reser">use</span> Core\Validator;
+    <span class="reser">use</span> Core\File;
+
+    <span class="reser">class</span> HomeController 
+    {
+
+        <span class="reser">public function</span> index(){
+
+            <span class="reser">Validator</span>::<span class="reser">check</span>([
+                [ 'photo', [ 'file' ] ],
+            ]);
+
+            <span class="vars">$upload</span> = <span class="reser">File</span>::<span class="reser">upload</span>('photo', 'photos', [ 'max_size' => 514319, 'allowed_types' => "image/jpeg|pdf" ]);
+
+
+            <span class="comm">/* Optional */</span>
+
+            if(!<span class="vars">$upload</span>['status']){
+                set_errors(<span class="reser">array</span>(<span class="vars">$upload</span>['message']));
+                back();
+            }
+            
+            ...
+        }
+    }
+</code>
 </pre>
 </section>
 

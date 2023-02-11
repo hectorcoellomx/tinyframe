@@ -9,7 +9,6 @@ Route::register("get", "/", [ HomeController::class, 'index' ], [ 'test' ] );
 
 Route::register("get", "/login", [ HomeController::class, 'access' ] );
 Route::register("post", "/login", [ HomeController::class, 'login' ] );
-Route::register("get", "/dashboard", [ HomeController::class, 'dashboard' ], [ 'test' ] ); 
 
 
 

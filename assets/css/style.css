@@ -7,6 +7,13 @@ body{
     background-image: linear-gradient(#f1f1f1 1px, transparent 1px), linear-gradient(to right, #f1f1f1 1px, #f7f7ff 1px);
     background-size: 20px 20px;
 }
+.btntop{
+    font-size: 13px; 
+    float: right; 
+    margin: 15px 20px; 
+    z-index: 99;
+    position: relative;
+}
 .center {
     position: absolute;
     top: 0;

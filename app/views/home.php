@@ -1,6 +1,10 @@
 
-<a href="./login" style="font-size: 13px; float: right; margin: 15px 20px; z-index: 99;position: relative;">Login example</a>
+<?php if($logged==1) { ?>
+    <a href="./" class="btntop">Logout</a>
+<?php } else {?>
+    <a href="./login" class="btntop">Login example</a>
+<?php } ?>
 
 <div class="center">
-    <?php echo $app . " " . $message; ?>
+    <?php echo ($logged==1) ? "Welcome." : $app . " " . $message; ?>
 </div>
