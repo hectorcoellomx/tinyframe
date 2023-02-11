@@ -37,10 +37,10 @@ body{
 
 .login input[type=text],
 .login input[type=password]{
-    border: 1px solid gray;
+    border: 1px solid #e6e6e6;
     padding: 7px 12px;
     border-radius: 3px;
-    background: gainsboro;
+    background: #f0eeee;
     width: 200px;
     margin-top: 8px;
     margin-bottom: 15px;

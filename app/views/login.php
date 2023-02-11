@@ -1,13 +1,9 @@
 <div>
     <div class="login">
-        <h3>Login | <?php echo $app; ?></h3>
+        <span style="font-size: 17px;display: block;margin-bottom: 8px;">Login Example</span>
         <form action="login" method="post" enctype="multipart/form-data">
-            <label for="email">Correo electrónico:</label><br>
-            <input type="text" id="email" name="email"><br>
-            <!--label for="file">Seleccionar archivo:</label><br>
-            <input type="file" name="photo" id="file"><br><br-->
-            <label for="password">Contraseña:</label><br>
-            <input type="password" id="password" name="password"><br>
+            <input type="text" id="email" name="email" placeholder="Email"><br>
+            <input type="password" id="password" name="password" placeholder="Password"><br>
             <?php
                 
                 $errors = get_errors();
@@ -21,7 +17,7 @@
                 }
                 
             ?>
-            <input type="submit" value="Iniciar sesión">
+            <input type="submit" value="Login">
         </form>
     </div>
 </div>

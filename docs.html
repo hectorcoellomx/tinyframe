@@ -122,7 +122,7 @@
 </code>
 </pre>
 
-<p>Para el uso de controladores en API Rest, se debe extender al controlador de "Response", para poder dar respuesta tipo JSON, como se ve acontinuación.</p>
+<p>Para el uso de controladores en API Rest, se debe extender al controlador de "Response", para poder dar respuesta tipo JSON, como se ve a continuación.</p>
 <pre>
 <code>
     <span class="reser">namespace</span> App\Controllers;
@@ -140,11 +140,11 @@
         );
         
         <span class="vars">$data</span> = <span class="reser">array</span>( 'success' => true, 'data' => <span class="vars">$students</span>, 'message' => "" );
-        return $this-><span class="reser">array</span>(<span class="vars">$data</span>, 200);
+        return $this-><span class="reser">json</span>(<span class="vars">$data</span>, 200);
     }
 </code>
 </pre>
-
+<p>En el tercer parámetro del método "$this->json()" se establece el nombre de la configuración de la cabecera (header) de la respuesta, por defecto utiliza la configuracón "default" definida en el archivo de configuración del proyecto app/Config.php</p>
 </section>
 
 
