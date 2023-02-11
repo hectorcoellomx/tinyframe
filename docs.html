@@ -121,6 +121,30 @@
     }
 </code>
 </pre>
+
+<p>Para el uso de controladores en API Rest, se debe extender al controlador de "Response", para poder dar respuesta tipo JSON, como se ve acontinuación.</p>
+<pre>
+<code>
+    <span class="reser">namespace</span> App\Controllers;
+
+    <span class="reser">use</span> Core\Response;
+
+    <span class="reser">class</span> StudentApiController <span class="reser">extends</span> Response
+    {
+
+        <span class="vars">$students</span> = <span class="reser">array</span>(
+            array('id' => 100, "name" => 'Mary Jones' ),
+            array('id' => 101, "name" => 'David Williams' ),
+            array('id' => 102, "name" => 'Matt Smith' ),
+            array('id' => 103, "name" => 'Cris Brown' )
+        );
+        
+        <span class="vars">$data</span> = <span class="reser">array</span>( 'success' => true, 'data' => <span class="vars">$students</span>, 'message' => "" );
+        return $this-><span class="reser">array</span>(<span class="vars">$data</span>, 200);
+    }
+</code>
+</pre>
+
 </section>
 
 
