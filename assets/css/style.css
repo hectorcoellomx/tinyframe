@@ -3,7 +3,6 @@ body{
     font-size: 18px;
     color: gray;
     background-color: #f7f7ff;
-    opacity: 1;
     background-image: linear-gradient(#f1f1f1 1px, transparent 1px), linear-gradient(to right, #f1f1f1 1px, #f7f7ff 1px);
     background-size: 20px 20px;
 }
@@ -36,10 +35,6 @@ body{
     padding: 48px 20px 50px;
     border-radius: 4px;
     font-size: 16px;
-}
-
-.login h3{
-    margin: 0 0 18px 0;
 }
 
 .login input[type=text],
