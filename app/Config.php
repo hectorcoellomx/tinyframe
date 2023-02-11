@@ -5,7 +5,7 @@ namespace App;
 class Config
 {
     
-    public $status_project = 'dev'; 
+    public $status_project = 'dev'; // dev or pro
 
     public $base_url = 'http://localhost/tinyapp/';
 

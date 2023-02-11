@@ -38,8 +38,9 @@
         <br>
 <section id="primerospasos" class="section">
     <div class="title">Primeros pasos</div>
-    <p>Una vez descargado el proyecto debes ir al archivo <span class="color-main">/app/Config.php</span> para configurar la URL de tu proyecto, lo harás modificando la propiedad <span class="color-main">$base_url</span>.</p>
+    <p>Una vez descargado el proyecto debes ir al archivo <span class="color-main">app/Config.php</span> para configurar la URL de tu proyecto, lo harás modificando la propiedad <span class="color-main">$base_url</span>.</p>
     <p>Si deseas configurar una base de datos (Mysql), deberás modificar la propiedad <span class="color-main">$databases</span> en el mismo archivo, como se muestra acontinuación.</p>
+    <p>Al poner el proyecto en producción debes cambiar el valor de <span class="color-main">$status_project</span> a "pro", en el archivo de configuración del proyecto <span class="color-main">app/Config.php</span></p>
                     
 <pre>
 <code>
@@ -105,7 +106,7 @@
 
 <section id="controladores" class="section">
     <div class="title">Controladores</div>
-    <p>Debes crear tus controladores con el namespace App\Controllers. Se pueden obtener los datos enviados por GET, POST o parámetro URL, con la función input(). Se sugiere nombrar a los controladores en formato CamelCase con la palabra Controllers al final.</p>
+    <p>Debes crear tus controladores con el <span class="color-main">namespace App\Controllers</span>. Se pueden obtener los datos enviados por GET, POST o parámetro URL, con la función <span class="color-main">input()</span>. Se sugiere nombrar a los controladores en formato <span class="color-main">CamelCase</span> con la palabra Controllers al final.</p>
     <p>/app/controllers/HomeController.php</p>
     <br>
 
@@ -148,13 +149,13 @@
     }
 </code>
 </pre>
-<p>En el tercer parámetro del método "$this->json()" se establece el nombre de la configuración de la cabecera (header) de la respuesta, por defecto utiliza la configuración "default" ($api_config) definida en el archivo de configuración del proyecto app/Config.php</p>
+<p>En el tercer parámetro del método <span class="color-main">$this->json()</span> se establece el nombre de la configuración de la cabecera (header) de la respuesta, por defecto utiliza la configuración "default" en <span class="color-main">$api_config</span> en el archivo de configuración del proyecto <span class="color-main">app/Config.php</span></p>
 </section>
 
 
 <section id="rutas" class="section">
     <div class="title">Rutas</div>
-    <p>Rutas tipo GET, POST, PUT y DELETE.</p>
+    <p>Rutas tipo <span class="color-main">GET, POST, PUT y DELETE</span>.</p>
     <p>/app/routes.php</p>
             
 <pre>
@@ -187,7 +188,7 @@
 
 <section id="vistas" class="section">
     <div class="title">Vistas</div>
-    <p>Las vistas se debe llamar en los controladores con el método View::get().</p>
+    <p>Las vistas se debe llamar en los controladores con el método <span class="color-main">View::get()</span>.</p>
             
 <pre>
 <code>
@@ -226,7 +227,7 @@
 
 <section id="modelos" class="section">
     <div class="title">Modelos</div>
-    <p>Debes crear tus modelos con el namespace App\Models, como se ve a continuación.</p>
+    <p>Debes crear tus modelos con el namespace <span class="color-main">App\Models</span>, como se ve a continuación.</p>
 <pre>
 <code>
     <span class="reser">namespace</span> App\Models;
@@ -241,12 +242,12 @@
     }
 </code>
 </pre>
-<p>Para usar este modelo en un controlador, debes hacer un require_once del archivo ( require_once './app/models/App.php'; ) y usarlo con "use App\Models\App".</p>
+<p>Para usar este modelo en un controlador, debes hacer un require_once del archivo <span class="color-main">require_once './app/models/App.php';</span> y usarlo con <span class="color-main">use App\Models\App</span>.</p>
 </section>
 
 <section id="basededatos" class="section">
     <div class="title">Base de datos</div>
-    <p>Para conectarte a la base de datos debes usar la librería Core\Databases\DB, como se ve a continuación.</p>
+    <p>Para conectarte a la base de datos debes usar la librería <span class="color-main">Core\Databases\DB</span>, como se ve a continuación.</p>
 <pre>
 <code>
     <span class="reser">namespace</span> App\Models;
@@ -284,15 +285,14 @@
     }
 </code>
 </pre>
-<p>La configuración de la base de datos se realiza en el archivo app/Config.php</p>
+<p>La configuración de la base de datos se realiza en el archivo <span class="color-main">app/Config.php</span></p>
 </section>
 
 
 
 <section id="middlewares" class="section">
     <div class="title">Middlewares</div>
-    <p>Los middlewares se pueden implementar en el tercer párametro del método "Route::register()".</p>
-    <p>/app/routes.php</p>
+    <p>Los middlewares se pueden implementar en el tercer párametro del método <span class="color-main">Route::register()</span>, en el archivo de rutas <span class="color-main">app/routes.php</span>.</p>
             
 <pre>
 
@@ -307,7 +307,7 @@
 
 </pre>
 
-<p>Los archivos middlewares se deben crear en la carpeta "app/middlewares/", por ejemplo "app/middlewares/Test.php, el archivo debe tener el siguiente formato:</p>
+<p>Los archivos middlewares se deben crear en la carpeta <span class="color-main">app/middlewares/</span>, por ejemplo <span class="color-main">app/middlewares/Test.php</span>, el archivo debe tener el siguiente formato:</p>
 
 <pre>
 
@@ -333,7 +333,7 @@
 
 <section id="validaciones" class="section">
     <div class="title">Validaciones</div>
-    <p>Para usar las validaciones en los controladores se debe implementar "use Core\Validator;".</p>
+    <p>Para usar las validaciones en los controladores se debe implementar <span class="color-main">use Core\Validator;</span>.</p>
 <pre>
 <code>
     <span class="reser">namespace</span> App\Controllers;
@@ -356,15 +356,15 @@
 </code>
 </pre>
 
-<p>El primer parámetro del método Validator::check() recibe un arreglo de dos dimensiones. La primer dimensión tiene el nombre del valor que se está recibiendo (input). La segunda dimensión es un arreglo con las validaciones aplicables a ese valor. </p>
-<p>Las validaciones aplicables son las siguientes: string, numeric, integer, float, boolean, email, file, max(5), min(4), val(1, 0), allows_null. </p>
-<p>El método Validator::check() recibe un segundo parámetro, este es tipo booleano y sirve para habilitar o deshabilitar la redireción automática en la validación. Por defecto es true.</p>
+<p>El primer parámetro del método <span class="color-main">Validator::check()</span> recibe un arreglo de dos dimensiones. La primer dimensión tiene el nombre del valor que se está recibiendo (input). La segunda dimensión es un arreglo con las validaciones aplicables a ese valor. </p>
+<p>Las validaciones aplicables son las siguientes: <span class="color-main">string, numeric, integer, float, boolean, email, file, max(5), min(4), val(1, 0), allows_null</span>. </p>
+<p>El método <span class="color-main">Validator::check()</span> recibe un segundo parámetro, este es tipo booleano y sirve para habilitar o deshabilitar la redireción automática en la validación. Por defecto es true.</p>
 </section>
 
 
 <section id="almacenamiento" class="section">
     <div class="title">Almacenamiento</div>
-    <p>Para guardar archivos se debe usar la librería Core\File, de igual manera si se desea validar el envío de la imagen, se puede validar con el tipo 'file', como se ve a continuación.</p>
+    <p>Para guardar archivos se debe usar la librería <span class="color-main">Core\File</span>, de igual manera si se desea validar el envío de la imagen, se puede validar con el tipo 'file', como se ve a continuación.</p>
 <pre>
 <code>
     <span class="reser">namespace</span> App\Controllers;
@@ -397,12 +397,12 @@
 </code>
 </pre>
 </section>
-<p>La configuración para habilitar el almacenamiento de archivos ($load_upload_files) se realiza en app/Config.php</p>
+<p>La configuración para habilitar el almacenamiento de archivos ($load_upload_files) se realiza en <span class="color-main">app/Config.php</span></p>
 
 <br>
 <section id="helpers" class="section">
     <div class="title">Helpers</div>
-    <p>Los Helpers son funciones globales que se deben agregar en el archivo app/helpers.php. Para que los Helpers estén habilitados, se deben precargar ($load_helper = true) desde el archivo de configuración app/Config.php</p>
+    <p>Los Helpers son funciones globales que se deben agregar en el archivo app/helpers.php. Para que los Helpers estén habilitados, se deben precargar ($load_helper = true) desde el archivo de configuración <span class="color-main">app/Config.php</span></p>
 <pre>
 <code>
 
@@ -412,14 +412,14 @@
 
 </code>
 </pre>
-<p>Para usar este modelo en un controlador, debes hacer un require_once del archivo ( require_once './app/models/App.php'; ) y usarlo con "use App\Models\App".</p>
+<p>Para usar este modelo en un controlador, debes hacer un require_once del archivo ( require_once './app/models/App.php'; ) y usarlo con <span class="color-main">use App\Models\App</span>.</p>
 </section>
 
 <br>
 
 <section id="librerias" class="section">
     <div class="title">Librerías</div>
-    <p>Las librerías son archivos de clases que se deben agregar en la carpeta app/libreries/ y requerirlos en el respectivo controlador o modelo.</p>
+    <p>Las librerías son archivos de clases que se deben agregar en la carpeta <span class="color-main">app/libreries/</span> y requerirlos en el respectivo controlador o modelo.</p>
 <pre>
 <code>
     <span class="reser">namespace</span> App\Libraries;
