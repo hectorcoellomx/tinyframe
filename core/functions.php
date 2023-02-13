@@ -38,6 +38,11 @@ function base($add=""){
     return $config->base_url . $add;
 }
 
+function assets($add=""){
+    $config = new Config();
+    echo $config->base_url . 'assets/'. $add;
+}
+
 function input($name, $type="all"){
 
     $value= NULL;
