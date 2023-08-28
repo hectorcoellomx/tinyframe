@@ -10,16 +10,23 @@ class Config
     public $base_url = 'http://localhost/tinyapp/';
 
     public $databases = array(
-
         'mysql' => array(
             'host' => "localhost",
             'user' => "root",
             'password' => "",
             'database' => "tinyapp",
             'type' => 'mysql'
+        ), 
+        'oracle' => array(
+            'host' => "localhost",
+            'port' => "1521",
+            'user' => "root",
+            'password' => "",
+            'service_name' => "pdbsaucetux",
+            'type' => 'oracle'
         )
-
     );
+    
 
     public $api_config = array(
 
