@@ -10,6 +10,9 @@
     if($config->status_project=="pro"){
         ini_set('display_errors', 0);
         error_reporting(E_ALL ^ E_WARNING);
+    }else{
+        ini_set('display_errors', 1);
+        error_reporting(E_ALL);
     }
     
     $tinyapp_test_url = $config->test_url;
