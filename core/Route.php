@@ -74,7 +74,20 @@ class Route
     public static function middleware($name)
     {
         if ($name != "") {
-            require_once './app/middlewares/' . ucfirst(strtolower($name)) . '.php';
+
+            $middlewareFileName = ucfirst(strtolower($name)) . '.php';
+            $middlewareFilePath = './app/middlewares/' . $middlewareFileName;
+
+            if (preg_match('/^[a-zA-Z_]+\.php$/', $middlewareFileName)) {
+                if (file_exists($middlewareFilePath)) {
+                    require_once $middlewareFilePath;
+                }else {
+                    trigger_error("The middleware file does not exist '" .  $middlewareFilePath . "'", E_USER_ERROR);
+                }
+            }else{
+                trigger_error("The file name for the middleware is invalid (Only letters and underscore) '" .  $middlewareFilePath . "'", E_USER_ERROR);
+            }
+            
         } else {
             exit;
         }
