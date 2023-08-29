@@ -66,12 +66,15 @@ class TokenAuth {
 
 // Crear un token
 
+require_once './app/libraries/TokenAuth.php';
+use App\Libraries\TokenAuth;
+
 $expiration = 3600; // Expira en una hora
 $data = ['user_id' => 123, 'username' => 'john.doe'];
-$token = TokenManager::generateToken($data, $expiration);
+$token = TokenAuth::generateToken($data, $expiration);
 
 // Validar un token
-$decodedData = TokenManager::validateToken($token);
+$decodedData = TokenAuth::validateToken($token);
 
 if ($decodedData !== false) {
     echo "Token válido. Datos decodificados: ";
