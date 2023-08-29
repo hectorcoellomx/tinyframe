@@ -2,58 +2,63 @@
 
 namespace Core;
 
-class Session
-{
+class Session {
+    
     private $id= 'your_secret_session_id_here';
-    private $url_login = 'login';
-    private $url_home = 'home';
 
     public function __construct($id="") {
-        
-        session_start();
+        session_start();     
 
         if($id!=""){
             $this->id = $id;
         }
-
     }
 
     function create($data){
         $_SESSION[$this->id] = $data;
     }
 
-    function validate($redirect, $url_login='')
-    {   
-        $url_login = ($url_login=='') ? $this->url_login : $url_login;
-
-        //if(!$this->ci->session->userdata($this->id)){
-        if(!isset($_SESSION[$this->id])){
-            //redirect($url_login);
+    function validate($redirect=''){   
+        if($redirect==""){
+            return isset($_SESSION[$this->id]) ? $_SESSION[$this->id] : false;
+        }else{  
+            redir($redirect);
         }
     }
 
-    /*function get_data($key="")
-    {   
-        $data = $this->ci->session->userdata($this->id);
+    function get_data($key=""){   
+        $data = $_SESSION[$this->id];
         return ($key == "") ? $data : ((isset($data[$key])) ? $data[$key] : null);
     }
 
-    function set_data($key, $value)
-    {   
-        $data = $this->ci->session->userdata($this->id);
+    function set_data($key, $value){   
+        $data = $_SESSION[$this->id];
         $data[$key] = $value;
-        $this->ci->session->set_userdata($this->id, $data);        
-    }*/
+        $_SESSION[$this->id] = $data;      
+    }
 
-    function logout($redirect='')
-    {
-        
-        $url_login = ($redirect=='') ? $this->url_login : $redirect;
-
+    function logout($redirect=''){
         unset($_SESSION[$this->id]);
 
         if($redirect!=''){
-            //redirect($url_login);
+            redir($redirect);
         }
     }
 }
+
+/*
+
+Example
+
+use Core\Session;
+
+
+$session = new Session();
+$data_session = array( "id"=> 100, "username"=> 'Hector');
+$session->create($data_session);
+$session->set_data("username", "Hector Coello");
+$id = $session->get_data("id");
+$validate = $session->validate("login");
+$session->logout();
+
+ */

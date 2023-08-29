@@ -21,6 +21,7 @@
     $tinyapp_url_response = array();
     
     require './core/functions.php';
+    require './core/Session.php';
     require './core/Response.php';
     require './core/Validator.php';
     require './core/View.php';
