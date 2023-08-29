@@ -43,6 +43,9 @@ class Config
     public $load_upload_files = false;
 
     public $test_url = false;
+    
+    public $session_login = "login";
+    public $session_home = "home";
 
 
 
