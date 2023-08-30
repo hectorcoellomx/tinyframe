@@ -4,13 +4,16 @@ namespace Core;
 
 class Session {
     
-    private $id= 'your_secret_session_id_here';
+    private $id= 'sessionid';
 
     public function __construct($id="") {
         session_start();     
 
         if($id!=""){
             $this->id = $id;
+        }else{
+            global $config;
+            $this->id = $config->session_id;
         }
     }
 

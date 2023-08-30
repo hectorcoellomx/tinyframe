@@ -22,7 +22,7 @@ class Config
             'port' => "1521",
             'user' => "root",
             'password' => "",
-            'service_name' => "pdbsaucetux",
+            'service_name' => "",
             'type' => 'oracle'
         )
     );
@@ -39,7 +39,9 @@ class Config
 
     );
 
-    public $load_helper = false;
+    public $load_session = false;
+    public $session_id = "your_secret_session_id_here";
+
     public $load_upload_files = false;
 
     public $test_url = false;

@@ -10,13 +10,13 @@ class DB
     private $db = null;
     private $database_conn = 'mysql';
 
-    public function set_database_conn($database){
-        $this->database_conn = $database;
-    }
-    
-    private function __construct()
+    private function __construct($database_name="")
     {
         global $config;
+
+        if($database_name!=""){
+            $this->database_conn = $database_name;
+        }
         
         $db_config = $config->databases[$this->database_conn];
 
@@ -34,9 +34,9 @@ class DB
         }  
     }
 
-    public static function getInstance() {
+    public static function getInstance($database_name="") {
         if (!self::$instance) {
-            self::$instance = new DB();
+            self::$instance = new DB($database_name);
         }
         return self::$instance;
     }
