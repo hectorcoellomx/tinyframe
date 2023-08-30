@@ -8,17 +8,16 @@ class DB
 {
     private static $instance;
     private $db = null;
-    private $database_conn = 'mysql';
 
     private function __construct($database_name="")
     {
         global $config;
 
         if($database_name!=""){
-            $this->database_conn = $database_name;
+            $db_config = $config->databases[$database_name];
+        }else{
+            $db_config = reset($config->databases);
         }
-        
-        $db_config = $config->databases[$this->database_conn];
 
         if($db_config['type']=="mysql"){
             $dsn = "mysql:host=".$db_config['host'].";dbname=" . $db_config['database'];
