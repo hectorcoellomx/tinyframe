@@ -4,13 +4,16 @@ namespace Core;
 
 class Session {
     
-    private $id= 'your_secret_session_id_here';
+    private $id= 'sessionid';
 
     public function __construct($id="") {
         session_start();     
 
         if($id!=""){
             $this->id = $id;
+        }else{
+            global $config;
+            $this->id = $config->session_id;
         }
     }
 
@@ -58,6 +61,7 @@ $data_session = array( "id"=> 100, "username"=> 'Hector');
 $session->create($data_session);
 $session->set_data("username", "Hector Coello");
 $id = $session->get_data("id");
+$validate = $session->validate();
 $validate = $session->validate("login");
 $session->logout();
 
