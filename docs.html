@@ -33,7 +33,7 @@
     <div class="container">
         <br>
         <div>
-            Contenido: El microframework tiene control de rutas, middlewares, base de datos mysql (Oracle próximamente), configuración para api restfull, integración de librerías externas, helpers, integración de assets (frontend), validador de formularios, subida de archivos; y arquitectura para manejo de vistas, modelos y controladores.
+            Contenido: El microframework tiene control de rutas, middlewares, base de datos mysql y oracle, configuración para api restfull, integración de librerías externas, helpers, integración de assets (frontend), validador de formularios, subida de archivos; y arquitectura para manejo de vistas, modelos y controladores.
         </div>
         <br>
 <section id="primerospasos" class="section">
@@ -167,20 +167,20 @@
 
     <span class="comm">/* Rutas */</span>
 
-    Route::<span class="reser">register</span>("get", "/", HomeController::<span class="reser">class</span>, 'index' , [ 'test' ] );
-    Route::<span class="reser">register</span>("post", "/login", HomeController::<span class="reser">class</span>, 'login' );
+    Route::<span class="reser">register</span>("get", "/", [ HomeController::<span class="reser">class</span> ], 'index' ], [ 'test' ] );
+    Route::<span class="reser">register</span>("post", "/login", [ HomeController::<span class="reser">class</span>, 'login' ] );
 
 
     <span class="comm">/* Rutas con parámetros */</span>
 
-    Route::<span class="reser">register</span>("get", "/student/{id}", StudentController::<span class="reser">class</span>, 'show' );
-    Route::<span class="reser">register</span>("delete", "/student", StudentController::<span class="reser">class</span>, 'destroy' );
-    Route::<span class="reser">register</span>("put", "/student/{id}/status/{status}", StudentController::<span class="reser">class</span>, 'update' );
+    Route::<span class="reser">register</span>("get", "/student/{id}", [ StudentController::<span class="reser">class</span>, 'show' ] );
+    Route::<span class="reser">register</span>("delete", "/student", [ StudentController::<span class="reser">class</span>, 'destroy' ] );
+    Route::<span class="reser">register</span>("put", "/student/{id}/status/{status}", [ StudentController::<span class="reser">class</span>, 'update' ] );
 
 
     <span class="comm">/* Rutas para API */</span>
 
-    Route::<span class="reser">register</span>("get", "/api/student", StudentApiController::<span class="reser">class</span>, 'index' );
+    Route::<span class="reser">register</span>("get", "/api/student", [ StudentApiController::<span class="reser">class</span>, 'index' ] );
 
 </pre>
 </section>
