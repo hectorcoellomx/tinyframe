@@ -90,10 +90,27 @@ function exist_input($name){
     if ( isset($_POST[$name]) || isset($_GET[$name]) ) {
         $value = true;
     }else{
-        global $tinyapp_url_response;
-        if( isset( $tinyapp_url_response[$name] ) ){
-            $value = true;
+
+        $data = file_get_contents("php://input");
+        $data_decode = json_decode($data, true);
+
+        if($data_decode==NULL){
+            parse_str(file_get_contents("php://input"), $data_decode);
         }
+        
+        $value = isset($data_decode[$name]);
+
+        if(!$value){
+            global $tinyapp_url_response;
+            if( isset( $tinyapp_url_response[$name] ) ){
+                $value = true;
+            }
+        }
+
+        if(!$value){
+            $value = isset( getallheaders()[$name] );
+        }
+        
     }
     
     return $value;
