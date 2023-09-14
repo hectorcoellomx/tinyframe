@@ -5,22 +5,21 @@ namespace App;
 class Config
 {
     
-    public $status_project = 'dev'; // dev or pro
-
-    public $base_url = 'http://localhost/tinyapp/';
+    public $status_project = "dev"; // dev or pro
+    public $base_url = "http://localhost/tinyapp/";
 
     public $databases = array(
         'mysql' => array(
-            'host' => "localhost",
-            'user' => "root",
+            'host' => "",
+            'user' => "",
             'password' => "",
-            'database' => "tinyapp",
+            'database' => "",
             'type' => 'mysql'
         ), 
         'oracle' => array(
-            'host' => "localhost",
-            'port' => "1521",
-            'user' => "root",
+            'host' => "",
+            'port' => "",
+            'user' => "",
             'password' => "",
             'service_name' => "",
             'type' => 'oracle'
@@ -45,5 +44,33 @@ class Config
     public $load_upload_files = false;
 
     public $test_url = false;
+
+
+    public function __construct()
+    {
+        $envFilePath = __DIR__ . '/../.env';
+        if (file_exists($envFilePath)) {$lines = file($envFilePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES); if ($lines) {foreach ($lines as $line) {list($key, $value) = explode('=', $line, 2); $key = trim($key); $value = trim($value); if (!empty($key) && !isset($_ENV[$key])) {if ($value === '') {$_ENV[$key] = ''; } else {$_ENV[$key] = $value; } } } } }
+
+        if (file_exists($envFilePath)){
+            
+            $this->status_project =                      $_ENV['STATUS_PROJECT'];
+            $this->base_url =                            $_ENV['BASE_URL'];
+            $this->session_id =                          $_ENV['SESSION_ID'];
+
+            $this->databases['mysql']['host'] =          $_ENV['DB_MYSQL_HOST'];
+            $this->databases['mysql']['user'] =          $_ENV['DB_MYSQL_USER'];
+            $this->databases['mysql']['password'] =      $_ENV['DB_MYSQL_PASSWORD'];
+            $this->databases['mysql']['database'] =      $_ENV['DB_MYSQL_NAME'];
+
+            $this->databases['oracle']['host'] =         $_ENV['DB_ORACLE_HOST'];
+            $this->databases['oracle']['port'] =         $_ENV['DB_ORACLE_PORT'];
+            $this->databases['oracle']['user'] =         $_ENV['DB_ORACLE_USER'];
+            $this->databases['oracle']['password'] =     $_ENV['DB_ORACLE_PASSWORD'];
+            $this->databases['oracle']['service_name'] = $_ENV['DB_ORACLE_SERVICE_NAME'];
+
+        }
+        
+
+    }
 
 }
