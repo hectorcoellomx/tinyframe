@@ -19,12 +19,16 @@ function back(){
 }
 
 function set_errors($errors){
-    session_start();
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
     $_SESSION['validator_errors'] = $errors;
 }
 
 function get_errors(){
-    session_start();
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
     $errors = array();
     if(isset($_SESSION['validator_errors'])){
         $errors = $_SESSION['validator_errors'];
