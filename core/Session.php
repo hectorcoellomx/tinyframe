@@ -42,7 +42,7 @@ class Session {
         $_SESSION[$this->id] = $data;      
     }
 
-    function logout($redirect=''){
+    function delete($redirect=''){
         unset($_SESSION[$this->id]);
 
         if($redirect!=''){
@@ -57,14 +57,25 @@ Example
 
 use Core\Session;
 
-
+// Crear una sesión
 $session = new Session();
 $data_session = array( "id"=> 100, "username"=> 'Hector');
 $session->create($data_session);
+
+// Cambiar datos de sesión
+$session = new Session();
 $session->set_data("username", "Hector Coello");
+
+// Obtener datos de sesión
+$session = new Session();
 $id = $session->get_data("id");
+
+// Validar sesión
+$session = new Session();
 $validate = $session->validate();
 $validate = $session->validate("login");
-$session->logout();
+
+// Eliminar sesión
+$session->delete();
 
  */
