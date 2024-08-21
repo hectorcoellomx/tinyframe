@@ -27,23 +27,29 @@ class TokenAuth {
 
     public static function validateToken($token)
     {
-        list($header, $payload, $signature) = explode('.', $token);
+        $token_divide = explode('.', $token);
+        
+        if(count($token_divide)!=3){
+            return [ "status" => false, "payload" => null, "message" => "Wrong token" ];
+        }
+
+        list($header, $payload, $signature) = $token_divide;
 
         $decodedSignature = self::base64UrlDecode($signature);
         $expectedSignature = hash_hmac('sha256', $header . '.' . $payload, self::$secretKey, true);
 
         if ($decodedSignature !== $expectedSignature) {
-            return false;
+            return [ "status" => false, "payload" => null, "message" => "Invalid token" ];
         }
 
         $decodedPayload = json_decode(self::base64UrlDecode($payload), true);
 
         // Verificar si el token ha expirado
         if (isset($decodedPayload['exp']) && $decodedPayload['exp'] < time()) {
-            return false;
+            return [ "status" => false, "payload" => null, "message" => "Expired token" ];
         }
 
-        return $decodedPayload;
+        return [ "status" => true, "payload" => $decodedPayload, "message" => "" ];
     }
 
     private static function base64UrlEncode($data)
@@ -74,13 +80,13 @@ $data = ['user_id' => 123, 'username' => 'john.doe'];
 $token = TokenAuth::generateToken($data, $expiration);
 
 // Validar un token
-$decodedData = TokenAuth::validateToken($token);
+$validate = TokenAuth::validateToken($token);
 
-if ($decodedData !== false) {
+if ($validate["status"]===false) {
     echo "Token válido. Datos decodificados: ";
-    print_r($decodedData);
+    print_r($validate["payload"]);
 } else {
-    echo "Token inválido.";
+    echo $validate["message"];
 }
 
 */
