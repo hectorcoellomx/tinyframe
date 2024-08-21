@@ -1,3 +1,3 @@
 - Rutas protegidas de archivos
-- Idiomas
+- Conexión Oracle sin PDO
 - Completar documentación
