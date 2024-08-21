@@ -27,7 +27,7 @@ class TokenAuth {
 
     public static function validateToken($token)
     {
-        $token_divide = explode('.', $token);
+        $token_divide = (is_string($token)) ? explode('.', $token) : array();
         
         if(count($token_divide)!=3){
             return [ "status" => false, "payload" => null, "message" => "Wrong token" ];
@@ -44,7 +44,6 @@ class TokenAuth {
 
         $decodedPayload = json_decode(self::base64UrlDecode($payload), true);
 
-        // Verificar si el token ha expirado
         if (isset($decodedPayload['exp']) && $decodedPayload['exp'] < time()) {
             return [ "status" => false, "payload" => null, "message" => "Expired token" ];
         }
@@ -70,10 +69,10 @@ class TokenAuth {
 
 /*
 
-// Crear un token
-
 require_once './app/libraries/TokenAuth.php';
 use App\Libraries\TokenAuth;
+
+// Crear un token
 
 $expiration = 3600; // Expira en una hora
 $data = ['user_id' => 123, 'username' => 'john.doe'];
@@ -82,8 +81,9 @@ $token = TokenAuth::generateToken($data, $expiration);
 // Validar un token
 $validate = TokenAuth::validateToken($token);
 
-if ($validate["status"]===false) {
-    echo "Token válido. Datos decodificados: ";
+if ($validate["status"]===true) {
+    echo "Token válido.";
+    echo "Datos decodificados: ";
     print_r($validate["payload"]);
 } else {
     echo $validate["message"];
