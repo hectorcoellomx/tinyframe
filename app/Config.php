@@ -8,7 +8,7 @@ class Config
     public $status_project = "dev"; // dev or pro
     public $base_url = "http://localhost/tinyapp/";
 
-    public $databases_driver = "DEFAULT"; // DEFAULT (Mysql), OCI (Oracle), PDO (Mysql & Oracle)
+    public $databases_driver = "Mysqli"; // Mysqli (Mysql), OCI (Oracle), PDO (Mysql & Oracle)
 
     public $databases = array(
         'mysql' => array(
