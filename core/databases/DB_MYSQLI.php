@@ -1,7 +1,6 @@
 <?php
 
 namespace Core\Databases;
-echo "mysqli<hr>";
 
 use App\Config;
 

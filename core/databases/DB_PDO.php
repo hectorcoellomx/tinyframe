@@ -33,7 +33,7 @@ class DB
         }  
     }
 
-    public static function getInstance($database_name="") {
+    public static function init($database_name="") {
         if (!self::$instance) {
             self::$instance = new DB($database_name);
         }

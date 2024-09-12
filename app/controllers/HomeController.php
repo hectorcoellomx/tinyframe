@@ -15,15 +15,13 @@ class HomeController{
     public function index(){
 
         $app = new App();
-        $res = $app->delete(10);
-
-        var_dump($res);
+        $message = $app->message();
 
         $logged = input('logged');
 
         $data = array(
             'app' => "TinyApp",
-            'message' => 'Hola', 
+            'message' => $message, 
             'logged' => $logged
         );
 
