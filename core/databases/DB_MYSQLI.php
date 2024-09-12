@@ -1,6 +1,7 @@
 <?php
 
 namespace Core\Databases;
+echo "mysqli<hr>";
 
 use App\Config;
 
@@ -16,26 +17,23 @@ class DB
         if ($database_name != "") {
             $db_config = $config->databases[$database_name];
         } else {
-            $db_config = reset($config->databases);
+            $db_config = $config->databases["mysql"];
         }
 
-        if ($db_config['type'] == "mysql") {
-            $this->db = new \mysqli(
-                $db_config['host'],
-                $db_config['user'],
-                $db_config['password'],
-                $db_config['database']
-            );
+        $this->db = new \mysqli(
+            $db_config['host'],
+            $db_config['user'],
+            $db_config['password'],
+            $db_config['database']
+        );
 
-            if ($this->db->connect_error) {
-                die("Error de conexión: " . $this->db->connect_error);
-            }
-        } else {
-            // Código para conectar a Oracle si es necesario.
+        if ($this->db->connect_error) {
+            die("Error de conexión: " . $this->db->connect_error);
         }
+        
     }
 
-    public static function getInstance($database_name = "")
+    public static function init($database_name = "")
     {
         if (!self::$instance) {
             self::$instance = new DB($database_name);
