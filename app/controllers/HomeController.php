@@ -20,7 +20,7 @@ class HomeController{
         $logged = input('logged');
         $version = get_version();
         
-        //vd($ver);
+        //vd($version);
 
         $data = array(
             'app' => "TinyApp",
