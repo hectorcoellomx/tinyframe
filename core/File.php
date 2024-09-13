@@ -65,4 +65,27 @@ class File
 
         return $res;
     }
+
+    public static function delete($filePath)
+    {
+        if (file_exists($filePath)) {
+            if (unlink($filePath)) {
+                return [
+                    'status' => true,
+                    'message' => 'El archivo ha sido eliminado exitosamente.'
+                ];
+            } else {
+                return [
+                    'status' => false,
+                    'message' => 'No se pudo eliminar el archivo.'
+                ];
+            }
+        } else {
+            return [
+                'status' => false,
+                'message' => 'El archivo no existe.'
+            ];
+        }
+    }
+
 }
