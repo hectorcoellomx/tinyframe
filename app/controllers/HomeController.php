@@ -18,10 +18,14 @@ class HomeController{
         $message = $app->message();
 
         $logged = input('logged');
+        $version = get_version();
+        
+        //vd($ver);
 
         $data = array(
             'app' => "TinyApp",
             'message' => $message, 
+            'version' => $version, 
             'logged' => $logged
         );
 
