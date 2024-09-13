@@ -1,22 +1,24 @@
 <?php
+    
+    $tinyapp_version = "1.2.0";
 
     require './app/Config.php';
     use App\Config;
 
-    $config = new Config();
+    $tinyapp_config = new Config();
 
-    $bd_driver = ($config->databases_driver!=null) ? strtoupper($config->databases_driver) : $config->databases_driver;
-    $status_project = ($config->status_project!=null) ? strtoupper($config->status_project) : $config->status_project;
+    $tinyapp_bd_driver = ($tinyapp_config->databases_driver!=null) ? strtoupper($tinyapp_config->databases_driver) : $tinyapp_config->databases_driver;
+    $tinyapp_status_project = ($tinyapp_config->status_project!=null) ? strtoupper($tinyapp_config->status_project) : $tinyapp_config->status_project;
 
-    if($bd_driver=="PDO"){
+    if($tinyapp_bd_driver=="PDO"){
         require './core/databases/DB_PDO.php';
-    }elseif($bd_driver=="OCI"){
+    }elseif($tinyapp_bd_driver=="OCI"){
         require './core/databases/DB_OCI.php';
     }else{
         require './core/databases/DB_MYSQLI.php';
     }
 
-    if($status_project=="pro"){
+    if($tinyapp_status_project=="pro"){
         ini_set('display_errors', 0);
         error_reporting(E_ALL ^ E_WARNING);
     }else{
@@ -24,14 +26,14 @@
         error_reporting(E_ALL);
     }
     
-    $tinyapp_test_url = $config->test_url;
+    $tinyapp_test_url = $tinyapp_config->test_url;
     $tinyapp_nofound = false;
     $tinyapp_vars = null;
     $tinyapp_url_response = array();
     
     require './core/functions.php';
 
-    if($config->load_session){
+    if($tinyapp_config->load_session){
         require './core/Session.php';
     }
 
@@ -40,7 +42,7 @@
     require './core/View.php';
 
     
-    if($config->load_upload_files){
+    if($tinyapp_config->load_upload_files){
         require './core/File.php';
     }
 
