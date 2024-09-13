@@ -58,6 +58,7 @@ class Config
             $this->status_project =                      $_ENV['STATUS_PROJECT'];
             $this->base_url =                            $_ENV['BASE_URL'];
             $this->session_id =                          $_ENV['SESSION_ID'];
+            $this->databases_driver =                    $_ENV['DATABASES_DRIVER'];
 
             $this->databases['mysql']['host'] =          $_ENV['DB_MYSQL_HOST'];
             $this->databases['mysql']['user'] =          $_ENV['DB_MYSQL_USER'];

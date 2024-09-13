@@ -2,6 +2,8 @@ STATUS_PROJECT=dev
 BASE_URL=http://localhost/tinyapp/
 SESSION_ID=your_secret_session_id_here
 
+DATABASES_DRIVER=Mysqli
+
 DB_MYSQL_HOST=localhost
 DB_MYSQL_USER=root
 DB_MYSQL_PASSWORD=
