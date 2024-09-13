@@ -2,6 +2,8 @@
     
     $tinyapp_version = "1.2.0";
 
+    //require_once __DIR__ . '/vendor/autoload.php';
+    
     require './app/Config.php';
     use App\Config;
 

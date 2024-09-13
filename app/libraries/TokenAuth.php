@@ -75,8 +75,13 @@ use App\Libraries\TokenAuth;
 // Crear un token
 
 $expiration = 3600; // Expira en una hora
-$data = ['user_id' => 123, 'username' => 'john.doe'];
-$token = TokenAuth::generateToken($data, $expiration);
+$payload = [
+    'iss' => 'http://example.org',
+    'aud' => 'http://example.com',
+    'iat' => 1356999524,
+    'nbf' => 1357000000
+];
+$token = TokenAuth::generateToken($payload, $expiration);
 
 // Validar un token
 $validate = TokenAuth::validateToken($token);
