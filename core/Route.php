@@ -7,7 +7,7 @@ use Core\Databases\DB;
 class Route
 {
 
-    public static function check($route_pattern, $controller, $middlewares, $type)
+    public static function register($type, $route_pattern, $controller, $middlewares = [])
     {
 
         $get_route = $_GET['route'];
@@ -64,11 +64,6 @@ class Route
             }
         }
         
-    }
-
-    public static function register($method, $path, $controller, $middleware = [])
-    {
-        self::check($path, $controller, $middleware, $method);
     }
 
     public static function middleware($name)
