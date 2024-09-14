@@ -10,5 +10,3 @@ class Test {
     }
 
 }
-
-Test::run();

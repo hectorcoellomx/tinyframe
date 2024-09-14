@@ -76,6 +76,23 @@ class Route
             if (preg_match('/^[a-zA-Z_]+\.php$/', $middlewareFileName)) {
                 if (file_exists($middlewareFilePath)) {
                     require_once $middlewareFilePath;
+
+                    $middlewareClass = '\\App\\Middlewares\\' . ucfirst(strtolower($name));
+
+                    if (class_exists($middlewareClass)) {
+                        
+                        $middlewareInstance = new $middlewareClass();
+                        
+                        if (method_exists($middlewareInstance, 'run')) {
+                            $middlewareInstance->run();
+                        } else {
+                            trigger_error("The '$name' middleware does not have a 'run' method", E_USER_ERROR);
+                        }
+
+                    }else{
+                        trigger_error("Middleware class '$middlewareClass' does not exist", E_USER_ERROR);
+                    }
+
                 }else {
                     trigger_error("The middleware file does not exist '" .  $middlewareFilePath . "'", E_USER_ERROR);
                 }
