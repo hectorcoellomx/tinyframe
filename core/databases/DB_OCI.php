@@ -2,20 +2,17 @@
 
 namespace Core\Databases;
 
-class DB
+require_once './core/databases/DB.php';
+
+class DB extends DB_CONFIG
 {
     private static $instance;
     private $db = null;
 
     private function __construct($database_name="")
     {
-        global $tinyapp_config;
-
-        if($database_name!=""){
-            $db_config = $tinyapp_config->databases[$database_name];
-        }else{
-            $db_config = $tinyapp_config->databases["oracle"];
-        }
+        $database_name = ($database_name=="") ? "oracle" : $database_name;
+        $db_config = $this->get_config($database_name);
 
         $conn_str = "//" . $db_config['host'] . ":" . $db_config['port'] . "/" . $db_config['service_name'];
 

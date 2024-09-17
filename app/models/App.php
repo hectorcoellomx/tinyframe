@@ -4,16 +4,16 @@ namespace App\Models;
 
 use Core\Databases\DB;
 
-class App{
+class App {
 
     public function single($id){
         $db = DB::init();
         return $db->db_select_row("SELECT * FROM users WHERE id=?", [ $id ]);
     }
 
-    public function list($status){
+    public function list(){
         $db = DB::init();
-        return $db->db_select("SELECT * FROM users WHERE status=?", [ $status ]);
+        return $db->db_select("SELECT * FROM users", null);
     }
 
     public function insert($name){

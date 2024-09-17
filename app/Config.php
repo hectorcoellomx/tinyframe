@@ -10,25 +10,6 @@ class Config
 
     public $databases_driver = "Mysqli"; // Mysqli (Mysql), OCI (Oracle), PDO (Mysql & Oracle)
 
-    public $databases = array(
-        'mysql' => array(
-            'host' => "",
-            'user' => "",
-            'password' => "",
-            'database' => "",
-            'type' => 'mysql'
-        ), 
-        'oracle' => array(
-            'host' => "",
-            'port' => "",
-            'user' => "",
-            'password' => "",
-            'service_name' => "",
-            'type' => 'oracle'
-        )
-    );
-    
-
     public $api_config = array(
 
         'default' => array(
@@ -62,20 +43,8 @@ class Config
             $this->session_id =                          $_ENV['SESSION_ID'];
             $this->load_upload_files =                   ($_ENV['LOAD_UPLOAD_FILES'] === 'true' || $_ENV['LOAD_UPLOAD_FILES'] === 'TRUE');
 
-            $this->databases['mysql']['host'] =          $_ENV['DB_MYSQL_HOST'];
-            $this->databases['mysql']['user'] =          $_ENV['DB_MYSQL_USER'];
-            $this->databases['mysql']['password'] =      $_ENV['DB_MYSQL_PASSWORD'];
-            $this->databases['mysql']['database'] =      $_ENV['DB_MYSQL_NAME'];
-
-            $this->databases['oracle']['host'] =         $_ENV['DB_ORACLE_HOST'];
-            $this->databases['oracle']['port'] =         $_ENV['DB_ORACLE_PORT'];
-            $this->databases['oracle']['user'] =         $_ENV['DB_ORACLE_USER'];
-            $this->databases['oracle']['password'] =     $_ENV['DB_ORACLE_PASSWORD'];
-            $this->databases['oracle']['service_name'] = $_ENV['DB_ORACLE_SERVICE_NAME'];
-
         }
         
-
     }
 
 }
