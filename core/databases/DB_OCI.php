@@ -11,12 +11,12 @@ class DB
 
     private function __construct($database_name="")
     {
-        global $config;
+        global $tinyapp_config;
 
         if($database_name!=""){
-            $db_config = $config->databases[$database_name];
+            $db_config = $tinyapp_config->databases[$database_name];
         }else{
-            $db_config = $config->databases["oracle"];
+            $db_config = $tinyapp_config->databases["oracle"];
         }
 
         $conn_str = "//" . $db_config['host'] . ":" . $db_config['port'] . "/" . $db_config['service_name'];
