@@ -2,14 +2,13 @@
 
 namespace Core;
 
-use App\Config;
 
 class Response {
 
     public function json($data, $code, $config_name="default")
     {
-        $config = new Config();
-        $api_config = $config->api_config[$config_name];
+        global $tinyapp_config;
+        $api_config = $tinyapp_config->api_config[$config_name];
 
         header("Access-Control-Allow-Origin: " . $api_config['origin']);
         header('Access-Control-Allow-Methods: ' . $api_config['methods']);

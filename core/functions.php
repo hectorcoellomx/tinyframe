@@ -1,11 +1,9 @@
 <?php
 
-use App\Config;
-
 function redir($path="", $url=false){
     if(!$url){
-        $config = new Config();
-        header("Location: " . $config->base_url . $path);
+        global $tinyapp_config;
+        header("Location: " . $tinyapp_config->base_url . $path);
         exit();
     }else{
         header("Location: " . $path);
@@ -101,13 +99,13 @@ function get_errors(){
 }
 
 function base($add=""){
-    $config = new Config();
-    return $config->base_url . $add;
+    global $tinyapp_config;
+    return $tinyapp_config->base_url . $add;
 }
 
 function assets($add=""){
-    $config = new Config();
-    echo $config->base_url . 'assets/'. $add;
+    global $tinyapp_config;
+    echo $tinyapp_config->base_url . 'assets/'. $add;
 }
 
 function input_json(){

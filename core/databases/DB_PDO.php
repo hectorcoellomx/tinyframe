@@ -2,8 +2,6 @@
 
 namespace Core\Databases;
 
-use App\Config;
-
 class DB
 {
     private static $instance;
