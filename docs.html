@@ -26,6 +26,7 @@
         <li><a href="#basededatos">Bases de datos</a></li>
         <li><a href="#middlewares">Middlewares</a></li>
         <li><a href="#validaciones">Validaciones</a></li>
+        <li><a href="#sessions">Sesiones</a></li>
         <li><a href="#almacenamiento">Almacenamiento</a></li>
         <li><a href="#helpers">Helpers</a></li>
         <li><a href="#librerias">Librerías</a></li>
@@ -41,7 +42,7 @@
         </div>
         <br>
         <div style="font-style: italic;">
-            Nota: Este framework fue creado por Héctor de Jesús Coello Gómez con la intención de ayudar en el desarrollo de proyectos web pequeños, simples y funcionales con él.
+            Nota: Este framework fue creado por Héctor de Jesús Coello Gómez con la intención de ayudar en el desarrollo de proyectos web pequeños, simples y funcionales.
         </div>
     </section>
     <section id="primerospasos" class="section">
@@ -373,6 +374,44 @@
             true.</p>
     </section>
 
+    <section id="sessions" class="section">
+        <div class="title">Sesiones</div>
+        <p>Si deseas manejar sesiones en tu proyecto, debes activarlo desde el archivo .env poniendo true en LOAD_SESSION y agregando una clave/id de sesión personalizada.</p>
+
+        <div class="code">
+
+            LOAD_SESSION=true
+            SESSION_ID=clav3_personaliz4d4
+
+        </div>
+
+        <div class="code">
+            use Core\Session;
+
+            // Crear una sesión
+            $session = new Session();
+            $data_session = array( "id"=> 100, "username"=> 'Hector');
+            $session->create($data_session);
+
+            // Cambiar datos de sesión
+            $session = new Session();
+            $session->set_data("username", "Hector Coello");
+
+            // Obtener datos de sesión
+            $session = new Session();
+            $id = $session->get_data("id");
+
+            // Validar sesión
+            $session = new Session();
+            $validate = $session->validate();
+            $validate = $session->validate("login");
+
+            // Eliminar sesión
+            $session->delete();
+
+        </div>
+    </section>
+
 
     <section id="almacenamiento" class="section">
         <div class="title">Almacenamiento</div>
@@ -588,7 +627,7 @@
         // Función para aplicar el resaltado de sintaxis
         function highlightPHPCode(code) {
 
-            const keywords = ['CREATE', 'DATABASE', 'INSERT', 'USE', 'TABLE', 'INTO', 'VALUES', 'public', 'class', 'STATUS_PROJECT', 'BASE_URL', 'use', 'namespace', 'array', 'View::get', 'require_once', 'Route::register', 'extends', 'input', 'json', 'set_errors', 'set_errors', 'back', 'File::upload', 'Validator::check', 'static', 'echo', 'if', 'else', 'for', 'while', 'return', 'function'];
+            const keywords = ['CREATE', 'DATABASE', 'INSERT', 'USE', 'TABLE', 'INTO', 'VALUES', 'public', 'class', 'STATUS_PROJECT', 'LOAD_SESSION', 'SESSION_ID', 'LOAD_UPLOAD_FILES', 'DATABASES_DRIVER', 'BASE_URL', 'use', 'namespace', 'array', 'View::get', 'require_once', 'Route::register', 'extends', 'input', 'json', 'set_errors', 'set_errors', 'back', 'File::upload', 'Validator::check', 'static', 'echo', 'if', 'else', 'for', 'while', 'return', 'function'];
             const keywordRegex = new RegExp(`\\b(${keywords.join('|')})\\b`, 'g');
             code = code.replace(keywordRegex, '<span class="keyword">$1</span>');
 
