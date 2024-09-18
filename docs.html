@@ -52,7 +52,7 @@
 
         <div class="code">
             STATUS_PROJECT=dev
-            BASE_URL=http:&frasl;&frasl;localhost/tinyapp/
+            BASE_URL=http://localhost/tinyapp/
 
             ...
         </div>
@@ -63,7 +63,7 @@
 
         <div class="code">
             STATUS_PROJECT=pro
-            BASE_URL=https:&frasl;&frasl;www.mywebsite.com
+            BASE_URL=https://www.mywebsite.com
 
             ...
         </div>
@@ -631,7 +631,7 @@
             const keywordRegex = new RegExp(`\\b(${keywords.join('|')})\\b`, 'g');
             code = code.replace(keywordRegex, '<span class="keyword">$1</span>');
 
-            code = code.replace(/(\/\/.*?)(<br>|\n)/g, '<span class="comment">$1</span>$2');
+            code = code.replace(/(\/\/\s.*?)(<br>|\n)/g, '<span class="comment">$1</span>$2');
 
             code = code.replace(/(\$[a-zA-Z_][a-zA-Z0-9_]*)/g, '<span class="variable">$1</span>');
             return code;
