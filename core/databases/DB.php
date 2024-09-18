@@ -22,7 +22,10 @@ class DB_CONFIG
             $config['host'] =          $_ENV['DB_'.strtoupper($name).'_HOST'];
             $config['user'] =          $_ENV['DB_'.strtoupper($name).'_USER'];
             $config['password'] =      $_ENV['DB_'.strtoupper($name).'_PASSWORD'];
-            $config['database'] =      $_ENV['DB_'.strtoupper($name).'_NAME'];
+            
+            if($type=="mysql"){
+                $config['database'] =      $_ENV['DB_'.strtoupper($name).'_NAME'];
+            }
 
             if($type=="oracle"){
                 $config['port'] =          $_ENV['DB_'.strtoupper($name).'_PORT'];
