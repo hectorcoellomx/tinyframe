@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -13,10 +13,10 @@
 <body>
 
 <div class="sidebar">
-    <div class="logo">TinyApp</div>
+    <div class="logo"><a href="#bienvenida">TinyApp</a></div>
     <span class="text-logo">Para proyectos pequeños</span>
     <br><br>
-    <div>Documentación</div>
+    <div><a href="#bienvenida">Documentación</a></div>
     <ul>
         <li><a href="#primerospasos">Primeros pasos</a></li>
         <li><a href="#controladores">Controladores</a></li>
@@ -34,20 +34,18 @@
 </div>
 <div class="container">
     <section id="bienvenida" class="section">
+        <div class="title">Documentación</div>
         <div>
-            Bienvenido a la documentación del microframework <strong>TinyApp (1.2.0)</strong> el cuál tiene control de
-            rutas, middlewares, conexión con base de datos mysql y oracle, configuración para api restful, integración de
-            librerías externas y archivos assets (frontend), helpers, validador de formularios, subida de archivos,
-            manejo de sesiones; y arquitectura para manejo de vistas, modelos y controladores.
+            Bienvenido a la documentación del microframework <strong>TinyApp (1.2.0)</strong> el cuál tiene control de rutas, middlewares, conexión con base de datos mysql y oracle, configuración para api restful, integración de librerías externas y archivos assets (frontend), helpers, validador de formularios, subida de archivos, manejo de sesiones; y arquitectura para uso de vistas, modelos y controladores.
         </div>
         <br>
         <div style="font-style: italic;">
-            Nota: Este framework fue creado por Héctor de Jesús Coello Gómez con la intención de ayudar en el desarrollo de proyectos web pequeños, simples y funcionales.
+            Nota: Este framework fue creado por Héctor de Jesús Coello Gómez y tiene la intención ser una herramienta de ayuda en el desarrollo de proyectos web pequeños, simples y funcionales.
         </div>
     </section>
     <section id="primerospasos" class="section">
         <div class="title">Primeros pasos</div>
-        <p>Una vez descargado el framework debes configurarlo creando un archivo .env en la carpeta raíz del proyecto. Para crear el archivo .env debes hacerlo creando una copia del archivo de ejemplo que se encuentra en el proyecto: <span class="color-main">env-example.txt</span> (este archivo una vez copiado puedes eliminarlo).</p>
+        <p>Una vez descargado el framework debes configurarlo creando un archivo <span class="color-main">.env</span> en la carpeta raíz del proyecto. Para obtener el contenido del archivo .env debes realizar una copia del archivo de ejemplo que se encuentra en el proyecto: <span class="color-main">env-example.txt</span> (este archivo una vez copiado puedes eliminarlo).</p>
         <p>Tu primer configuración en el archivo .env debe ser la URL de tu proyecto, lo harás modificando la propiedad <span class="color-main">BASE_URL</span>.</p>
 
         <div class="code">
@@ -55,23 +53,23 @@
             BASE_URL=http://localhost/tinyapp/
 
             ...
+
+            <footer>.env</footer>
         </div>
 
-        <p>Al poner el proyecto en producción debes cambiar el valor de <span
-                class="color-main">STATUS_PROJECT</span> de "dev" a "pro" en el archivo <span
-                class="color-main">.env</span></p>
+        <p>Al poner el proyecto en producción debes cambiar el valor de <span class="color-main">STATUS_PROJECT</span> de "dev" a "pro" en el archivo <span class="color-main">.env</span> y colocar el dominio real de tu proyecto en línea.</p>
 
         <div class="code">
             STATUS_PROJECT=pro
             BASE_URL=https://www.mywebsite.com
 
             ...
+
+            <footer>.env</footer>
         </div>
 
-        <br>
 
-        <p>Si deseas realizar pruebas con el modelo App que viene de prueba en el proyecto, deberás crear la
-            siguiente base de datos:</p>
+        <p>Si deseas realizar pruebas con el modelo App que viene de prueba en el proyecto, deberás crear la siguiente base de datos:</p>
 
         <div class="code">
             CREATE DATABASE tinyapp;
@@ -91,73 +89,14 @@
             ('David Smith');
         </div>
 
-        <br><br>
-
-        <p>Ahora puedes crear tus controladores.</p>
-
+        <p>Ahora puedes crear tus rutas.</p>
 
     </section>
-
-
-
-    <section id="controladores" class="section">
-        <div class="title">Controladores</div>
-        <p>Debes crear tus controladores con el <span class="color-main">namespace App\Controllers</span>. Se pueden
-            obtener los datos enviados por GET, POST o parámetro URL, con la función <span
-                class="color-main">input()</span>. Se sugiere nombrar a los controladores en formato <span
-                class="color-main">CamelCase</span> con la palabra Controllers al final.</p>
-        <p>/app/controllers/HomeController.php</p>
-        <br>
-
-        <div class="code">
-            namespace App\Controllers;
-
-            class HomeController
-            {
-
-                $username = input('username'); // GET or POST or URL Param
-
-            }
-        </div>
-
-        <p>Para el uso de controladores en API Rest, se debe extender al controlador de "Response", para poder dar
-            respuesta tipo JSON, como se ve a continuación.</p>
-
-        <div class="code">
-            namespace App\Controllers;
-
-            use Core\Response;
-
-            class StudentApiController extends Response
-            {
-                public function index(){
-
-                    $students = array(
-                        array('id' => 100, "name" => 'Mary Jones' ),
-                        array('id' => 101, "name" => 'David Williams' ),
-                        array('id' => 102, "name" => 'Matt Smith' ),
-                        array('id' => 103, "name" => 'Cris Brown' )
-                    );
-
-                    $data = array( 'success' => true, 'data' => $students, 'message' => "" );
-                    return $this->json($data, 200);
-
-                }
-            }
-        </div>
-
-
-        <p>En el tercer parámetro del método <span class="color-main">$this->json()</span> se establece el nombre de
-            la configuración de la cabecera (header) de la respuesta, por defecto utiliza la configuración "default"
-            en <span class="color-main">$api_config</span> en el archivo de configuración del proyecto <span
-                class="color-main">app/Config.php</span></p>
-    </section>
-
 
     <section id="rutas" class="section">
         <div class="title">Rutas</div>
         <p>Rutas tipo <span class="color-main">GET, POST, PUT y DELETE</span>.</p>
-        <p>/app/routes.php</p>
+        <p>Tus rutas las debes crear en el archivo <span class="color-main">app/routes.php</span>.</p>
 
         <div class="code">
             require_once './app/controllers/HomeController.php';
@@ -181,16 +120,98 @@
             // Rutas para API
 
             Route::register("get", "/api/student", [ StudentApiController::class, 'index' ] );
+
+            <footer>app/routes.php</footer>
         </div>
 
+        <p>Para recibir y leer los parámetros de las rutas, por ejemplo la variable "id" de la ruta "student/{id}", debes hacerlo con la función input('id') en el respectivo controlador. En la siguiente sección se detalla el uso de controladores y la forma de recibir parámetros. </p>
+
+    </section>
+
+    <section id="controladores" class="section">
+        <div class="title">Controladores</div>
+        <p>Debes crear tus controladores en la carpeta <span class="color-main">app/controllers</span> y colocar en cada uno de ellos el namespace <span class="color-main">App\Controllers</span>. Se sugiere nombrar a los controladores en formato <span class="color-main">CamelCase</span> con la palabra Controllers al final (app/controllers/HomeController.php).</p> 
+        <p>Para obtener los datos recibidos por GET, POST o parámetro URL en el controlador, debes usar la función <span class="color-main">input()</span> y poner de parámetro el nombre del parámetro.</p>
+
+        <div class="code">
+            namespace App\Controllers;
+
+            class HomeController
+            {
+
+                $username = input('username'); // GET (Query params) or POST or URL Param
+
+            }
+
+            <footer>app/controllers/HomeController.php</footer>
+        </div>
+
+        <p>Para el uso de controladores para API Rest, se debe extender al controlador de "Response" para así poder dar respuestas tipo JSON como se ve a continuación.</p>
+
+        <div class="code">
+            namespace App\Controllers;
+
+            use Core\Response;
+
+            class StudentApiController extends Response
+            {
+                public function index(){
+
+                    $students = array(
+                        array('id' => 100, "name" => 'Mary Jones' ),
+                        array('id' => 101, "name" => 'David Williams' ),
+                        array('id' => 102, "name" => 'Matt Smith' ),
+                        array('id' => 103, "name" => 'Cris Brown' )
+                    );
+
+                    $data = array( 'success' => true, 'data' => $students, 'message' => "" );
+                    return $this->json($data, 200);
+
+                }
+            }
+
+            <footer>app/controllers/StudentApiController.php</footer>
+        </div>
+
+
+        <p>En el tercer parámetro del método <span class="color-main">$this->json($data, 200, "myconfig")</span> establece la configuración de la cabecera de la respuesta JSON, si esta no se detalla, por defecto se utiliza la configuración "default".</p> 
+        <p>Estas configuraciones de la cabecera están y deben estar definida en <span class="color-main">app/Config.php</span>, como se ve a continuación.</p>
+
+        <div class="code">
+            public $api_config = array(
+
+                'default' => array(
+                    'origin' => "*",
+                    'methods' => "GET, PUT, POST, DELETE",
+                    'headers' => "X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Authorization",
+                    'content_type' => "application/json"
+                ),
+
+                'myconfig' => array(
+                    'origin' => "mysite.com",
+                    'methods' => "GET",
+                    'headers' => "X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Authorization",
+                    'content_type' => "application/json"
+                ),
+
+                'otherconfig' => array(
+                    'origin' => "*",
+                    'methods' => "GET, POST",
+                    'headers' => "X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Authorization",
+                    'content_type' => "application/json"
+                )
+
+            );
+
+            <footer>app/Config.php</footer>
+        </div>
 
     </section>
 
 
     <section id="vistas" class="section">
         <div class="title">Vistas</div>
-        <p>Las vistas se debe llamar en los controladores con el método <span class="color-main">View::get()</span>.
-        </p>
+        <p>Las vistas se debe llamar en los controladores con el método <span class="color-main">View::get()</span>.</p>
 
         <div class="code">
             namespace App\Controllers;
@@ -203,25 +224,34 @@
 
                 public function index(){
 
-                    // Vistas siendo llamadas
+                    // Tres vistas siendo llamadas
 
                     View::get('partials/header');
                     View::get('home');
                     View::get('partials/footer');
 
 
-                    // Llamadas con parámetros
+                    // Llamada pasando datos (variables)
 
-                    $data = array(
-                        'app' => "TinyApp",
-                        'message' => $message,
-                    );
-
-
+                    $data = array( 'app' => "TinyApp", 'message' => "Hola" );
                     View::get('home', $data);
 
                 }
             }
+
+            <footer>app/controllers/HomeController.php</footer>
+        </div>
+
+        <p>Las vistas a su vez deben estar creadas en la carpeta <span class="color-main">app/views</span></p>
+
+        <div class="code">
+            
+            // Código HTML 
+
+            // Se puede hacer uso de las variables pasadas a la vista
+            echo $message . " " . $app; 
+
+            <footer>app/views/home.php</footer>
         </div>
 
     </section>
@@ -242,6 +272,8 @@
                 }
 
             }
+
+            <footer>app/models/App.php</footer>
         </div>
 
         <p>Para usar este modelo en un controlador, debes hacer un require_once del archivo <span
@@ -251,7 +283,7 @@
 
     <section id="basededatos" class="section">
         <div class="title">Base de datos</div>
-        <p>Para conectarte a la base de datos debes usar la librería <span class="color-main">Core\Databases\DB</span>, como se ve a continuación.</p>
+        <p>Para conectarte a una base de datos desde tus modelos, debes hacer uso del paquete <span class="color-main">Core\Databases\DB</span> en tu modelo, como se ve a continuación.</p>
 
         <div class="code">
             namespace App\Models;
@@ -262,41 +294,119 @@
             {
 
                 public function single($id){
-                    $db = DB::getInstance();
+                    $db = DB::init();
                     return $db->db_select_row("SELECT * FROM users WHERE id=?", [ $id ]);
                 }
 
                 public function list(){
-                    $db = DB::getInstance();
+                    $db = DB::init();
                     return $db->db_select("SELECT * FROM users");
                 }
 
                 public function list_by_status($status){
-                    $db = DB::getInstance();
+                    $db = DB::init();
                     return $db->db_select("SELECT * FROM users WHERE status=?", [ $status ]);
                 }
 
                 public function insert($name){
-                    $db = DB::getInstance();
+                    $db = DB::init();
                     return $db->db_insert_lastid("INSERT INTO users (fullname) VALUES (?)", [ $name ]);
                 }
 
                 public function update($id, $name){
-                    $db = DB::getInstance();
+                    $db = DB::init();
                     return $db->db_update("UPDATE users SET fullname = ? WHERE id = ?", [ $name, $id ]);
                 }
 
                 public function delete($id){
-                    $db = DB::getInstance();
+                    $db = DB::init();
                     return $db->db_delete("DELETE from users WHERE id = ?", [ $id ]);
                 }
 
             }
+
+            <footer>app/models/User.php</footer>
         </div>
 
 
-        <p>La configuración de la base de datos se realiza en el archivo <span
-                class="color-main">app/Config.php</span></p>
+        <p>La configuración de la base de datos debes realizarla en el archivo <span class="color-main">.env</span>. En este archivo en la propiedad DATABASES_DRIVER debes configurar el driver de base de datos a utilizar en tu proyecto:</p>
+        <p>
+            <ul>
+                <li>Mysqli: Para uso únicamente de BD MySQL</li>
+                <li>OCI: Para uso únicamente de BD Oracle</li>
+                <li>PDO: Para uso de BD MySQL y Oracle en el mismo proyecto.</li>
+            </ul>
+        </p>
+
+        <div class="code">
+            DB_MYSQL_TYPE=mysql
+            DB_MYSQL_HOST=localhost
+            DB_MYSQL_USER=root
+            DB_MYSQL_PASSWORD=
+            DB_MYSQL_NAME=tinyapp
+
+            DB_ORACLE_TYPE=oracle
+            DB_ORACLE_HOST=localhost
+            DB_ORACLE_PORT=1521
+            DB_ORACLE_USER=root
+            DB_ORACLE_PASSWORD=
+            DB_ORACLE_SERVICE_NAME=
+
+            <footer>.env</footer>
+        </div>
+
+        <p>Si deseas agregar una configuración personalizada, por ejemplo "databaseprod" y de tipo MySQL, debes definirla de la siguiente manera: </p>
+
+        <div class="code">
+            DB_MYSQL_TYPE=mysql
+            DB_MYSQL_HOST=localhost
+            DB_MYSQL_USER=root
+            DB_MYSQL_PASSWORD=
+            DB_MYSQL_NAME=tinyapp
+
+            DB_ORACLE_TYPE=oracle
+            DB_ORACLE_HOST=localhost
+            DB_ORACLE_PORT=1521
+            DB_ORACLE_USER=root
+            DB_ORACLE_PASSWORD=
+            DB_ORACLE_SERVICE_NAME=
+
+            // Mi configuración personalizada 'databaseprod'
+
+            DB_DATABASEPROD_TYPE=mysql
+            DB_DATABASEPROD_HOST=localhost
+            DB_DATABASEPROD_USER=userad
+            DB_DATABASEPROD_PASSWORD=12345
+            DB_DATABASEPROD_NAME=tinyapp
+
+            <footer>.env</footer>
+        </div>
+
+        <p>Una vez definida tu configuración de base de datos personalizada, debes usarla de esta manera para conectarte con ella:</p>
+
+        <div class="code">
+            namespace App\Models;
+
+            use Core\Databases\DB;
+
+            class User
+            {
+
+                public function single($id){
+
+                    // Debes pasar en init() el nombre de tu configuración personalizada
+                    $db = DB::init('databaseprod');
+                    return $db->db_select_row("SELECT * FROM users WHERE id=?", [ $id ]);
+
+                }
+
+                ...
+
+            }
+
+            <footer>app/models/User.php</footer>
+        </div>
+
     </section>
 
 
@@ -316,6 +426,8 @@
             // Middleware "test"
 
             Route::register("get", "/", HomeController::class, 'index' , [ 'test' ] );
+
+            <footer>app/routes.php</footer>
         </div>
 
         <p>Los archivos middlewares se deben crear en la carpeta <span class="color-main">app/middlewares/</span>,
@@ -337,6 +449,7 @@
 
             }
 
+            <footer>app/middlewares/Test.php</footer>
         </div>
 
     </section>
@@ -366,6 +479,7 @@
                 }
             }
 
+            <footer>app/controllers/HomeController.php</footer>
         </div>
 
         <p>El primer parámetro del método <span class="color-main">Validator::check()</span> recibe un arreglo de
@@ -385,35 +499,45 @@
         <div class="code">
 
             LOAD_SESSION=true
-            SESSION_ID=clav3_personaliz4d4
+            SESSION_ID=mynewsessionid
 
+            <footer>.env</footer>
         </div>
 
         <div class="code">
+            namespace App\Controllers;
+
             use Core\Session;
 
-            // Crear una sesión
-            $session = new Session();
-            $data_session = array( "id"=> 100, "username"=> 'Hector');
-            $session->create($data_session);
+            class HomeController
+            {
 
-            // Cambiar datos de sesión
-            $session = new Session();
-            $session->set_data("username", "Hector Coello");
+                // Crear una sesión
+                $session = new Session();
+                $data_session = array( "id"=> 100, "username"=> 'Hector');
+                $session->create($data_session);
 
-            // Obtener datos de sesión
-            $session = new Session();
-            $id = $session->get_data("id");
+                // Cambiar datos de sesión
+                $session = new Session();
+                $session->set_data("username", "Hector Coello");
 
-            // Validar sesión
-            $session = new Session();
-            $validate = $session->validate();
-            $validate = $session->validate("login");
+                // Obtener datos de sesión
+                $session = new Session();
+                $id = $session->get_data("id");
 
-            // Eliminar sesión
-            $session->delete();
+                // Validar sesión
+                $session = new Session();
+                $validate = $session->validate();
+                $validate = $session->validate("login");
 
+                // Eliminar sesión
+                $session->delete();
+
+            }
+
+            <footer>app/controllers/HomeController.php</footer>
         </div>
+
     </section>
 
 
@@ -453,35 +577,34 @@
                     ...
                 }
             }
+
+            <footer>app/controllers/HomeController.php</footer>
         </div>
 
     </section>
-    <p>La configuración para habilitar el almacenamiento de archivos ($load_upload_files) se realiza en <span
-            class="color-main">app/Config.php</span></p>
+    <p>La configuración para habilitar el almacenamiento de archivos ($load_upload_files) se realiza en <span class="color-main">app/Config.php</span></p>
 
-    <br>
     <section id="helpers" class="section">
         <div class="title">Helpers</div>
-        <p>Los Helpers son funciones globales que se deben agregar en el archivo app/helpers.php. Para que los
-            Helpers estén habilitados, se deben precargar ($load_helper = true) desde el archivo de configuración
-            <span class="color-main">app/Config.php</span></p>
+        <p>Los Helpers son funciones globales que se deben agregar en el archivo <span class="color-main">app/helpers.php</span></p>
 
         <div class="code">
             public function format_email(){
                 ...
             }
+
+            <footer>app/helpers.php</footer>
+
         </div>
 
         <p>Para usar este modelo en un controlador, debes hacer un require_once del archivo ( require_once
             './app/models/App.php'; ) y usarlo con <span class="color-main">use App\Models\App</span>.</p>
     </section>
 
-    <br>
-
     <section id="librerias" class="section">
         <div class="title">Librerías</div>
         <p>Las librerías son archivos de clases que se deben agregar en la carpeta <span
-                class="color-main">app/libreries/</span> y requerirlos en el respectivo controlador o modelo.</p>
+                class="color-main">app/libraries/</span> y requerirlos en el respectivo controlador o modelo.</p>
 
         <div class="code">
             namespace App\Libraries;
@@ -492,6 +615,8 @@
                 ...
 
             }
+
+            <footer>app/libraries/Test.php</footer>
         </div>
 
     </section>
@@ -546,13 +671,14 @@
             width: calc(100% - 275px);
             display: inline-block;
             vertical-align: top;
-            padding: 30px;
+            padding: 0 30px 30px;
             box-sizing: border-box;
             margin-left: 270px;
         }
 
         .section {
             margin: 20px 0 40px;
+            padding-top: 15px;
         }
 
         .sidebar {
@@ -588,8 +714,6 @@
             display: block;
             font-size: 16px;
         }
-
-
         .code::before {
             content: '';
             width: 12px;
@@ -601,7 +725,6 @@
             top: -22px;
             right: 12px;
         }
-
         .code::after {
             content: '';
             width: 12px;
@@ -613,16 +736,23 @@
             top: -22px;
             right: 30px;
         }
-
-        .keyword {
+        .code footer{
+            position: absolute;
+            bottom: 0;
+            width: calc(100% - 24px);
+            background-color: #3c3b3b;
+            color: gainsboro;
+            font-size: 12px;
+            padding: 7px 12px;
+            border-radius: 0 0 5px 5px;
+        }
+        .code .keyword {
             color: #ff45d9;
         }
-
-        .variable {
+        .code .variable {
             color: #5bfd00;
         }
-
-        .comment {
+        .code .comment {
             color: gainsboro;
         }
     </style>
@@ -631,7 +761,7 @@
         // Función para aplicar el resaltado de sintaxis
         function highlightPHPCode(code) {
 
-            const keywords = ['CREATE', 'DATABASE', 'INSERT', 'USE', 'TABLE', 'INTO', 'VALUES', 'public', 'class', 'STATUS_PROJECT', 'LOAD_SESSION', 'SESSION_ID', 'LOAD_UPLOAD_FILES', 'DATABASES_DRIVER', 'BASE_URL', 'use', 'namespace', 'array', 'View::get', 'require_once', 'Route::register', 'extends', 'input', 'json', 'set_errors', 'set_errors', 'back', 'File::upload', 'Validator::check', 'static', 'echo', 'if', 'else', 'for', 'while', 'return', 'function'];
+            const keywords = ['CREATE', 'DATABASE', 'INSERT', 'USE', 'TABLE', 'INTO', 'VALUES', 'public', 'class', 'STATUS_PROJECT', 'LOAD_SESSION', 'SESSION_ID', 'LOAD_UPLOAD_FILES', 'DATABASES_DRIVER', 'BASE_URL', 'use', 'namespace', 'array', 'View::get', 'require_once', 'Route::register', 'extends', 'input', 'set_errors', 'set_errors', 'back', 'File::upload', 'Validator::check', 'static', 'echo', 'if', 'else', 'for', 'while', 'return', 'function'];
             const keywordRegex = new RegExp(`\\b(${keywords.join('|')})\\b`, 'g');
             code = code.replace(keywordRegex, '<span class="keyword">$1</span>');
 
