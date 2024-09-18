@@ -66,32 +66,3 @@ class TokenAuth {
 
 }
 
-
-/*
-
-require_once './app/libraries/TokenAuth.php';
-use App\Libraries\TokenAuth;
-
-// Crear un token
-
-$expiration = 3600; // Expira en una hora
-$payload = [
-    'iss' => 'http://example.org',
-    'aud' => 'http://example.com',
-    'iat' => 1356999524,
-    'nbf' => 1357000000
-];
-$token = TokenAuth::generateToken($payload, $expiration);
-
-// Validar un token
-$validate = TokenAuth::validateToken($token);
-
-if ($validate["status"]===true) {
-    echo "Token válido.";
-    echo "Datos decodificados: ";
-    print_r($validate["payload"]);
-} else {
-    echo $validate["message"];
-}
-
-*/

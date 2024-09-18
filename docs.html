@@ -19,8 +19,8 @@
     <div><a href="#bienvenida">Documentación</a></div>
     <ul>
         <li><a href="#primerospasos">Primeros pasos</a></li>
-        <li><a href="#controladores">Controladores</a></li>
         <li><a href="#rutas">Rutas</a></li>
+        <li><a href="#controladores">Controladores</a></li>
         <li><a href="#vistas">Vistas</a></li>
         <li><a href="#modelos">Modelos</a></li>
         <li><a href="#basededatos">Bases de datos</a></li>
@@ -69,7 +69,7 @@
         </div>
 
 
-        <p>Si deseas realizar pruebas con el modelo App que viene de prueba en el proyecto, deberás crear la siguiente base de datos:</p>
+        <p>Si deseas realizar pruebas con el modelo <span class="color-main">App</span> que viene de prueba en el proyecto, deberás crear la siguiente base de datos:</p>
 
         <div class="code">
             CREATE DATABASE tinyapp;
@@ -101,25 +101,26 @@
         <div class="code">
             require_once './app/controllers/HomeController.php';
 
-            ...
+            use Core\Route;
+            use App\Controllers\HomeController;
 
 
             // Rutas
 
-            Route::register("get", "/", [ HomeController::class ], 'index' ], [ 'test' ] );
-            Route::register("post", "/login", [ HomeController::class, 'login' ] );
+            Route::register("get", "/", [ HomeController::class ], 'index' ]);
+            Route::register("post", "/login", [ HomeController::class, 'login' ]);
 
 
             // Rutas con parámetros
 
-            Route::register("get", "/student/{id}", [ StudentController::class, 'show' ] );
-            Route::register("delete", "/student", [ StudentController::class, 'destroy' ] );
-            Route::register("put", "/student/{id}/status/{status}", [ StudentController::class, 'update' ] );
+            Route::register("get", "/student/{id}", [ StudentController::class, 'show' ]);
+            Route::register("delete", "/student", [ StudentController::class, 'destroy' ]);
+            Route::register("put", "/student/{id}/status/{status}", [ StudentController::class, 'update' ]);
 
 
             // Rutas para API
 
-            Route::register("get", "/api/student", [ StudentApiController::class, 'index' ] );
+            Route::register("get", "/api/student", [ StudentApiController::class, 'index' ]);
 
             <footer>app/routes.php</footer>
         </div>
@@ -206,6 +207,55 @@
             <footer>app/Config.php</footer>
         </div>
 
+        <p>Si deseas trabajar con tokens JWT puedes hacer uso de la librería: <span class="color-main">TokenAuth</span>.</p>
+
+        <div class="code">
+            namespace App\Controllers;
+
+            require_once './app/libraries/TokenAuth.php';
+            
+            use App\Libraries\TokenAuth;
+
+            use Core\Validator;
+            use Core\File;
+
+            class HomeController
+            {
+
+                public function index(){
+
+                    // Crear un token
+
+                    $expiration = 3600; // Expira en una hora
+                    
+                    $payload = [
+                        'iss' => 'http://example.org',
+                        'aud' => 'http://example.com',
+                        'iat' => 1356999524,
+                        'nbf' => 1357000000
+                    ];
+
+                    $token = TokenAuth::generateToken($payload, $expiration);
+
+
+                    // Validar un token
+                    
+                    $validate = TokenAuth::validateToken($token);
+
+                    if ($validate["status"]===true) {
+                        echo "Token válido.";
+                        echo "Datos decodificados: ";
+                        print_r($validate["payload"]);
+                    } else {
+                        echo $validate["message"];
+                    }
+
+                }
+            }
+
+            <footer>app/controllers/HomeController.php</footer>
+        </div>
+
     </section>
 
 
@@ -283,7 +333,97 @@
 
     <section id="basededatos" class="section">
         <div class="title">Base de datos</div>
-        <p>Para conectarte a una base de datos desde tus modelos, debes hacer uso del paquete <span class="color-main">Core\Databases\DB</span> en tu modelo, como se ve a continuación.</p>
+
+        <p>La configuración inicial de tus bases de datos debes realizarla en el archivo <span class="color-main">.env</span>. En la propiedad <span class="color-main">DATABASES_DRIVER</span> debes colocar el driver de base de datos a utilizar en tu proyecto:</p>
+        <p>
+            <ul>
+                <li>Mysqli: Para uso únicamente de bases de datos MySQL</li>
+                <li>OCI: Para uso únicamente de bases de datos Oracle</li>
+                <li>PDO: Para uso de bases de datos MySQL y Oracle (Requiere el plugin PDO).</li>
+            </ul>
+        </p>
+
+        <div class="code">
+
+            // Driver a utilizar: Mysqli, OCI, PDO
+
+            DATABASES_DRIVER=Mysqli
+
+
+            // Conexiones 
+
+            DB_MYSQL_TYPE=mysql
+            DB_MYSQL_HOST=localhost
+            DB_MYSQL_USER=root
+            DB_MYSQL_PASSWORD=
+            DB_MYSQL_NAME=tinyapp
+
+            DB_ORACLE_TYPE=oracle
+            DB_ORACLE_HOST=localhost
+            DB_ORACLE_PORT=1521
+            DB_ORACLE_USER=root
+            DB_ORACLE_PASSWORD=
+            DB_ORACLE_SERVICE_NAME=
+
+            <footer>.env</footer>
+        </div>
+
+        <p>Si deseas agregar una conexión personalizada, por ejemplo llamada "databaseprod" y de tipo MySQL, debes definirla de la siguiente manera: </p>
+
+        <div class="code">
+            DB_MYSQL_TYPE=mysql
+            DB_MYSQL_HOST=localhost
+            DB_MYSQL_USER=root
+            DB_MYSQL_PASSWORD=
+            DB_MYSQL_NAME=tinyapp
+
+            DB_ORACLE_TYPE=oracle
+            DB_ORACLE_HOST=localhost
+            DB_ORACLE_PORT=1521
+            DB_ORACLE_USER=root
+            DB_ORACLE_PASSWORD=
+            DB_ORACLE_SERVICE_NAME=
+
+            // Mi configuración personalizada 'databaseprod'
+
+            DB_DATABASEPROD_TYPE=mysql
+            DB_DATABASEPROD_HOST=localhost
+            DB_DATABASEPROD_USER=userad
+            DB_DATABASEPROD_PASSWORD=12345
+            DB_DATABASEPROD_NAME=tinyapp
+
+            <footer>.env</footer>
+        </div>
+
+        <p>Una vez definida tu configuración de base de datos personalizada, debes usarla de esta manera para conectarte con ella:</p>
+
+        <div class="code">
+            namespace App\Models;
+
+            // Paquete para BD
+            use Core\Databases\DB; 
+
+            class User
+            {
+
+                public function single($id){
+
+                    // Debes pasar en init() el nombre de tu configuración personalizada
+                    $db = DB::init('databaseprod');
+                    return $db->db_select_row("SELECT * FROM users WHERE id=?", [ $id ]);
+
+                }
+
+            }
+        </div>
+
+        <div>
+        <p>Nota: Para conectarte a una base de datos desde tus modelos, debes hacer uso del paquete <span class="color-main">Core\Databases\DB</span> en tu modelo.</p>
+        
+        <br>
+        <span>EJEMPLOS CRUD</span>
+
+        <p>A continuación se presenta un CRUD de ejemplo con los drivers <span class="color-main">Mysqli</span> y <span class="color-main">PDO</span>.</p>
 
         <div class="code">
             namespace App\Models;
@@ -328,61 +468,7 @@
             <footer>app/models/User.php</footer>
         </div>
 
-
-        <p>La configuración de la base de datos debes realizarla en el archivo <span class="color-main">.env</span>. En este archivo en la propiedad DATABASES_DRIVER debes configurar el driver de base de datos a utilizar en tu proyecto:</p>
-        <p>
-            <ul>
-                <li>Mysqli: Para uso únicamente de BD MySQL</li>
-                <li>OCI: Para uso únicamente de BD Oracle</li>
-                <li>PDO: Para uso de BD MySQL y Oracle en el mismo proyecto.</li>
-            </ul>
-        </p>
-
-        <div class="code">
-            DB_MYSQL_TYPE=mysql
-            DB_MYSQL_HOST=localhost
-            DB_MYSQL_USER=root
-            DB_MYSQL_PASSWORD=
-            DB_MYSQL_NAME=tinyapp
-
-            DB_ORACLE_TYPE=oracle
-            DB_ORACLE_HOST=localhost
-            DB_ORACLE_PORT=1521
-            DB_ORACLE_USER=root
-            DB_ORACLE_PASSWORD=
-            DB_ORACLE_SERVICE_NAME=
-
-            <footer>.env</footer>
-        </div>
-
-        <p>Si deseas agregar una configuración personalizada, por ejemplo "databaseprod" y de tipo MySQL, debes definirla de la siguiente manera: </p>
-
-        <div class="code">
-            DB_MYSQL_TYPE=mysql
-            DB_MYSQL_HOST=localhost
-            DB_MYSQL_USER=root
-            DB_MYSQL_PASSWORD=
-            DB_MYSQL_NAME=tinyapp
-
-            DB_ORACLE_TYPE=oracle
-            DB_ORACLE_HOST=localhost
-            DB_ORACLE_PORT=1521
-            DB_ORACLE_USER=root
-            DB_ORACLE_PASSWORD=
-            DB_ORACLE_SERVICE_NAME=
-
-            // Mi configuración personalizada 'databaseprod'
-
-            DB_DATABASEPROD_TYPE=mysql
-            DB_DATABASEPROD_HOST=localhost
-            DB_DATABASEPROD_USER=userad
-            DB_DATABASEPROD_PASSWORD=12345
-            DB_DATABASEPROD_NAME=tinyapp
-
-            <footer>.env</footer>
-        </div>
-
-        <p>Una vez definida tu configuración de base de datos personalizada, debes usarla de esta manera para conectarte con ella:</p>
+        <p>Para el driver <span class="color-main">OCI</span> los parámetros se deben pasar de diferente manera:</p>
 
         <div class="code">
             namespace App\Models;
@@ -393,19 +479,21 @@
             {
 
                 public function single($id){
-
-                    // Debes pasar en init() el nombre de tu configuración personalizada
-                    $db = DB::init('databaseprod');
-                    return $db->db_select_row("SELECT * FROM users WHERE id=?", [ $id ]);
-
+                    $db = DB::init();
+                    return $db->db_select_row("SELECT * FROM users WHERE id = :id", [ "id" => $id ]);
                 }
 
-                ...
+                public function insert($name, $ocupation){
+                    $db = DB::init();
+                    $sql = "INSERT INTO users (name, ocupation) VALUES (:name, :ocupation)";
+                    return $db->db_insert($sql, [ "name" => $name, "ocupation" => $ocupation]);
+                }
 
             }
 
             <footer>app/models/User.php</footer>
         </div>
+
 
     </section>
 
@@ -419,8 +507,6 @@
 
         <div class="code">
             require_once './app/controllers/HomeController.php';
-
-            ...
 
 
             // Middleware "test"
@@ -761,7 +847,7 @@
         // Función para aplicar el resaltado de sintaxis
         function highlightPHPCode(code) {
 
-            const keywords = ['CREATE', 'DATABASE', 'INSERT', 'USE', 'TABLE', 'INTO', 'VALUES', 'public', 'class', 'STATUS_PROJECT', 'LOAD_SESSION', 'SESSION_ID', 'LOAD_UPLOAD_FILES', 'DATABASES_DRIVER', 'BASE_URL', 'use', 'namespace', 'array', 'View::get', 'require_once', 'Route::register', 'extends', 'input', 'set_errors', 'set_errors', 'back', 'File::upload', 'Validator::check', 'static', 'echo', 'if', 'else', 'for', 'while', 'return', 'function'];
+            const keywords = ['CREATE', 'DATABASE', 'INSERT', 'USE', 'TABLE', 'INTO', 'VALUES', 'public', 'class', 'STATUS_PROJECT', 'LOAD_SESSION', 'SESSION_ID', 'LOAD_UPLOAD_FILES', 'DATABASES_DRIVER', 'DB_MYSQL_TYPE', 'DB_MYSQL_HOST', 'DB_MYSQL_USER', 'DB_MYSQL_PASSWORD', 'DB_MYSQL_NAME', 'DB_ORACLE_TYPE', 'DB_ORACLE_HOST', 'DB_ORACLE_PORT', 'DB_ORACLE_USER', 'DB_ORACLE_PASSWORD', 'DB_ORACLE_PASSWORD', 'DB_ORACLE_SERVICE_NAME', 'DB_DATABASEPROD_TYPE', 'DB_DATABASEPROD_HOST', 'DB_DATABASEPROD_USER', 'DB_DATABASEPROD_PASSWORD', 'DB_DATABASEPROD_NAME', 'BASE_URL', 'use', 'namespace', 'array', 'View::get', 'require_once', 'Route::register', 'extends', 'input', 'set_errors', 'set_errors', 'back', 'File::upload', 'Validator::check', 'static', 'echo', 'if', 'else', 'for', 'while', 'return', 'function'];
             const keywordRegex = new RegExp(`\\b(${keywords.join('|')})\\b`, 'g');
             code = code.replace(keywordRegex, '<span class="keyword">$1</span>');
 
