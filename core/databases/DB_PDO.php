@@ -35,11 +35,11 @@ class DB extends DB_CONFIG
         return self::$instance;
     }
 
-    public function db_select_row($sql, $param){
+    public function db_select_row($sql, $param=null){
         return $this->db_select($sql, $param, false);
     }
 
-    public function db_select($sql, $param, $list = true){
+    public function db_select($sql, $param=null, $list = true){
         $stmt = $this->db->prepare($sql); 
         $stmt->execute($param);
         $result = ($list) ? $stmt->fetchAll(\PDO::FETCH_ASSOC) : $stmt->fetch(\PDO::FETCH_ASSOC);
