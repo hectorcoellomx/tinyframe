@@ -2,7 +2,7 @@ STATUS_PROJECT=dev
 BASE_URL=http://localhost/tinyapp/
 
 LOAD_SESSION=false
-SESSION_ID=your_secret_session_id_here
+SESSION_ID=your_session_id
 
 LOAD_UPLOAD_FILES=false
 
