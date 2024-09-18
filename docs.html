@@ -251,8 +251,7 @@
 
     <section id="basededatos" class="section">
         <div class="title">Base de datos</div>
-        <p>Para conectarte a la base de datos debes usar la librería <span
-                class="color-main">Core\Databases\DB</span>, como se ve a continuación.</p>
+        <p>Para conectarte a la base de datos debes usar la librería <span class="color-main">Core\Databases\DB</span>, como se ve a continuación.</p>
 
         <div class="code">
             namespace App\Models;
@@ -267,7 +266,12 @@
                     return $db->db_select_row("SELECT * FROM users WHERE id=?", [ $id ]);
                 }
 
-                public function list($status){
+                public function list(){
+                    $db = DB::getInstance();
+                    return $db->db_select("SELECT * FROM users");
+                }
+
+                public function list_by_status($status){
                     $db = DB::getInstance();
                     return $db->db_select("SELECT * FROM users WHERE status=?", [ $status ]);
                 }
