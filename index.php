@@ -28,7 +28,6 @@
         error_reporting(E_ALL);
     }
     
-    $tinyapp_test_url = $tinyapp_config->test_url;
     $tinyapp_nofound = false;
     $tinyapp_vars = null;
     $tinyapp_url_response = array();
@@ -43,7 +42,6 @@
     require './core/Validator.php';
     require './core/View.php';
 
-    
     if($tinyapp_config->load_upload_files){
         require './core/File.php';
     }
@@ -57,7 +55,5 @@
         include('./core/pages/nofound.php');
         exit;
     }
-
-    
 
 ?>

@@ -34,34 +34,25 @@ class Route
             }
         }
 
-        global $tinyapp_test_url;
-        
-        if ($tinyapp_test_url) {
-            $match = ($finally_route_pattern == $get_route && strtolower($_SERVER['REQUEST_METHOD']) == $type) ? '#77dd77' : '#ff6961';
-            echo "<div style='font-size: 15px;background-color: ".$match.";color: black;padding: 15px;margin-bottom: 2px;'>";
-            echo "<strong>" . strtoupper($type) . "</strong> " . $route_pattern  . "<br><br><strong>Comparar:</strong><br>" . $finally_route_pattern  . "<br>" . $get_route . " (URL)";
-            echo "</div>";
-        }else{
-            if ($finally_route_pattern == $get_route && strtolower($_SERVER['REQUEST_METHOD']) == $type) {
+        if ($finally_route_pattern == $get_route && strtolower($_SERVER['REQUEST_METHOD']) == $type) {
 
-                if (count($middlewares) > 0) {
-                    foreach ($middlewares as $middleware) {
-                        self::middleware($middleware);
-                    }
+            if (count($middlewares) > 0) {
+                foreach ($middlewares as $middleware) {
+                    self::middleware($middleware);
                 }
-    
-                $object = new $controller[0];
-                $method = $controller[1];
-                $object->$method();
-
-                DB::db_close();
-
-                exit;
-
-            } else {
-                global $tinyapp_nofound;
-                $tinyapp_nofound = true;
             }
+
+            $object = new $controller[0];
+            $method = $controller[1];
+            $object->$method();
+
+            DB::db_close();
+
+            exit;
+
+        } else {
+            global $tinyapp_nofound;
+            $tinyapp_nofound = true;
         }
         
     }
