@@ -24,7 +24,7 @@ class File
 
         //$validations['file_name'] = explode(",",  $validations['file_name']);
 
-        $size_aproveed = ( $fileSize >= $valid_max_size );
+        $size_aproveed = ( $valid_max_size == 0 || $fileSize <= $valid_max_size );
         $type_aproveed = $valid_types == [] || in_array($fileType, $valid_types);
 
         $error = "";
