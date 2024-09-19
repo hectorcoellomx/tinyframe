@@ -1,7 +1,7 @@
 <?php
 
-function redir($path="", $url=false){
-    if(!$url){
+function redir($path, $external=false){
+    if(!$external){
         global $tinyapp_config;
         header("Location: " . $tinyapp_config->base_url . $path);
         exit();

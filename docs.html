@@ -21,6 +21,7 @@
         <li><a href="#primerospasos">Primeros pasos</a></li>
         <li><a href="#rutas">Rutas</a></li>
         <li><a href="#controladores">Controladores</a></li>
+        <li><a href="#api">API Rest</a></li>
         <li><a href="#vistas">Vistas</a></li>
         <li><a href="#modelos">Modelos</a></li>
         <li><a href="#basededatos">Bases de datos</a></li>
@@ -146,6 +147,10 @@
 
             <footer>app/controllers/HomeController.php</footer>
         </div>
+
+        </section>
+        <section id="api" class="section">
+            <div class="title">Api Rest</div>
 
         <p>Para el uso de controladores para API Rest, se debe extender al controlador de "Response" para así poder dar respuestas tipo JSON como se ve a continuación.</p>
 
@@ -580,7 +585,7 @@
 
     <section id="sessions" class="section">
         <div class="title">Sesiones</div>
-        <p>Si deseas manejar sesiones en tu proyecto, debes activarlo desde el archivo .env poniendo true en LOAD_SESSION y agregando una clave/id de sesión personalizada.</p>
+        <p>Si deseas manejar sesiones en tu proyecto, debes activarlo desde el archivo <span class="color-main">.env</span> poniendo true en <span class="color-main">LOAD_SESSION</span> y agregando una clave/id de sesión personalizada.</p>
 
         <div class="code">
 
@@ -668,7 +673,7 @@
         </div>
 
     </section>
-    <p>La configuración para habilitar el almacenamiento de archivos ($load_upload_files) se realiza en <span class="color-main">app/Config.php</span></p>
+    <p>Para habilitar el almacenamiento de archivos debes poner "true" al valor de <span class="color-main">LOAD_UPLOAD_FILES</span> en el archivo <span class="color-main">.env</span></p>
 
     <section id="helpers" class="section">
         <div class="title">Helpers</div>
@@ -683,8 +688,45 @@
 
         </div>
 
-        <p>Para usar este modelo en un controlador, debes hacer un require_once del archivo ( require_once
-            './app/models/App.php'; ) y usarlo con <span class="color-main">use App\Models\App</span>.</p>
+        <p>Existen funciones helper que existen por defecto en el proyecto:</p>
+
+        <div class="code">
+
+            // Redireccionar a ruta local o externa
+            redir($path, $external=false)
+
+            // Redirecciona a ruta anterior
+            back()
+                
+            // Devuelve la versión del framework
+            get_version()
+
+            // Imprime un var_dump personalizado
+            vd($vars, $stop=true)
+
+            // Guardar errores temporales
+            set_errors($errors)
+            
+            // Obtener errores temporales
+            get_errors()
+            
+            // Devuelve el URL base del proyecto
+            base($add="")
+            
+            // Devuelve el URL de Assets del proyecto
+            assets($add="")
+            
+            // Recibir el valor de un parámetro recibido
+            input($name, $type="all")
+            
+            // Verificar si un parámetro está siendo recibido
+            exist_input($name)
+
+            // Recibe un parámetro JSON recibido
+            input_json()
+            
+            
+        </div>
     </section>
 
     <section id="librerias" class="section">
