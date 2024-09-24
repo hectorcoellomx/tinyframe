@@ -64,6 +64,13 @@ CREATE TABLE `collections` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `book_category` (
+  `book_id` VARCHAR(50) NOT NULL,
+  `category_id` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`book_id`,`category_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 CREATE TABLE `book_collection` (
   `book_id` VARCHAR(50) NOT NULL,
   `collection_id` INT(5) unsigned NOT NULL,
