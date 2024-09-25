@@ -13,28 +13,30 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:200',
             'email' => 'required|string|email|max:80|unique:users',
-            'type' => 'required|boolean'
+            'type' => 'required|in:0,1,2,3',
+            'last_access' => 'required|date',
         ]);
     
         if ($validator->fails()) {
             return response()->json([
                 "success" => false,
                 "message" => "Error en la validación",
-                "errors" => $validator->errors(),
-            ], 401);
+                'error' => [
+                'code' => 400,
+                        'message' => 'Error en la validación',
+                        'details' => $validator->errors()->first(),
+                        ]
+            ], 400);
         }
     
         try {
-
-            $last_access = User::Now();
-
             $validatedData = $validator->validated();
     
             $user = new User();
             $user->name = $validatedData['name'];
             $user->email = $validatedData['email'];
             $user->type = $validatedData['type'];
-            $user->last_access = $last_access;
+            $user->last_access = $validatedData['last_access'];
     
             if ($user->save()) {
                 return response()->json([
