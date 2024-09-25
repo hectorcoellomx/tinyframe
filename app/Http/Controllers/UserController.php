@@ -13,8 +13,7 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:200',
             'email' => 'required|string|email|max:80|unique:users',
-            'type' => 'required|boolean',
-            'last_access' => 'required|date',
+            'type' => 'required|boolean'
         ]);
     
         if ($validator->fails()) {
@@ -22,17 +21,20 @@ class UserController extends Controller
                 "success" => false,
                 "message" => "Error en la validación",
                 "errors" => $validator->errors(),
-            ], 422);
+            ], 401);
         }
     
         try {
+
+            $last_access = User::Now();
+
             $validatedData = $validator->validated();
     
             $user = new User();
             $user->name = $validatedData['name'];
             $user->email = $validatedData['email'];
             $user->type = $validatedData['type'];
-            $user->last_access = $validatedData['last_access'];
+            $user->last_access = $last_access;
     
             if ($user->save()) {
                 return response()->json([
