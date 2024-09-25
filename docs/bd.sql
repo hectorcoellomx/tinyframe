@@ -66,14 +66,16 @@ CREATE TABLE `collections` (
 
 CREATE TABLE `book_category` (
   `book_id` VARCHAR(50) NOT NULL,
-  `category_id` VARCHAR(50) NOT NULL,
+  `category_id` INT(3) NOT NULL,
+  FOREIGN KEY (`book_id`) REFERENCES `books`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (`category_id`) REFERENCES `categories`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   PRIMARY KEY (`book_id`,`category_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE `book_collection` (
   `book_id` VARCHAR(50) NOT NULL,
-  `collection_id` INT(5) unsigned NOT NULL,
+  `collection_id` INT(3) unsigned NOT NULL,
   FOREIGN KEY (`book_id`) REFERENCES `books`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (`collection_id`) REFERENCES `collections`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   PRIMARY KEY (`book_id`, `collection_id`)
