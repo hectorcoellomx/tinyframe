@@ -66,7 +66,7 @@ CREATE TABLE `collections` (
 
 CREATE TABLE `book_category` (
   `book_id` VARCHAR(50) NOT NULL,
-  `category_id` INT(3) NOT NULL,
+  `category_id` INT(3) unsigned NOT NULL,
   FOREIGN KEY (`book_id`) REFERENCES `books`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (`category_id`) REFERENCES `categories`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   PRIMARY KEY (`book_id`,`category_id`)
@@ -99,5 +99,5 @@ CREATE TABLE `ratings` (
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   FOREIGN KEY (`book_id`) REFERENCES `books`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  PRIMARY KEY (`book_id`, `user_id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
