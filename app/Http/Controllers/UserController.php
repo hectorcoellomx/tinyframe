@@ -16,6 +16,11 @@ class UserController extends Controller
             'type' => 'required|in:0,1,2,3',
             'last_access' => 'required|date',
         ]);
+
+        $validator->sometimes('email', 'regex:/^[a-zA-Z0-9._%+-]+@unach\.mx$/i', function ($input) {
+            return in_array($input->type, [1, 2, 3]);
+        });
+
     
         if ($validator->fails()) {
             return response()->json([
@@ -31,7 +36,8 @@ class UserController extends Controller
     
         try {
             $validatedData = $validator->validated();
-    
+            $validatedData ['email'] = strtolower($validatedData['email']);
+            
             $user = new User();
             $user->name = $validatedData['name'];
             $user->email = $validatedData['email'];

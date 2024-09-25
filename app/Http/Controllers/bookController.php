@@ -17,6 +17,7 @@ class bookController extends Controller
         $estanteria = $request->query('estanteria'),
         $masLeido = $request->query('mas_leido'),
         $keyword = $request->query('keyword'),
+
         ];
 
         $query = book::query();
