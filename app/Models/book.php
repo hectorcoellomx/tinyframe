@@ -10,7 +10,7 @@ class book extends Model
     use HasFactory;
     protected $table = 'books';
 
-    protected $fillable = ['title', 'cover_photo', 'description','file','year','keywords','status'];
+    protected $fillable = ['id','title', 'cover_photo', 'description','file','year','keywords','status'];
 
     public function categories()
     {
@@ -30,5 +30,10 @@ class book extends Model
     public function ratings()
     {
         return $this->hasMany(Rating::class, 'book_id');
+    }
+
+    public function progress()
+    {
+        return $this->hasMany(Progress::class, 'book_id');
     }
 }

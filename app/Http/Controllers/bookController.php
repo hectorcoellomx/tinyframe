@@ -34,13 +34,14 @@ class bookController extends Controller
                     break;
 
                 case 'most_read':
-                    $books->withCount('ratings')
-                        ->orderBy('ratings_count', 'desc');
-                    break;
-
+                                                  
+                break;
                 case 'keyword':
                     $books->where('keywords', 'LIKE', '%' . $value . '%');
                     break;
+                case 'title':
+                    $books->where('title', 'LIKE', '%' . $value . '%');
+                break;
             }
             
         }
