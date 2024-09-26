@@ -12,4 +12,23 @@ class book extends Model
 
     protected $fillable = ['title', 'cover_photo', 'description','file','year','keywords','status'];
 
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'book_category', 'book_id', 'category_id');
+    }
+
+    public function collections()
+    {
+        return $this->belongsToMany(Collection::class, 'book_collection', 'book_id', 'collection_id');
+    }
+
+    public function shelving()
+    {
+        return $this->hasMany(Shelving::class, 'book_id');
+    }
+
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class, 'book_id');
+    }
 }
