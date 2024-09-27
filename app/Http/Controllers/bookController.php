@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 class bookController extends Controller
 {
     public function book(Request $request){
+
         $filter = $request->query('filter');
         $value = $request->query('value');
         
@@ -34,14 +35,11 @@ class bookController extends Controller
                     break;
 
                 case 'most_read':
-                                                  
+                    
                 break;
-                case 'keyword':
+                case 'search':
                     $books->where('keywords', 'LIKE', '%' . $value . '%');
                     break;
-                case 'title':
-                    $books->where('title', 'LIKE', '%' . $value . '%');
-                break;
             }
             
         }
