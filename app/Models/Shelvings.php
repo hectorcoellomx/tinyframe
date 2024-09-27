@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Shelving extends Model
+class Shelvings extends Model
 {
     use HasFactory;
 
     protected $table = 'shelving';
+    public $timestamps = false;
 
     protected $fillable = ['book_id','user_id'];
     
