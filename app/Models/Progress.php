@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Container\Attributes\DB;
 
 class Progress extends Model
 {
@@ -11,7 +12,7 @@ class Progress extends Model
 
     protected $table = ['progress'];
 
-    protected $fillable  = ['bool_id', 'user_id','status','position'];
+    protected $fillable  = ['booK_id', 'user_id','status','position'];
 
     public function book()
     {

@@ -52,6 +52,8 @@ CREATE TABLE `progress` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+
 CREATE TABLE `categories` (
   `id` INT(3) unsigned NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(100) NOT NULL,

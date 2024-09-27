@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Book extends Model
 {
@@ -11,6 +12,9 @@ class Book extends Model
     protected $table = 'books';
 
     protected $fillable = ['id','title', 'cover_photo', 'description','file','year','keywords','status'];
+
+    public $incrementing = false;
+    protected $keyType = 'string';
 
     public function categories()
     {
@@ -34,6 +38,6 @@ class Book extends Model
 
     public function progress()
     {
-        return $this->hasMany(Progress::class, 'book_id');
+        return $this->hasMany(Progress::class, 'book_id', 'id');
     }
 }
