@@ -10,9 +10,10 @@ class Progress extends Model
 {
     use HasFactory;
 
-    protected $table = ['progress'];
+    protected $table = 'progress';
+    public $timestamps = false;
 
-    protected $fillable  = ['booK_id', 'user_id','status','position'];
+    protected $fillable = ['book_id','user_id','status','position'];
 
     public function book()
     {

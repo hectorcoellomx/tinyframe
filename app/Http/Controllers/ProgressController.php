@@ -8,48 +8,48 @@ use Illuminate\Support\Facades\Validator;
 
 class ProgressController extends Controller
 {
-    public function progressBook(Request $request){
+    public function store(Request $request){
 
        try{
             $validator = Validator::make($request->all(), [
                 'book_id' => 'required|string|max:50',
                 'user_id' => 'required|integer',
-                'status' => 'required|in:1,2',
+                'status' => 'required|integer|in:1,2',
                 'position' => 'required|integer|min:1|max:100',
             ]);
 
-            if ($validator->fails()) {
+            if ($validator->failed()) { // Cambiado a fails()
                 return response()->json([
                     "success" => false,
-                    "message" => "Error en la validación",
-                    'error' => [
-                    'code' => 400,
-                            'message' => 'Error en la validación',
-                            'details' => $validator->errors()->first(),
-                            ]
+                    "message" => "Error de validación",
+                    "error" => [
+                        'code' => 400,
+                        'message' => 'Error de validación',
+                        'details' => $validator->errors()->first(), // Corregido 'datails' a 'details'
+                    ]
                 ]);
             }
-            $progress = new Progress();
-            $progress->book_id = $request->book_id;
-            $progress->user_id = $request->user_id;
-            $progress->status = $request->status;
-            $progress->position = $request->position;
+                $advance = new Progress();
+                $advance->book_id  = $request->book_id;
+                $advance->user_id = $request->user_id;
+                $advance->status = $request->status;
+                $advance->position = $request->position;
+                $advance->save();
 
-           if($progress->save())
+        
+            if($advance->save())
            {
-            return response()->json([
-                'success' => true,
-                'data' => $progress,
-                'message' => 'OK'
-            ]);
-           }else
-           {
-            return response()->json([
-                'sucess' => false,
-                "data" => null,
-                "message" => 'No es posible guardar progreso'
-            ]);
-           }
+                return response()->json([
+                    "success" => true,
+                    "message" => 'OK',
+                    "data" => $advance
+                ]);
+           }else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error saving progress record',
+                ], 500);
+            }
 
         }catch (\Exception $e) {
             return response()->json([
@@ -61,7 +61,41 @@ class ProgressController extends Controller
                     'details' => $e->getMessage(),
                 ]
             ], 500);
-            }
+        }
     }
-    
+
+    public function update(Request $request, $id)
+    {
+        try{
+            $advance = Progress::findOrFail($id);
+
+            $validator = Validator::make($request->all(), [
+                'book_id' => 'required|string|max:50',
+                'user_id' => 'required|integer',
+                'status' => 'required|integer|in:1,2',
+                'position' => 'required|integer|min:1|max:100',
+            ]);
+            if ($validator->fails()) {
+                return response()->json([
+                    "success" => false,
+                    "message" => "Error de validación",
+                    "errors" => $validator->errors()
+                ], 400);
+            }
+            $advance->update($request->all());
+
+            return response()->json([
+                "success" => true,
+                "message" => "Registro actualizado correctamente",
+                "data" => $advance
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                "success" => false,
+                "message" => "Ocurrió un error",
+                "error" => $e->getMessage()
+            ], 500);
+        }
+    }    
 }

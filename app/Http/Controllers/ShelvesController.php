@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Validator;
 
 class ShelvesController extends Controller
 {
-    // protected $fillable = ['book_id','user_id'];
     public function store(Request $request){
     
         try{
@@ -16,6 +15,8 @@ class ShelvesController extends Controller
                 'book_id' => 'required|string|max:50',
                 'user_id' => 'required|integer',
             ]);
+            dd($request->all());
+
 
             if($validator->failed()){
                 return response()->json([
@@ -32,7 +33,8 @@ class ShelvesController extends Controller
             $Shelve->book_id = $request->book_id;
             $Shelve->user_id = $request->user_id;
 
-            if($Shelve->save()){
+            if($Shelve->save())
+            {
                 return response()->json([
                     "success" => true,
                     "message" => "OK",
