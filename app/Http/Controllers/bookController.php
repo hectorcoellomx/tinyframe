@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Models\Progress;
+use App\Models\Rating;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -77,12 +78,12 @@ class bookController extends Controller
                 return response()->json([
                     "success" => false,
                     "data" => null,
-                    'message' => "Parámetros inválidos",
+                    'message' => "Invalid params",
                     'error' => [
-                        'code' => 401,
+                        'code' => 400,
                         'details' => "Invalid params",
                     ]
-                ], 401);
+                ], 400);
 
             }
 
@@ -93,11 +94,37 @@ class bookController extends Controller
                 'message' => "Ha ocurrido un error inesperado",
                 'error' => [
                     'code' => $e->getCode(),
+                    'message' => 'Error del servidor',
                     'details' => $e->getMessage(),
                 ]
             ], 500);
         }
        
     }
+
+    public function show($id, $user_id)
+    {
+
+        $averageData = Book::average($id, $user_id);
+
+        if (!$averageData -> isEmpty()) {
+            return response()->json([
+                "success" => true,
+                'message' => 'OK',
+                "data"=> $averageData
+            ],200);
+        } 
+
+        return response()->json([
+            "success" => false,
+            "message" => "Ha ocurrido un error inesperado",
+            'error' => [
+                    'code' => 404,
+                    'message' => 'data does not exist',
+                    'details' => $averageData->errors()->first(),
+                    ]
+            ], 404);
+    }
     
 }
+

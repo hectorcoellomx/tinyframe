@@ -20,12 +20,12 @@ class CategoryController extends Controller
             return response()->json([
                 "success" => false,
                 "data" => null,
-                'message' => "No existe datos",
+                'message' => "No data available",
                 'error' => [
-                    'code' => 401,
-                    'details' => "No existe datos",
+                    'code' => 404,
+                    'details' => "No data available",
                 ]
-            ], 401);
+            ], 404);
         }
     }
 }

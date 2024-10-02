@@ -25,9 +25,10 @@ class UserController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 "success" => false,
+                "data"=> null,
                 "message" => "Error en la validación",
                 'error' => [
-                'code' => 400,
+                        'code' => 400,
                         'message' => 'Error en la validación',
                         'details' => $validator->errors()->first(),
                         ]
@@ -47,8 +48,8 @@ class UserController extends Controller
                 return response()->json([
                     'success' => true,
                     'data'=> $user,
-                    'message' => 'New session'
-                ], 200);
+                    'message' => 'OK'
+                ], 201);
             } else {
                 $user = new User();
                 $user->name = $validatedData['name'];
@@ -60,13 +61,18 @@ class UserController extends Controller
                     return response()->json([
                         "success" => true,
                         "data" => $user,
-                        'message' => 'Usuario creado correctamente',
+                        'message' => 'OK',
                     ], 201);
                 } else {
                     return response()->json([
                         "success" => false,
                         "data" => null,
-                        'message' => 'No se pudo crear el usuario',
+                        'message' => 'Ha ocurrido un error inesperado',
+                        'error' => [
+                                'code' => 500,
+                                'message' => 'No se ha creado el usuario',
+                                'details' => "Error del servidor",
+                        ]
                     ], 500);
                 }
             }

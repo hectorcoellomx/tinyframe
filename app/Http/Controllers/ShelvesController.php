@@ -15,19 +15,18 @@ class ShelvesController extends Controller
                 'book_id' => 'required|string|max:50',
                 'user_id' => 'required|integer',
             ]);
-            dd($request->all());
-
 
             if($validator->failed()){
                 return response()->json([
                     "success" => false,
+                    "data" => null,
                     "message" => "Error de validación",
                     "error" => [
-                        'code' => 400,
+                            'code' => 400,
                             'message' => 'Error de validación',
                             'datails'=> $validator->errors()->first(),
                     ]
-                    ]);
+                ], 400);
             }
             $Shelve = new Shelvings();
             $Shelve->book_id = $request->book_id;
@@ -42,7 +41,6 @@ class ShelvesController extends Controller
                 ]);
             }
     
-            
         }catch (\Exception $e) {
             return response()->json([
                 "success" => false,
@@ -50,6 +48,7 @@ class ShelvesController extends Controller
                 'message' => "Ha ocurrido un error inesperado",
                 'error' => [
                     'code' => $e->getCode(),
+                    'message' => 'server error',
                     'details' => $e->getMessage(),
                 ]
             ], 500);

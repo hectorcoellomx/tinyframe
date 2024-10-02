@@ -21,6 +21,7 @@ class ProgressController extends Controller
             if ($validator->failed()) { // Cambiado a fails()
                 return response()->json([
                     "success" => false,
+                    "data" => null,
                     "message" => "Error de validación",
                     "error" => [
                         'code' => 400,
@@ -46,8 +47,14 @@ class ProgressController extends Controller
                 ]);
            }else {
                 return response()->json([
-                    'success' => false,
-                    'message' => 'Error saving progress record',
+                    "success" => false,
+                    "data"=> null,
+                    "message" => "Error del servidor",
+                    'error' => [
+                            'code' => 500,
+                            'message' => 'server error',
+                            'details' => $validator->errors()->first(),
+                            ]
                 ], 500);
             }
 
@@ -58,6 +65,7 @@ class ProgressController extends Controller
                 'message' => "Ha ocurrido un error inesperado",
                 'error' => [
                     'code' => $e->getCode(),
+                    'message' => 'server error',
                     'details' => $e->getMessage(),
                 ]
             ], 500);
@@ -78,6 +86,7 @@ class ProgressController extends Controller
             if ($validator->fails()) {
                 return response()->json([
                     "success" => false,
+                    "data" => null,
                     "message" => "Error de validación",
                     "errors" => $validator->errors()
                 ], 400);
@@ -93,8 +102,13 @@ class ProgressController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 "success" => false,
-                "message" => "Ocurrió un error",
-                "error" => $e->getMessage()
+                "data" => null,
+                'message' => "Ha ocurrido un error inesperado",
+                'error' => [
+                    'code' => $e->getCode(),
+                    'message' => 'server error',
+                    'details' => $e->getMessage(),
+                ]
             ], 500);
         }
     }    

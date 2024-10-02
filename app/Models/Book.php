@@ -16,6 +16,19 @@ class Book extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
+    public static function average($id, $user_id)
+    {
+         // Usar el query builder para construir la consulta SQL
+        return DB::table('ratings as r')
+        ->join('progress as p', 'r.book_id', '=', 'p.book_id')  // Inner join de ratings y progress
+        ->join('users as u', 'u.id', '=', 'r.user_id')          // Inner join de ratings y users
+        ->select('r.point', 'p.position', 'u.id')               // Seleccionamos los campos deseados
+        ->where('r.book_id', $id)                           // Filtramos por el libro
+        ->where('u.id', $user_id)                                // Filtramos por el usuario
+        ->get();                                                // Obtener los resultados
+
+    }
+
     public function categories()
     {
         return $this->belongsToMany(Category::class, 'book_category', 'book_id', 'category_id');
@@ -28,7 +41,7 @@ class Book extends Model
 
     public function shelving()
     {
-        return $this->hasMany(Shelving::class, 'book_id');
+        return $this->hasMany(Shelvings::class, 'book_id');
     }
 
     public function ratings()
