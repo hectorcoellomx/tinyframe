@@ -16,6 +16,16 @@ class Book extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
+    public static function most_read()
+    {
+        return DB::table('books')
+        ->join('progress', 'progress.book_id', '=', 'books.id')
+        ->select('books.*', DB::raw('COUNT(progress.id) as total'))
+        ->groupBy('books.id')
+        ->orderBy('total', 'desc')
+        ->get();
+    }
+
     public static function average($id, $user_id)
     {
          // Usar el query builder para construir la consulta SQL
@@ -26,7 +36,6 @@ class Book extends Model
         ->where('r.book_id', $id)                           // Filtramos por el libro
         ->where('u.id', $user_id)                                // Filtramos por el usuario
         ->get();                                                // Obtener los resultados
-
     }
 
     public function categories()

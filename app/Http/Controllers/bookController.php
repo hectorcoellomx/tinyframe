@@ -44,13 +44,7 @@ class bookController extends Controller
                         break;
     
                     case 'most_read':
-                        $result = DB::table('books')
-                        ->join('progress', 'progress.book_id', '=', 'books.id')
-                        ->select('books.*', DB::raw('COUNT(progress.id) as total'))
-                        ->groupBy('books.id')
-                        ->orderBy('total', 'desc')
-                        ->get();
-                        break;
+                        $result = Book::most_read();
                     case 'search':
                         $keywords = explode(' ', trim($value)); // Dividir el valor en palabras con la funcion explode eliminando espacios en blanco
 
