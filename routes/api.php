@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
 // })->middleware('auth:sanctum');
+Route::post('/v1/users', [UserController::class, 'store']);
 
 Route::get('/v1/books',[bookController::class, 'book']);
 Route::get('/v1/categories/',[CategoryController::class, 'category']);
@@ -24,7 +25,6 @@ Route::post('/v1/ratings/{id}',[RatingController::class, 'store']);
 Route::get('/v1/ratings/{id}',[RatingController::class, 'show']);
 Route::get('/v1/books/{id}/{user_id}',[bookController::class, 'show']);
 
-Route::post('/v1/users', [UserController::class, 'store']);
 
 // Route::group([
 //     'middleware' => 'api',
