@@ -34,8 +34,8 @@ class Book extends Model
         ->join('users as u', 'u.id', '=', 'r.user_id')          // Inner join de ratings y users
         ->select('r.point', 'p.position', 'u.id')               // Seleccionamos los campos deseados
         ->where('r.book_id', $id)                           // Filtramos por el libro
-        ->where('u.id', $user_id)                                // Filtramos por el usuario
-        ->get();                                                // Obtener los resultados
+        ->where('u.id', $user_id)
+        ->first();
     }
 
     public function categories()

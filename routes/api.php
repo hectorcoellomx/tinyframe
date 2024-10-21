@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/v1/books',[bookController::class, 'book']);
 Route::get('/v1/categories/',[CategoryController::class, 'category']);
 Route::get('/v1/collections/',[CollectionController::class, 'collection']);
-
 Route::post('/v1/progress/',[ProgressController::class, 'store']);
 Route::patch('/v1/progress/{id}',[ProgressController::class, 'update']);
 Route::post('/v1/shelves/',[ShelvesController::class, 'store']);

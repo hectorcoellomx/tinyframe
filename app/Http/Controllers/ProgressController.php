@@ -75,7 +75,8 @@ class ProgressController extends Controller
     public function update(Request $request, $id)
     {
         try{
-            $advance = Progress::findOrFail($id);
+            $advance = Progress::where('book_id', $id)->firstOrFail();
+            // $advance = Progress::findOrFail($id);
 
             $validator = Validator::make($request->all(), [
                 'book_id' => 'required|string|max:50',

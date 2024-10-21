@@ -8,6 +8,8 @@ use App\Models\Rating;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use function Laravel\Prompts\error;
+
 class bookController extends Controller
 {
     public function book(Request $request)
@@ -99,9 +101,11 @@ class bookController extends Controller
     public function show($id, $user_id)
     {
 
+        try{
+
         $averageData = Book::average($id, $user_id);
 
-        if (!$averageData -> isEmpty()) {
+        if ($averageData) {
             return response()->json([
                 "success" => true,
                 'message' => 'OK',
@@ -111,13 +115,24 @@ class bookController extends Controller
 
         return response()->json([
             "success" => false,
-            "message" => "Ha ocurrido un error inesperado",
+            "message" => "Ha ocurrido un error",
             'error' => [
                     'code' => 404,
                     'message' => 'data does not exist',
-                    'details' => $averageData->errors()->first(),
+                    'details' => 'data does not exist',
                     ]
             ], 404);
+        }catch(\Exception $e){
+            return response()->json([
+                "success" => false,
+                "message" => "Ha ocurrido un error inesperado",
+                'error' => [
+                    'code' => 500,
+                    'message' => 'Error interno del servidor',
+                    'details' => $e->getMessage(), 
+                ]
+            ], 500);
+        }
     }
     
 }
