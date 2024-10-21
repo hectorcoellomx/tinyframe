@@ -10,46 +10,46 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class UserController extends Controller
 {
-    public function login(Request $request)
-    {
-        $credentials = $request->only(['name','email']);
+    // public function login(Request $request)
+    // {
+    //     $credentials = $request->only(['name','email']);
 
-        $user = User::where('name', $credentials['name'])
-                    ->where('email', $credentials['email'])
-                    ->first();
+    //     $user = User::where('name', $credentials['name'])
+    //                 ->where('email', $credentials['email'])
+    //                 ->first();
 
-        if(! $user) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
-        $token = JWTAuth::fromUser($user);
-        return $this->respondWithToken($token);
-    }
-    public function me()
-    {
-        $user = JWTAuth::parseToken()->authenticate();
+    //     if(! $user) {
+    //         return response()->json(['error' => 'Unauthorized'], 401);
+    //     }
+    //     $token = JWTAuth::fromUser($user);
+    //     return $this->respondWithToken($token);
+    // }
+    // public function me()
+    // {
+    //     $user = JWTAuth::parseToken()->authenticate();
 
-        return response()->json($user);
-    }
+    //     return response()->json($user);
+    // }
 
-    public function logout()
-    {
-        Auth::logout();
-        return response()->json(['message' => 'Successfully logged out']);
-    }
+    // public function logout()
+    // {
+    //     Auth::logout();
+    //     return response()->json(['message' => 'Successfully logged out']);
+    // }
 
-    public function refresh()
-    {
-        return $this->respondWithToken (Auth::refresh());
-    }
+    // public function refresh()
+    // {
+    //     return $this->respondWithToken (Auth::refresh());
+    // }
 
-    protected function respondWithToken($token)
-    {
-        return response()->json([
-            'token_type' => 'bearer',
-            'access_token'=> $token,
-            'expires_in' => Auth::factory()->getTTL() * 60
-        ]);
-    }
+    // protected function respondWithToken($token)
+    // {
+    //     return response()->json([
+    //         'token_type' => 'bearer',
+    //         'access_token'=> $token,
+    //         'expires_in' => Auth::factory()->getTTL() * 60
+    //     ]);
+    // }
 
     public function store(Request $request)
     {

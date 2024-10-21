@@ -24,12 +24,14 @@ Route::post('/v1/ratings/{id}',[RatingController::class, 'store']);
 Route::get('/v1/ratings/{id}',[RatingController::class, 'show']);
 Route::get('/v1/books/{id}/{user_id}',[bookController::class, 'show']);
 
-Route::group([
-    'middleware' => 'api',
-    'prefix' => 'auth'
-], function($router){
-    Route::post('/v1/users', [UserController::class, 'store']);
-    Route::post('/v1/users/login', [UserController::class, 'login']);
-    Route::post('/v1/users/refresh', [UserController::class, 'refresh']);
-    Route::post('/v1/users/me', [UserController::class, 'me']);
-});
+Route::post('/v1/users', [UserController::class, 'store']);
+
+// Route::group([
+//     'middleware' => 'api',
+//     'prefix' => 'auth'
+// ], function($router){
+//     Route::post('/v1/users', [UserController::class, 'store']);
+//     Route::post('/v1/users/login', [UserController::class, 'login']);
+//     Route::post('/v1/users/refresh', [UserController::class, 'refresh']);
+//     Route::post('/v1/users/me', [UserController::class, 'me']);
+// });
