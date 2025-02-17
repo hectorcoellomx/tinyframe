@@ -28,4 +28,9 @@ class CategoryController extends Controller
             ], 404);
         }
     }
+
+    public function show (){
+        return view('categories.show');
+    }
+
 }

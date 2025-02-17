@@ -51,6 +51,10 @@ class UserController extends Controller
     //     ]);
     // }
 
+    public function show(){
+        return view('users.show');
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [

@@ -12,6 +12,7 @@ use function Laravel\Prompts\error;
 
 class bookController extends Controller
 {
+    
     public function book(Request $request)
     {
         try {
@@ -133,6 +134,12 @@ class bookController extends Controller
                 ]
             ], 500);
         }
+    }
+    public function create(){
+        return view('books.create');
+    }
+    public function ver(){
+        return view('books.show');
     }
     
 }

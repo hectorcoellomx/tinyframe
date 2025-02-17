@@ -7,11 +7,6 @@
     <title>Libros</title>
 </head>
 <body>
-    <x-Navbar>
-
-    </x-Navbar>
-    <x-Table>
-        
-    </x-Table>
+    
 </body>
 </html>
