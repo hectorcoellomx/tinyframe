@@ -51,8 +51,17 @@ class UserController extends Controller
     //     ]);
     // }
 
-    public function show(){
-        return view('users.show');
+    // Mostrar listado de usuarios
+    public function index()
+    {
+        $users = User::all();
+        return view('users.index', compact('users'));
+    }
+
+    // Mostrar formulario para crear un usuario
+    public function create()
+    {
+        return view('users.create');
     }
 
     public function store(Request $request)
