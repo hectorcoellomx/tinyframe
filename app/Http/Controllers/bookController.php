@@ -138,6 +138,10 @@ class bookController extends Controller
     public function create(){
         return view('books.create');
     }
+    public function index(){
+        $books = Book::all(); // Obtener todos los libros
+        return view('books.index', compact('books'));
+    }
     public function ver(){
         return view('books.show');
     }
