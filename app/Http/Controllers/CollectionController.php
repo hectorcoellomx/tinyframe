@@ -32,4 +32,16 @@ class CollectionController extends Controller
 
         }
     }
+
+    public function create(){
+        return view('collections.create');
+    }
+
+    public function index(){
+        return view('collections.index');
+    }
+
+    public function show(){
+        return view('collections.show');
+    }
 }
