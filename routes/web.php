@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\bookController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\LibraryController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -15,10 +17,22 @@ Route::get('/books',function(){
     return view('layouts.books');
 });
 
-Route::get('/users/show',[UserController::class, 'show']);
+Route::get('/users/index',[UserController::class, 'index']);
+Route::get('users/create',[UserController::class, 'create']);
 
-Route::put('/books/create',[bookController::class, 'create']);
+Route::get('/books/create',[bookController::class, 'create']);
+Route::get('/books/index',[bookController::class, 'index']);
 Route::get('/books/show',[bookController::class, 'ver']);
 
+Route::get('/categories/create',[CategoryController::class, 'create']);
+Route::get('/categories/index',[CategoryController::class, 'index']);
 Route::get('/categories/show',[CategoryController::class, 'show']);
+
+Route::get('/authors/create',[AuthorController::class, 'create']);
+Route::get('/authors/index',[AuthorController::class, 'index']);
+Route::get('/authors/show',[AuthorController::class, 'show']);
+
+Route::get('/collections/create',[CollectionController::class, 'create']);
+Route::get('/collections/index',[CollectionController::class, 'index']);
+Route::get('/collections/show',[CollectionController::class, 'show']);
 
