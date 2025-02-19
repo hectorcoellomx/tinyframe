@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\bookController;
 use App\Http\Controllers\CategoryController;
@@ -12,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/',function(){
     return view('layouts.app');
 });
+
+Route::get('/login',[AuthController::class, 'login']);
 
 Route::get('/books',function(){
     return view('layouts.books');
