@@ -5,7 +5,7 @@
 @section('content')
     <div class="container">
         <h2>Listado de Libros</h2>
-        <a class="btn btn-primary mb-3">Agregar Libro</a>
+        <a href="/books/create" class="btn btn-primary mb-3">Agregar Libro</a>
 
         @if(session('success'))
             <div class="alert alert-success">
