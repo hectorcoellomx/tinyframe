@@ -25,31 +25,31 @@
 
     <!-- Nav Item - Gestor de Libros -->
     <li class="nav-item" >
-        <a class="nav-link">
+        <a href="/users/index" class="nav-link">
             <i class="fas fa-fw fa-book"></i>
             <span>Usuarios</span>
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link">
+        <a href="/books/index" class="nav-link">
             <i class="fas fa-fw fa-book"></i>
             <span>Libros</span>
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link">
+        <a href="/categories/index" class="nav-link">
             <i class="fas fa-fw fa-book"></i>
             <span>Categorias</span>
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link">
+        <a href="/authors/index" class="nav-link">
             <i class="fas fa-fw fa-book"></i>
             <span>Autores</span>
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link">
+        <a href="/collections/index" class="nav-link">
             <i class="fas fa-fw fa-book"></i>
             <span>Colecciones</span>
         </a>
