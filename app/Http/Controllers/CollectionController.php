@@ -38,7 +38,8 @@ class CollectionController extends Controller
     }
 
     public function index(){
-        return view('collections.index');
+        $collections = Collection::all();
+        return view('collections.index', compact('collections'));
     }
 
     public function show(){
