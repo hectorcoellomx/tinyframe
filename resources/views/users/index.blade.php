@@ -18,24 +18,24 @@
                 </tr>
             </thead>
             <tbody>
-                {{-- @foreach($users as $user)
+                @foreach($users as $user)
                     <tr>
                         <td>{{ $user->id }}</td>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
-                        <td>{{ $user->phone }}</td>
-                        <td>{{ $user->location }}</td>
-                        <td>{{ $user->hobby }}</td>
-                        <td>
+                        <td>{{ $user->type }}</td>
+                        <td>{{ $user->last_acces }}</td>
+                        <td>{{ $user->created_at }}</td>
+                        {{-- <td>
                             <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning btn-sm">Editar</a>
                             <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display: inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                             </form>
-                        </td>
+                        </td> --}}
                     </tr>
-                @endforeach --}}
+                @endforeach
             </tbody>
         </table>
     </div>
