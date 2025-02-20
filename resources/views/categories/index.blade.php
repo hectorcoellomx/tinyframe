@@ -16,30 +16,25 @@
         <table class="table">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Nombre</th>
-                    {{-- <th>Título</th>
-                    <th>Descripción</th>
-                    <th>Año</th>
-                    <th>Acciones</th> --}}
                 </tr>
             </thead>
             <tbody>
-                {{-- @foreach($categories as $category)
+                @foreach($categories as $category)
                     <tr>
-                        <td>{{ $book->id }}</td>
-                        <td>{{ $book->title }}</td>
-                        <td>{{ $book->description }}</td>
-                        <td>{{ $book->year }}</td>
+                        <td>{{ $category->id }}</td>
+                        <td>{{ $category->name }}</td>
                         <td>
-                            <a href="{{ route('books.edit', $book->id) }}" class="btn btn-warning btn-sm">Editar</a>
+                            {{-- <a href="{{ route('books.edit', $book->id) }}" class="btn btn-warning btn-sm">Editar</a>
                             <form action="{{ route('books.destroy', $book->id) }}" method="POST" style="display: inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-                            </form>
+                            </form> --}}
                         </td>
                     </tr>
-                @endforeach --}}
+                @endforeach
             </tbody>
         </table>
     </div>

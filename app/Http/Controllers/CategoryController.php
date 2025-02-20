@@ -33,7 +33,8 @@ class CategoryController extends Controller
         return view('categories.create');
     }
     public function index(){
-        return view('categories.index');
+        $categories = Category::all();
+        return view('categories.index', compact('categories'));
     }
     public function show (){
         return view('categories.show');
