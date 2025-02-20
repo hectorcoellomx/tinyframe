@@ -5,7 +5,7 @@
 @section('content')
     <div class="container">
         <h2>Listado de Usuarios</h2>
-        <a class="btn btn-primary mb-3">Agregar Usuario</a>
+        {{-- <a class="btn btn-primary mb-3">Agregar Usuario</a> --}}
 
         <table class="table">
             <thead>
@@ -13,10 +13,8 @@
                     <th>ID</th>
                     <th>Nombre</th>
                     <th>Email</th>
-                    <th>Teléfono</th>
-                    <th>Ubicación</th>
-                    <th>Hobby</th>
-                    <th>Acciones</th>
+                    <th>Tipo de cuenta</th>
+                    <th>Ultimo acceso</th>
                 </tr>
             </thead>
             <tbody>
