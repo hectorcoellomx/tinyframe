@@ -15,6 +15,7 @@
                     <th>Email</th>
                     <th>Tipo de cuenta</th>
                     <th>Ultimo acceso</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -24,8 +25,8 @@
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->type }}</td>
-                        <td>{{ $user->last_acces }}</td>
-                        <td>{{ $user->created_at }}</td>
+                        <td>{{ $user->last_access }}</td>
+                    
                         {{-- <td>
                             <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning btn-sm">Editar</a>
                             <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display: inline;">
