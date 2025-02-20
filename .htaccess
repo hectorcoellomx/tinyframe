@@ -6,6 +6,9 @@ Options All -Indexes
     deny from all
 </files>
 
+#RewriteCond %{REQUEST_URI} ^/admin/$
+#RewriteRule ^$ index.php?route=index.php [QSA,L]
+
 RewriteCond %{REQUEST_URI} !assets/([0-9a-zA-Z-_@./]+)$
 RewriteCond %{REQUEST_URI} !upload/([0-9a-zA-Z-_@./]+)$
 
