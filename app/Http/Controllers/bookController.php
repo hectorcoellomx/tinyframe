@@ -142,8 +142,11 @@ class bookController extends Controller
         $books = Book::all(); // Obtener todos los libros
         return view('books.index', compact('books'));
     }
-    public function ver(){
-        return view('books.show');
+    public function ver($book){
+
+        $book = Book::find($book);
+        //return $book;
+        return view('books.show',compact('book'));
     }
     
 }
