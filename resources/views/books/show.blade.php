@@ -1,28 +1,30 @@
 @extends('layouts.app') <!-- Extiende el layout principal -->
 
-@section('title', 'Listado de Usuarios') <!-- Define el título de la página -->
+@section('title', 'Listado de Libros') <!-- Define el título de la página -->
 
 @section('content') <!-- Define el contenido dinámico -->
     <div class="container">
         <h2>Listado de Libros</h2>
+        <a href="/books" class="btn btn-primary mb-3">Volver</a>
         <table class="table">
             <thead>
                 <tr>
                     <th>Titulo</th>
                     <th>Descripcion</th>
-                    <th>Anio</th>
+                    <th>Año</th>
                     <th>Status</th>
                 </tr>
             </thead>
-            {{-- <tbody>
-                @foreach($users as $user)
+            <tbody>
+               
                     <tr>
-                        <td>{{ $user->id }}</td>
-                        <td>{{ $user->name }}</td>
-                        <td>{{ $user->email }}</td>
+                        <td>{{ $book->title }}</td>
+                        <td>{{ $book->description }}</td>
+                        <td>{{ $book->year }}</td>
+                        <td>{{ $book->status }}</td>
                     </tr>
-                @endforeach
-            </tbody> --}}
+               
+            </tbody>
         </table>
     </div>
 @endsection

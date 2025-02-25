@@ -13,7 +13,16 @@
             </div>
         @endif
 
-        <table class="table">
+        <ul>
+            @foreach($books as $book)
+                <li>
+                    <a href="/books/{{$book -> id}}">{{$book -> title}}</a>
+                </li>
+
+            @endforeach
+        </ul>
+
+        {{-- <table class="table">
             <thead>
                 <tr>
                     <th>Id</th>
@@ -40,10 +49,10 @@
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                             </form>
-                        </td> --}}
+                        </td> }}
                     </tr>
                 @endforeach
             </tbody>
-        </table>
+        </table> --}}
     </div>
 @endsection
