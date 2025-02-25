@@ -24,8 +24,9 @@ Route::get('/users/index',[UserController::class, 'index']);
 Route::get('users/create',[UserController::class, 'create']);
 
 Route::get('/books/create',[bookController::class, 'create']);
-Route::get('/books/index',[bookController::class, 'index']);
-Route::get('/books/show',[bookController::class, 'ver']);
+Route::get('/books',[bookController::class, 'index']);
+Route::get('/books/{book}',[bookController::class, 'ver']);
+Route::post('/books',[bookController::class, 'store']);
 
 Route::get('/categories/create',[CategoryController::class, 'create']);
 Route::get('/categories/index',[CategoryController::class, 'index']);
