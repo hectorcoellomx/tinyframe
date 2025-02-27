@@ -42,7 +42,8 @@ class CollectionController extends Controller
         return view('collections.index', compact('collections'));
     }
 
-    public function show(){
-        return view('collections.show');
+    public function show($collection){
+        $collection = Collection::find($collection);
+        return view('collections.show', compact('collection'));
     }
 }
