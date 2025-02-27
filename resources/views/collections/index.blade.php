@@ -18,6 +18,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Nombre</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,6 +27,12 @@
                         {{-- <td>{{ $collection->id }}</td> --}}
                         <td>{{ $collection->id }}</td>
                         <td>{{ $collection->name }}</td>
+                        <td>
+                            <a href="/collections/{{$collection -> id}}" class="btn btn-warning mb-3">Editar</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-danger mb-3">Eliminar</a>
+                        </td>
                         {{-- <td>
                             <a href="{{ route('books.edit', $book->id) }}" class="btn btn-warning btn-sm">Editar</a>
                             <form action="{{ route('books.destroy', $book->id) }}" method="POST" style="display: inline;">
