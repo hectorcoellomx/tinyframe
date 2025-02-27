@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Collection;
 use App\Models\Progress;
 use App\Models\Rating;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 use function Laravel\Prompts\error;
 
@@ -136,7 +138,43 @@ class bookController extends Controller
         }
     }
     public function create(){
-        return view('books.create');
+        $collections = Collection::all();
+        return view('books.create',compact('collections'));
+    }
+    public function store (Request $request){
+        
+        $request->validate([
+            'title' => 'required|string|max:200',
+            'cover_photo' => 'required|image|mimes:jpeg,png,jpg|max:2048', // Validar que sea una imagen
+            'description' => 'required|string|max:900',
+            'file' => 'required|mimes:pdf|max:10000', // Validar que sea un archivo PDF
+            'year' => 'required|integer|min:1900|max:' . date('Y'),
+            'keywords' => 'required|string|max:200',
+            // 'collections' => 'nullable|array', // Validar que sea un array (opcional)
+            // 'collections.*' => 'exists:collections,id', // Validar que los IDs de las colecciones existan
+        ]);
+
+        $coverPhotoPath = $request->file('cover_photo')->store('covers', 'public');
+        $filePath = $request->file('file')->store('files', 'public');
+        $bookId = Str::uuid();
+        
+        $book = Book::create([
+            'id' => $bookId, // Asignar el UUID generado
+            'title' => $request->title,
+            'cover_photo' => $coverPhotoPath, // Ruta de la imagen de portada
+            'description' => $request->description,
+            'file' => $filePath, // Ruta del archivo PDF
+            'year' => $request->year,
+            'keywords' => $request->keywords,
+            'status' => 1, // Por defecto, el libro está activo
+        ]);
+
+        // if ($request->has('collections')) {
+        //     $book->collections()->attach($request->collections);
+        // }
+        $book->save();
+    
+        return redirect('/books')->with('success', 'Libro creado exitosamente.');
     }
     public function index(){
         $books = Book::all(); // Obtener todos los libros
@@ -148,6 +186,7 @@ class bookController extends Controller
         //return $book;
         return view('books.show',compact('book'));
     }
+    
     
 }
 
