@@ -36,8 +36,9 @@ class CategoryController extends Controller
         $categories = Category::all();
         return view('categories.index', compact('categories'));
     }
-    public function show (){
-        return view('categories.show');
+    public function show ($category){
+        $category = Category::find($category);
+        return view('categories.show', compact('category'));
     }
 
 }
