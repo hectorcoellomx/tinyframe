@@ -37,7 +37,7 @@
         </a>
     </li>
     <li class="nav-item">
-        <a href="/categories/index" class="nav-link">
+        <a href="/categories" class="nav-link">
             <i class="fas fa-fw fa-book"></i>
             <span>Categorías</span>
         </a>
@@ -49,7 +49,7 @@
         </a>
     </li>
     <li class="nav-item">
-        <a href="/collections/index" class="nav-link">
+        <a href="/collections" class="nav-link">
             <i class="fas fa-fw fa-book"></i>
             <span>Colecciones</span>
         </a>
