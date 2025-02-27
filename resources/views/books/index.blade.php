@@ -13,16 +13,9 @@
             </div>
         @endif
 
-        <ul>
-            @foreach($books as $book)
-                <li>
-                    <a href="/books/{{$book -> id}}">{{$book -> title}}</a>
-                </li>
+        
 
-            @endforeach
-        </ul>
-
-        {{-- <table class="table">
+        <table class="table">
             <thead>
                 <tr>
                     <th>Id</th>
@@ -31,6 +24,7 @@
                     <th>Descripción</th>
                     <th>Año</th>
                     <th>Estatus</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -42,6 +36,12 @@
                         <td>{{ $book->description }}</td>
                         <td>{{ $book->year }}</td>
                         <td>{{ $book->status }}</td>
+                        <td>
+                            <a href="/books/{{$book -> id}}" class="btn btn-warning mb-3" >Editar</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-danger mb-3">Eliminar</a>
+                        </td>
                         {{-- <td>
                             <a href="{{ route('books.edit', $book->id) }}" class="btn btn-warning btn-sm">Editar</a>
                             <form action="{{ route('books.destroy', $book->id) }}" method="POST" style="display: inline;">
@@ -49,10 +49,10 @@
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                             </form>
-                        </td> }}
+                        </td> --}}
                     </tr>
                 @endforeach
             </tbody>
-        </table> --}}
+        </table>
     </div>
 @endsection
