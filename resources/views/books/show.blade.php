@@ -4,7 +4,7 @@
 
 @section('content') <!-- Define el contenido dinámico -->
     <div class="container">
-        <h2>Listado de Libros</h2>
+        <h2>Detalles</h2>
         <a href="/books" class="btn btn-primary mb-3">Volver</a>
         <table class="table">
             <thead>
