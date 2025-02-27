@@ -29,14 +29,14 @@ Route::get('/books/{book}',[bookController::class, 'ver']);
 Route::post('/books',[bookController::class, 'store']);
 
 Route::get('/categories/create',[CategoryController::class, 'create']);
-Route::get('/categories/index',[CategoryController::class, 'index']);
-Route::get('/categories/show',[CategoryController::class, 'show']);
+Route::get('/categories',[CategoryController::class, 'index']);
+Route::get('/categories/{category}',[CategoryController::class, 'show']);
 
 Route::get('/authors/create',[AuthorController::class, 'create']);
 Route::get('/authors/index',[AuthorController::class, 'index']);
 Route::get('/authors/show',[AuthorController::class, 'show']);
 
 Route::get('/collections/create',[CollectionController::class, 'create']);
-Route::get('/collections/index',[CollectionController::class, 'index']);
-Route::get('/collections/show',[CollectionController::class, 'show']);
+Route::get('/collections',[CollectionController::class, 'index']);
+Route::get('/collections/{collection}',[CollectionController::class, 'show']);
 
