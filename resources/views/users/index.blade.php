@@ -15,7 +15,6 @@
                     <th>Email</th>
                     <th>Tipo de cuenta</th>
                     <th>Ultimo acceso</th>
-
                 </tr>
             </thead>
             <tbody>
