@@ -8,6 +8,7 @@ use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\LibraryController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Contracts\View\View;
 
 
 Route::get('/',function(){
@@ -27,6 +28,8 @@ Route::get('/books/create',[bookController::class, 'create']);
 Route::get('/books',[bookController::class, 'index']);
 Route::get('/books/{book}',[bookController::class, 'ver']);
 Route::post('/books',[bookController::class, 'store']);
+Route::get('/books/{book}/edit',[bookController::class, 'edit']);
+Route::put('/books/{book}',[bookController::class,'update']);
 
 Route::get('/categories/create',[CategoryController::class, 'create']);
 Route::get('/categories',[CategoryController::class, 'index']);
@@ -39,4 +42,5 @@ Route::get('/authors/show',[AuthorController::class, 'show']);
 Route::get('/collections/create',[CollectionController::class, 'create']);
 Route::get('/collections',[CollectionController::class, 'index']);
 Route::get('/collections/{collection}',[CollectionController::class, 'show']);
+Route::post('collections/{collection}',[CollectionController::class, 'store']);
 
