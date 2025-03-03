@@ -37,7 +37,7 @@
                         <td>{{ $book->year }}</td>
                         <td>{{ $book->status }}</td>
                         <td>
-                            <a href="/books/{{$book -> id}}" class="btn btn-warning mb-3" >Editar</a>
+                            <a href="/books/{{$book -> id}}/edit" class="btn btn-warning mb-3" >Editar</a>
                         </td>
                         <td>
                             <a class="btn btn-danger mb-3">Eliminar</a>

@@ -5,7 +5,7 @@
 @section('content')
     <div class="container">
         <h2>Crear Libro</h2>
-        <form action="/books" method="POST">
+        <form action="/books" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="title">Título:</label>
@@ -31,14 +31,28 @@
                 <label for="keywords">Palabras clave:</label>
                 <input type="text" name="keywords" id="keywords" class="form-control" required>
             </div>
-            <div>
+            <div class="mb-3">
+                <label class="form-label">Colecciones:</label>
+                <div>
+                    @foreach($collections as $collection)
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="collections[]" id="collection_{{ $collection->id }}" value="{{ $collection->id }}">
+                            <label class="form-check-label" for="collection_{{ $collection->id }}">
+                                {{ $collection->name }}
+                            </label>
+                        </div>
+                    @endforeach
+                </div>
+                <small class="text-muted">Selecciona una o más colecciones.</small>
+            </div>
+            {{-- <div>
                 <label for="collections">Colecciones:</label>
                 <select name="collections" id="collections" multiple>
                     @foreach($collections as $collection)
                         <option value="{{ $collection->id }}">{{ $collection->name }}</option>
                     @endforeach
                 </select>
-            </div>
+            </div> --}}
 
             <button type="submit" class="btn btn-primary">Guardar</button>
         </form>
