@@ -36,6 +36,26 @@ class CollectionController extends Controller
     public function create(){
         return view('collections.create');
     }
+    public function store(Request $request){
+        try {
+            $validatedData = $request->validate([
+                'name' => 'required|string|max:200'
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            dd($e->errors());
+        }
+
+        try {
+            $collection = Collection::create(
+                [
+                    'name'=> $request->name
+                ]
+                );
+        return redirect('/collections')->with('success','Categoria creada exitosamente');
+        } catch (\Exception $e) {
+            dd('Error: '. $e->getMessage());
+        }
+    }
 
     public function index(){
         $collections = Collection::all();
