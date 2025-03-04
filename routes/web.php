@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\LibraryController;
 use App\Http\Controllers\UserController;
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Contracts\View\View;
 
@@ -30,10 +31,13 @@ Route::get('/books/{book}',[bookController::class, 'ver']);
 Route::post('/books',[bookController::class, 'store']);
 Route::get('/books/{book}/edit',[bookController::class, 'edit']);
 Route::put('/books/{book}',[bookController::class,'update']);
+Route::delete('/books/{book}', [bookController::class, 'destroy']);
 
 Route::get('/categories/create',[CategoryController::class, 'create']);
 Route::get('/categories',[CategoryController::class, 'index']);
 Route::get('/categories/{category}',[CategoryController::class, 'show']);
+Route::post('/categories',[CategoryController::class, 'store']);
+Route::delete('/categories/{category}', [CategoryController::class, 'destroy']);
 
 Route::get('/authors/create',[AuthorController::class, 'create']);
 Route::get('/authors/index',[AuthorController::class, 'index']);
