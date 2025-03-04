@@ -202,7 +202,7 @@ class bookController extends Controller
 
     }
     public function index(){
-        $books = Book::all(); // Obtener todos los libros
+        $books = Book::orderBy('title', 'asc')->paginate(3); // Obtener todos los libros
         return view('books.index', compact('books'));
     }
     public function ver($book){
@@ -274,6 +274,11 @@ class bookController extends Controller
         return redirect()->back()->with('error', 'Ocurrió un error al actualizar el libro: ' . $e->getMessage());
     }
 }
+    public function destroy($book){
+        $book = Book::find($book);
+        $book->delete();
+        return redirect('/books');
+    }
     
 }
 
