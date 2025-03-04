@@ -23,7 +23,6 @@
                     <th>Portada</th>
                     <th>Descripción</th>
                     <th>Año</th>
-                    <th>Estatus</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -35,12 +34,16 @@
                         <td>{{ $book->cover_photo }}</td>
                         <td>{{ $book->description }}</td>
                         <td>{{ $book->year }}</td>
-                        <td>{{ $book->status }}</td>
                         <td>
                             <a href="/books/{{$book -> id}}/edit" class="btn btn-warning mb-3" >Editar</a>
                         </td>
                         <td>
-                            <a class="btn btn-danger mb-3">Eliminar</a>
+                            {{-- <a class="btn btn-danger mb-3">Eliminar</a> --}}
+                            <form action="/books/{{$book->id}}" method="POST" style="display: inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                            </form>
                         </td>
                         {{-- <td>
                             <a href="{{ route('books.edit', $book->id) }}" class="btn btn-warning btn-sm">Editar</a>
@@ -55,4 +58,5 @@
             </tbody>
         </table>
     </div>
+    {{$books->links()}}
 @endsection
