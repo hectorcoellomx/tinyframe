@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Collection;
+use App\Http\Controllers\Response;
 use Illuminate\Http\Request;
 
 use function Pest\Laravel\json;
