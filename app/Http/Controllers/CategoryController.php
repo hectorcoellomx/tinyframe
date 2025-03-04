@@ -32,6 +32,26 @@ class CategoryController extends Controller
     public function create (){
         return view('categories.create');
     }
+    public function store(Request $request){
+        try {
+            $validateData= $request->validate([
+                'name' => 'required|string|max:100',
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            dd($e->errors());
+        }
+
+        try {
+            $category = Category::create([
+                'name' => $request->name,
+            ]);
+
+        return redirect('/categories')->with('succes', 'Categoria creada exitosamente');
+        } catch (\Exception $e) {
+            dd('Error: ' .$e->getMessage());
+        }
+    }
+
     public function index(){
         $categories = Category::all();
         return view('categories.index', compact('categories'));
@@ -39,6 +59,12 @@ class CategoryController extends Controller
     public function show ($category){
         $category = Category::find($category);
         return view('categories.show', compact('category'));
+    }
+
+    public function destroy($category){
+        $category = Category::find($category);
+        $category->delete();
+        return redirect('/categories');
     }
 
 }
