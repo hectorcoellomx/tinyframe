@@ -46,5 +46,7 @@ Route::get('/authors/show',[AuthorController::class, 'show']);
 Route::get('/collections/create',[CollectionController::class, 'create']);
 Route::get('/collections',[CollectionController::class, 'index']);
 Route::get('/collections/{collection}',[CollectionController::class, 'show']);
-Route::post('collections/{collection}',[CollectionController::class, 'store']);
-
+Route::post('/collections/{collection}',[CollectionController::class, 'store']);
+Route::get('/collections/{collection}/edit',[CollectionController::class, 'edit']);
+Route::put('/collections/{collection}',[CollectionController::class,'update']);
+Route::delete('/collections/{collection}', [CollectionController::class, 'destroy']);
