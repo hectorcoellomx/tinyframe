@@ -31,7 +31,9 @@
                     <tr>
                         <td>{{ $book->id }}</td>
                         <td>{{ $book->title }}</td>
-                        <td>{{ $book->cover_photo }}</td>
+                        <td>
+                            <img src="{{ asset('storage/' . $book->cover_photo) }}" class="img-thumbnail" width="300">
+                        </td>
                         <td>{{ $book->description }}</td>
                         <td>{{ $book->year }}</td>
                         <td>

@@ -20,7 +20,7 @@
                 <label for="description">Descripción:</label>
                 <textarea name="description" id="description" class="form-control"  required>{{$book->description}}</textarea>
             </div>
-            <div>
+            <div class="form-group">
                 <label for="file">Archivo PDF</label>
                 <input type="file" name="file" id="file" value="{{$book->file}}" accept="application/pdf">
             </div>

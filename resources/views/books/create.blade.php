@@ -19,9 +19,9 @@
                 <label for="description">Descripción:</label>
                 <textarea name="description" id="description" class="form-control" required></textarea>
             </div>
-            <div>
+            <div class="form-group">
                 <label for="file">Archivo PDF</label>
-                <input type="file" name="file" id="file" accept="application/pdf" required>
+                <input type="file" name="file" id="file" class="form-control" accept="application/pdf" required>
             </div>
             <div class="form-group">
                 <label for="year">Año:</label>
@@ -30,7 +30,7 @@
             <div class="form-group">
                 <label for="keywords">Palabras clave:</label>
                 <input type="text" name="keywords" id="keywords" class="form-control" required>
-            </div>
+            </div>            
             <div class="mb-3">
                 <label class="form-label">Colecciones:</label>
                 <div>
