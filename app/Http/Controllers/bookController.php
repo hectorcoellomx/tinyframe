@@ -153,7 +153,7 @@ class bookController extends Controller
             'title' => 'required|string|max:200',
             'cover_photo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             'description' => 'required|string|max:900',
-            'file' => 'required|mimes:pdf|max:10000',
+            'file' => 'required|mimes:epub|max:10000',
             'year' => 'required|integer|min:1900|max:' . date('Y'),
             'keywords' => 'required|string|max:200',
         ]);
@@ -224,7 +224,7 @@ class bookController extends Controller
             'title' => 'required|string|max:200',
             'cover_photo' => 'sometimes|image|mimes:jpeg,png,jpg|max:2048', // Opcional
             'description' => 'required|string|max:900',
-            'file' => 'sometimes|mimes:pdf|max:10000', // Opcional
+            'file' => 'sometimes|mimes:epub|max:10000', // Opcional
             'year' => 'required|integer|min:1900|max:' . date('Y'),
             'keywords' => 'required|string|max:200',
         ]);
