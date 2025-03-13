@@ -53,7 +53,7 @@ class CollectionController extends Controller
                     'name'=> $request->name
                 ]
                 );
-        return redirect('/collections')->with('success','Categoria creada exitosamente');
+        return redirect('/collections')->with('success','Colección creada exitosamente');
         } catch (\Exception $e) {
             dd('Error: '. $e->getMessage());
         }
