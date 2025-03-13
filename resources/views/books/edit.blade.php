@@ -21,8 +21,8 @@
                 <textarea name="description" id="description" class="form-control"  required>{{$book->description}}</textarea>
             </div>
             <div class="form-group">
-                <label for="file">Archivo PDF</label>
-                <input type="file" name="file" id="file" value="{{$book->file}}" accept="application/pdf">
+                <label for="file">Archivo (PDF o EPUB)</label>
+                <input type="file" name="file" id="file" class="form-control" accept="application/epub+zip" required>
             </div>
             <div class="form-group">
                 <label for="year">Año:</label>
