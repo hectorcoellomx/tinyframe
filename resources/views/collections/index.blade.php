@@ -28,13 +28,12 @@
                         <td>{{ $collection->id }}</td>
                         <td>{{ $collection->name }}</td>
                         <td>
-                            <a href="/collections/{{$collection -> id}}/edit" class="btn btn-warning mb-3">Editar</a>
-                        </td>
-                        <td>
+                            <a href="/collections/{{$collection -> id}}/edit" class="btn btn-warning mb-3 me-5">Editar</a>
+                        
                             <form action="/collections/{{$collection->id}}" method="POST" style="display: inline;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                <button type="submit" class="btn btn-danger mb-3">Eliminar</button>
                             </form>
                         </td>
                     </tr>
@@ -42,4 +41,5 @@
             </tbody>
         </table>
     </div>
+    {{-- {{$collections->links()}} --}}
 @endsection
