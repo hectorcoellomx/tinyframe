@@ -16,6 +16,20 @@ class User extends Model
 
     protected $fillable = ['name','email','type','last_access'];
 
+    public function getTypeTextAttribute()
+    {
+        switch ($this->type) {
+            case 1:
+                return 'Alumno';
+            case 2:
+                return 'Docente';
+            case 3:
+                return 'Administrativo';
+            default:
+                return 'Invitado';
+        }
+}
+
     // public function getJWTIdentifier()
     // {
     //     return $this->getKey();

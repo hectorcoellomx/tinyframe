@@ -57,6 +57,7 @@ class UserController extends Controller
         $users = User::all();
         return view('users.index', compact('users'));
     }
+    
 
     // Mostrar formulario para crear un usuario
     public function create()
