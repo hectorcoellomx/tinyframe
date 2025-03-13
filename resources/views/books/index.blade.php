@@ -23,8 +23,9 @@
                     <th>Portada</th>
                     <th>Descripción</th>
                     <th>Año</th>
-                    <th>Acciones</th>
-                    <th></th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
+                    <th>Descargar</th>
                 </tr>
             </thead>
             <tbody>
@@ -38,14 +39,27 @@
                         <td>{{ $book->description }}</td>
                         <td>{{ $book->year }}</td>
                         <td>
-                            <a href="/books/{{$book -> id}}/edit" class="btn btn-warning mb-3" >Editar</a>
+                            <a href="/books/{{$book -> id}}/edit" class="btn btn-warning mb-3" >
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
                         </td>
                         <td>
                             <form action="/books/{{$book->id}}" method="POST" style="display: inline;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger mb-3">Eliminar</button>
+                                <button type="submit" class="btn btn-danger mb-3">
+                                    <i class="bi bi-trash"></i>
+                                </button>
                             </form>
+                        </td>
+                        <td>
+                            @if($book->file) <!-- Verifica si el archivo existe -->
+                                <a href="{{ asset('storage/' . $book->file) }}" class="btn btn-success" download>
+                                    <i class="bi bi-download"></i>
+                                </a>
+                            @else
+                                <span class="text-muted">No disponible</span>
+                            @endif
                         </td>
                     </tr>
                 @endforeach
