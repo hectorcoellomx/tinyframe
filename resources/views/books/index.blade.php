@@ -44,13 +44,18 @@
                             </a>
                         </td>
                         <td>
-                            <form action="/books/{{$book->id}}" method="POST" style="display: inline;">
+                            <x-delete-confirmation 
+                                :actionUrl="'/books/' . $book->id" 
+                                :itemName="$book->title" 
+                                :itemId="$book->id" 
+                            />
+                            {{-- <form action="/books/{{$book->id}}" method="POST" style="display: inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger mb-3">
                                     <i class="bi bi-trash"></i>
                                 </button>
-                            </form>
+                            </form> --}}
                         </td>
                         <td>
                             @if($book->file) <!-- Verifica si el archivo existe -->
