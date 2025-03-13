@@ -18,8 +18,8 @@
                 <tr>
                     <th>ID</th>
                     <th>Nombre</th>
-                    <th>Acciones</th>
-                    <th></th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,14 +28,21 @@
                         <td>{{ $category->id }}</td>
                         <td>{{ $category->name }}</td>
                         <td>
-                            <a href="categories/{{$category -> id}}" class="btn btn-warning mb-3">Editar</a>
+                            <a href="categories/{{$category -> id}}" class="btn btn-warning mb-3">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
                         </td>
                         <td>
-                            <form action="/categories/{{$category->id}}" method="POST" style="display: inline;">
+                            <x-delete-confirmation 
+                                :actionUrl="'/categories/' . $category->id" 
+                                :itemName="$category->name" 
+                                :itemId="$category->id" 
+                            />
+                            {{-- <form action="/categories/{{$category->id}}" method="POST" style="display: inline;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-                            </form>
+                                <button type="submit" class="btn btn-danger mb-3">Eliminar</button>
+                            </form> --}}
                         </td>
                         <td>
                             {{-- <a href="{{ route('books.edit', $book->id) }}" class="btn btn-warning btn-sm">Editar</a>
