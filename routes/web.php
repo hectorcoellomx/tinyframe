@@ -12,9 +12,10 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Contracts\View\View;
 
 
-Route::get('/',function(){
-    return view('layouts.app');
-});
+// Route::get('/',function(){
+//     return view('users.index');
+// });
+Route::get('/',[UserController::class,'index']);
 
 Route::get('/login',[AuthController::class, 'login']);
 
@@ -22,7 +23,7 @@ Route::get('/books',function(){
     return view('layouts.books');
 });
 
-Route::get('/users/index',[UserController::class, 'index']);
+Route::get('/users',[UserController::class, 'index']);
 Route::get('users/create',[UserController::class, 'create']);
 
 Route::get('/books/create',[bookController::class, 'create']);
@@ -40,7 +41,7 @@ Route::post('/categories',[CategoryController::class, 'store']);
 Route::delete('/categories/{category}', [CategoryController::class, 'destroy']);
 
 Route::get('/authors/create',[AuthorController::class, 'create']);
-Route::get('/authors/index',[AuthorController::class, 'index']);
+Route::get('/authors',[AuthorController::class, 'index']);
 Route::get('/authors/show',[AuthorController::class, 'show']);
 
 Route::get('/collections/create',[CollectionController::class, 'create']);
