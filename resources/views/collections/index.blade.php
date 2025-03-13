@@ -18,7 +18,8 @@
                 <tr>
                     <th>ID</th>
                     <th>Nombre</th>
-                    <th>Acciones</th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,13 +29,25 @@
                         <td>{{ $collection->id }}</td>
                         <td>{{ $collection->name }}</td>
                         <td>
-                            <a href="/collections/{{$collection -> id}}/edit" class="btn btn-warning mb-3 me-5">Editar</a>
-                        
-                            <form action="/collections/{{$collection->id}}" method="POST" style="display: inline;">
+
+                            <a href="/collections/{{$collection -> id}}/edit" class="btn btn-warning mb-3 me-5">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                        <td>
+                            <x-delete-confirmation 
+                                :actionUrl="'/collections/' . $collection->id" 
+                                :itemName="$collection->name" 
+                                :itemId="$collection->id" 
+                            />
+
+                        </td>
+                            
+                            
+                            {{-- <form action="/collections/{{$collection->id}}" method="POST" style="display: inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger mb-3">Eliminar</button>
-                            </form>
+                            </form> --}}
                         </td>
                     </tr>
                 @endforeach
