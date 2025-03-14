@@ -38,19 +38,8 @@
                                 :itemName="$category->name" 
                                 :itemId="$category->id" 
                             />
-                            {{-- <form action="/categories/{{$category->id}}" method="POST" style="display: inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger mb-3">Eliminar</button>
-                            </form> --}}
                         </td>
                         <td>
-                            {{-- <a href="{{ route('books.edit', $book->id) }}" class="btn btn-warning btn-sm">Editar</a>
-                            <form action="{{ route('books.destroy', $book->id) }}" method="POST" style="display: inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-                            </form> --}}
                         </td>
                     </tr>
                 @endforeach
