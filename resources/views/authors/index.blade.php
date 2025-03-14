@@ -18,25 +18,30 @@
                 <tr>
                     <th>ID</th>
                     <th>Nombre</th>
-                    <th>Descripción</th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
                     
                 </tr>
             </thead>
             <tbody>
-                {{-- @foreach($authors as $author)
+                @foreach($authors as $author)
                     <tr>
                         <td>{{ $author->id }}</td>
                         <td>{{ $author->name }}</td>
                         <td>
-                            <a href="{{ route('books.edit', $book->id) }}" class="btn btn-warning btn-sm">Editar</a>
-                            <form action="{{ route('books.destroy', $book->id) }}" method="POST" style="display: inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-                            </form>
+                            <a href="/authors/{{$author -> id}}/edit" class="btn btn-warning mb-3" >
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <x-delete-confirmation 
+                                :actionUrl="'/authors/' . $author->id" 
+                                :itemName="$author->name" 
+                                :itemId="$author->id" 
+                            />
                         </td>
                     </tr>
-                @endforeach --}}
+                @endforeach
             </tbody>
         </table>
     </div>
