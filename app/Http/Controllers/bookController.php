@@ -189,15 +189,7 @@ class bookController extends Controller
         }  catch (\Exception $e) {
             dd('Error: ' . $e->getMessage());
         }
-        // if ($book) {
-        //     return redirect('/books')->with('success', 'Libro creado exitosamente.');
-
-        // }
-        // if ($request->has('collections')) {
-        //     $book->collections()->attach($request->collections);
-        // }
-      
-    
+       
         
 
     }
