@@ -18,11 +18,25 @@ use Illuminate\Contracts\View\View;
 // });
 Route::get('/',[UserController::class,'index']);
 
-Route::get('/login',[AuthController::class, 'login']);
+//Route::get('/login',[AuthController::class, 'login']);
 
 Route::get('/books',function(){
     return view('layouts.books');
 });
+// Mostrar el formulario de login
+Route::get('/login', [AuthController::class, 'login'])->name('auth.login');
+
+// Manejar el inicio de sesión
+Route::post('/login', [AuthController::class, 'authenticate'])->name('auth.authenticate');
+
+// Cerrar sesión
+Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
+
+// Ruta protegida para la vista de usuarios
+Route::middleware('auth.custom')->group(function () {
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+});
+
 
 Route::get('/users',[UserController::class, 'index']);
 Route::get('users/create',[UserController::class, 'create']);
