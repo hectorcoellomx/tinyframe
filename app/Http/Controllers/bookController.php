@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use App\Models\Category;
 use App\Models\Collection;
+use App\Models\Author;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Progress;
 use App\Models\Rating;
@@ -143,12 +144,74 @@ class bookController extends Controller
     public function create(){
         $collections = Collection::all();
         $categories = Category::all();
-        return view('books.create',compact('collections'), compact('categories'));
+        $authors = Author::all();
+        return view('books.create',compact('collections', 'categories', 'authors'));
     }
-    public function store(Request $request)
-    {
-        try {
+    // public function store(Request $request)
+    // {
+    //     // dd($request->all());
+    //     try {
              
+    //     $validatedData = $request->validate([
+    //         'title' => 'required|string|max:200',
+    //         'cover_photo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+    //         'description' => 'required|string|max:900',
+    //         'file' => 'required|mimes:epub|max:10000',
+    //         'year' => 'required|integer|min:1900|max:' . date('Y'),
+    //         'keywords' => 'required|string|max:200',
+    //         'author_ids' => 'required|array', // Validar que se envíen autores
+    //         'collection_ids' => 'required|array', // Validar que se envíen categorías
+    //     ]);
+    //     //dd( $validatedData);
+
+
+    //     } catch (\Illuminate\Validation\ValidationException $e) {
+    //         dd($e->errors());
+
+    //     }
+    //     // $coverPhotoPath = $request->file('cover_photo')->store('covers', 'public');
+    //     // $filePath = $request->file('file')->store('files', 'public');
+    //     try {
+    //         $coverPhotoPath = $request->file('cover_photo')->store('covers', 'public');
+    //     $filePath = $request->file('file')->store('files', 'public');
+        
+
+    //     $book = Book::create([
+    //         'id' => Str::uuid(),
+    //         'title' => $request->title,
+    //         'cover_photo' => $coverPhotoPath,
+    //         'description' => $request->description,
+    //         'file' => $filePath,
+    //         'year' => $request->year,
+    //         'keywords' => $request->keywords,
+    //         'status' => 1,
+    //     ]);
+
+    //     //dd($book);
+
+    //     return redirect('/books')->with('success', 'Libro creado exitosamente.');
+
+    //     }  catch (\Exception $e) {
+    //         dd('Error: ' . $e->getMessage());
+    //     }
+
+    //      // Asociar el libro con autores
+    //      $book->authors()->attach($request->author_ids);
+
+    //      // Asociar el libro con categorías
+    //      $book->categories()->attach($request->category_ids);
+ 
+    //      // Asociar el libro con colecciones
+    //      $book->collections()->attach($request->collection_ids);
+       
+        
+
+    // }
+
+    public function store(Request $request)
+{
+    try {
+        // Validar los datos del formulario
         $validatedData = $request->validate([
             'title' => 'required|string|max:200',
             'cover_photo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
@@ -156,21 +219,16 @@ class bookController extends Controller
             'file' => 'required|mimes:epub|max:10000',
             'year' => 'required|integer|min:1900|max:' . date('Y'),
             'keywords' => 'required|string|max:200',
+            'author_ids' => 'required|array', // Validar que se envíen autores
+            'category_ids' => 'required|array',// Validar que se envíen categorías
+            'collection_ids' => 'required|array', // Validar que se envíen colecciones
         ]);
-        //dd( $validatedData);
 
-
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            dd($e->errors());
-
-        }
-        // $coverPhotoPath = $request->file('cover_photo')->store('covers', 'public');
-        // $filePath = $request->file('file')->store('files', 'public');
-        try {
-            $coverPhotoPath = $request->file('cover_photo')->store('covers', 'public');
+        // Guardar la imagen de portada y el archivo
+        $coverPhotoPath = $request->file('cover_photo')->store('covers', 'public');
         $filePath = $request->file('file')->store('files', 'public');
-        
 
+        // Crear el libro
         $book = Book::create([
             'id' => Str::uuid(),
             'title' => $request->title,
@@ -182,17 +240,16 @@ class bookController extends Controller
             'status' => 1,
         ]);
 
-        //dd($book);
+        // Asociar el libro con autores, categorías y colecciones
+        $book->authors()->attach($request->author_ids);
+        $book->categories()->attach($request->category_ids);
+        $book->collections()->attach($request->collection_ids);
 
         return redirect('/books')->with('success', 'Libro creado exitosamente.');
-
-        }  catch (\Exception $e) {
-            dd('Error: ' . $e->getMessage());
-        }
-       
-        
-
+    } catch (\Exception $e) {
+        return redirect()->back()->with('error', 'Ocurrió un error: ' . $e->getMessage());
     }
+}
     public function index(){
         $books = Book::orderBy('title', 'asc')->paginate(3); // Obtener todos los libros
         return view('books.index', compact('books'));
@@ -206,7 +263,13 @@ class bookController extends Controller
     public function edit($book){
         $collections = Collection::all();
         $book = Book::find($book);
-        return view('books.edit', compact('book'), compact('collections'));
+        $authors = Author::all();
+        $categories = Category::all();
+        //Pasar colecciones, autores y categorías 
+        $selectedCollections = $book->collections->pluck('id')->toArray();
+        $selectedAuthors = $book->authors->pluck('id')->toArray();
+        $selectedCategories = $book->categories->pluck('id')->toArray();
+        return view('books.edit', compact('book', 'collections', 'authors', 'categories', 'selectedCollections', 'selectedAuthors', 'selectedCategories'));
     }
     public function update(Request $request, $book)
 {
@@ -219,6 +282,9 @@ class bookController extends Controller
             'file' => 'sometimes|mimes:epub|max:10000', // Opcional
             'year' => 'required|integer|min:1900|max:' . date('Y'),
             'keywords' => 'required|string|max:200',
+            'author_ids' => 'required|array', // Validar que se envíen autores
+            'category_ids' => 'required|array', // Validar que se envíen categorías
+            'collection_ids' => 'required|array', // Validar que se envíen colecciones
         ]);
     } catch (\Illuminate\Validation\ValidationException $e) {
         return redirect()->back()->withErrors($e->errors())->withInput();
@@ -258,6 +324,11 @@ class bookController extends Controller
 
         // Guardar los cambios en la base de datos
         $book->save();
+
+        $book->authors()->sync($request->author_ids);
+        $book->categories()->sync($request->category_ids);
+        $book->collections()->sync($request->collection_ids);
+
 
         // Redirigir con un mensaje de éxito
         return redirect("/books/{$book->id}")->with('success', 'Libro actualizado exitosamente.');
