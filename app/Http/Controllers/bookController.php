@@ -250,10 +250,35 @@ class bookController extends Controller
         return redirect()->back()->with('error', 'Ocurrió un error: ' . $e->getMessage());
     }
 }
-    public function index(){
-        $books = Book::orderBy('title', 'asc')->paginate(3); // Obtener todos los libros
-        return view('books.index', compact('books'));
+    // public function index(){
+
+
+    //     $books = Book::orderBy('title', 'asc')->paginate(3); // Obtener todos los libros
+    //     return view('books.index', compact('books'));
+    // }
+
+    public function index()
+    {
+        try {
+            // Obtener los libros con su calificación promedio
+            $books = DB::table('books')
+                ->leftJoin('ratings', 'books.id', '=', 'ratings.book_id')
+                ->select(
+                    'books.*',
+                    DB::raw('IFNULL(AVG(ratings.point), 0) as calificacion') // Calcular el promedio
+                )
+                ->groupBy('books.id') // Agrupar por libro
+                ->paginate(3); // Paginación
+
+            return view('books.index', compact('books'));
+        } catch (\Exception $e) {
+            // Manejar errores
+            return redirect()->back()->with('error', 'Ha ocurrido un error inesperado: ' . $e->getMessage());
+        }
     }
+
+   
+
     public function ver($book){
 
         $book = Book::find($book);
