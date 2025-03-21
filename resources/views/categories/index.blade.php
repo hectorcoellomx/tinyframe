@@ -3,10 +3,11 @@
 @section('title', 'Listado de Categorías')
 
 @section('content')
-    <div class="container">
-        <h2>Listado de Categorías</h2>
-        <a href="/categories/create"  class="btn btn-primary mb-3">Agregar Categoría</a>
-
+    <div class="container"> 
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Listado de Categorías</h2>
+            <a href="/categories/create"  class="btn btn-primary mb-3">Agregar Categoría</a>
+        </div>
         @if(session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
@@ -39,11 +40,10 @@
                                 :itemId="$category->id" 
                             />
                         </td>
-                        <td>
-                        </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
+    {{$categories->links()}}
 @endsection

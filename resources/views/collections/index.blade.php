@@ -4,9 +4,10 @@
 
 @section('content')
     <div class="container">
-        <h2>Listado de Colecciones</h2>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Listado de Colecciones</h2>
         <a href="/collections/create"  class="btn btn-primary mb-3">Agregar Coleccion</a>
-
+        </div>
         @if(session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
@@ -41,18 +42,10 @@
                             />
 
                         </td>
-                            
-                            
-                            {{-- <form action="/collections/{{$collection->id}}" method="POST" style="display: inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger mb-3">Eliminar</button>
-                            </form> --}}
-                        </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
-    {{-- {{$collections->links()}} --}}
+    {{$collections->links()}}
 @endsection

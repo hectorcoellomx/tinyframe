@@ -4,9 +4,10 @@
 
 @section('content')
     <div class="container">
-        <h2>Listado de Autores</h2>
-        <a href="/authors/create" class="btn btn-primary mb-3">Agregar Autor</a>
-
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Listado de Autores</h2>
+            <a href="/authors/create" class="btn btn-primary mb-3">Agregar Autor</a>
+        </div>
         @if(session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
@@ -45,4 +46,5 @@
             </tbody>
         </table>
     </div>
+    {{$authors->links()}}
 @endsection
