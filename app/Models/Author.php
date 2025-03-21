@@ -13,4 +13,9 @@ class Author extends Model
     protected $fillable = ['name'];
     public $timestamps = false;
 
+    public function books()
+    {
+        return $this->belongsToMany(Book::class, 'book_authors', 'author_id', 'book_id');
+    }
+
 }
