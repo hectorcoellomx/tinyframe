@@ -4,8 +4,10 @@
 
 @section('content')
     <div class="container">
-        <h2>Listado de Libros</h2>
-        <a href="/books/create" class="btn btn-primary mb-3">Agregar Libro</a>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Listado de Libros</h2>
+            <a href="/books/create" class="btn btn-primary">Agregar Libro</a>
+        </div>
 
         @if(session('success'))
             <div class="alert alert-success">
@@ -13,8 +15,7 @@
             </div>
         @endif
 
-        
-
+        <!-- Tabla -->
         <table class="table">
             <thead>
                 <tr>
@@ -23,6 +24,7 @@
                     <th>Portada</th>
                     <th>Descripción</th>
                     <th>Año</th>
+                    <th>Calificación</th>
                     <th>Editar</th>
                     <th>Eliminar</th>
                     <th>Descargar</th>
@@ -38,8 +40,9 @@
                         </td>
                         <td>{{ $book->description }}</td>
                         <td>{{ $book->year }}</td>
+                        <td>{{ number_format($book->calificacion, 1) }}</td> <!-- Mostrar el promedio -->
                         <td>
-                            <a href="/books/{{$book -> id}}/edit" class="btn btn-warning mb-3" >
+                            <a href="/books/{{$book->id}}/edit" class="btn btn-warning">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
                         </td>
