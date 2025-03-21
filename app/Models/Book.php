@@ -37,6 +37,10 @@ class Book extends Model
         ->where('u.id', $user_id)
         ->first();
     }
+    public function authors()
+    {
+        return $this->belongsToMany(Author::class, 'book_authors', 'book_id', 'author_id');
+    }
 
     public function categories()
     {
