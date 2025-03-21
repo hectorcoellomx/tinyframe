@@ -54,7 +54,8 @@ class UserController extends Controller
     // Mostrar listado de usuarios
     public function index()
     {
-        $users = User::all();
+        //$users = User::all();
+        $users = User::orderBy('name', 'asc')->paginate(3);
         return view('users.index', compact('users'));
     }
     

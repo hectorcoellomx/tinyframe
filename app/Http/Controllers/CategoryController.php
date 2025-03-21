@@ -53,7 +53,7 @@ class CategoryController extends Controller
     }
 
     public function index(){
-        $categories = Category::all();
+        $categories = Category::orderBy('name', 'asc')->paginate(3);
         return view('categories.index', compact('categories'));
     }
     public function show ($category){
