@@ -60,7 +60,7 @@ class CollectionController extends Controller
     }
 
     public function index(){
-        $collections = Collection::orderBy('name', 'asc')->paginate(3);
+        $collections = Collection::orderBy('name', 'asc')->paginate(10);
         return view('collections.index', compact('collections'));
     }
 

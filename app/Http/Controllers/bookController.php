@@ -268,7 +268,7 @@ class bookController extends Controller
                     DB::raw('IFNULL(AVG(ratings.point), 0) as calificacion') // Calcular el promedio
                 )
                 ->groupBy('books.id') // Agrupar por libro
-                ->paginate(3); // Paginación
+                ->paginate(10); // Paginación
 
             return view('books.index', compact('books'));
         } catch (\Exception $e) {

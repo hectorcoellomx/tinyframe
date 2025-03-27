@@ -70,7 +70,7 @@ class AuthorController extends Controller
 
     public function index(){
         //$authors = Author::orderby('id')->get();
-        $authors = Author::orderBy('name', 'asc')->paginate(3);
+        $authors = Author::orderBy('name', 'asc')->paginate(10);
         return view('authors.index',compact('authors'));
     }
 
