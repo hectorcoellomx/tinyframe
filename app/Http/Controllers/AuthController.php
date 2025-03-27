@@ -18,14 +18,13 @@ class AuthController extends Controller
         // Validar los datos del formulario
         $request->validate([
             'email' => 'required|email',
-            'password' => 'required',
         ]);
 
         // Array de usuarios permitidos
         $users = [
             [
                 'email' => 'georgina.mendez60@unach.mx',
-                'password' => 'admin', // Contraseña en texto plano (solo para este ejemplo)
+                //'password' => 'admin', // Contraseña en texto plano (solo para este ejemplo)
                 'type' => 3, // Tipo de usuario (3 = administrador)
             ],
             // Puedes agregar más usuarios aquí si lo necesitas
@@ -35,7 +34,7 @@ class AuthController extends Controller
         $user = collect($users)->firstWhere('email', $request->email);
 
         // Verificar si el usuario existe y la contraseña coincide
-        if ($user && $user['password'] === $request->password) {
+        if ($user && $user['email'] === $request->email) {
             // Guardar el usuario en la sesión
             session(['user' => $user]);
 

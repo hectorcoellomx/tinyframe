@@ -47,39 +47,16 @@
                                         </div>
                                     
                                         <!-- Campo de contraseña -->
-                                        <div class="form-group">
+                                        {{-- <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
                                                 id="password" name="password" placeholder="Contraseña" required>
-                                        </div>
+                                        </div> --}}
                                     
                                         <!-- Botón de login -->
                                         <button type="submit" class="btn btn-primary btn-user btn-block">
                                             Iniciar sesión
                                         </button>
                                     </form>
-
-                                    <!-- Formulario de login -->
-                                    {{-- <form class="user" method="POST">
-                                        @csrf <!-- Token CSRF para seguridad -->
-
-                                        <!-- Campo de email -->
-                                        <div class="form-group">
-                                            <input type="email" class="form-control form-control-user"
-                                                id="email" name="email" aria-describedby="emailHelp"
-                                                placeholder="Ingresa tu correo electrónico" required>
-                                        </div>
-
-                                        <!-- Campo de contraseña -->
-                                        <div class="form-group">
-                                            <input type="password" class="form-control form-control-user"
-                                                id="password" name="password" placeholder="Contraseña" required>
-                                        </div>
-                                        <!-- Botón de login -->
-                                        <button type="submit" class="btn btn-primary btn-user btn-block">
-                                            Iniciar sesión
-                                        </button>
-                                    </form> --}}
-
                                     <hr>
                                 </div>
                             </div>
