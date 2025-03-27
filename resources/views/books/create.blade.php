@@ -20,7 +20,7 @@
                 <textarea name="description" id="description" class="form-control" required></textarea>
             </div>
             <div class="form-group">
-                <label for="file">Archivo (PDF o EPUB)</label>
+                <label for="file">Archivo EPUB</label>
                 <input type="file" name="file" id="file" class="form-control" accept="application/epub+zip" required>
             </div>
             <div class="form-group">
@@ -78,48 +78,6 @@
                 </div>
                 <small class="text-muted">Selecciona una o más colecciones.</small>
             </div>
-            
-            {{-- <div class="mb-3">
-                <label class="form-label">Colecciones:</label>
-                <div>
-                    @foreach($collections as $collection)
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="collections_ids[]" id="collection_{{ $collection->id }}" value="{{ $collection->id }}">
-                            <label class="form-check-label" for="collection_{{ $collection->id }}">
-                                {{ $collection->name }}
-                            </label>
-                        </div>
-                    @endforeach
-                </div>
-                <small class="text-muted">Selecciona una o más colecciones.</small>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Autores:</label>
-                <div>
-                    @foreach($authors as $author)
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="authors_ids[]" id="author_{{ $author->id }}" value="{{ $author->id }}">
-                            <label class="form-check-label" for="author_{{ $author->id }}">
-                                {{ $author->name }}
-                            </label>
-                        </div>
-                    @endforeach
-                </div>
-                <small class="text-muted">Selecciona una o más colecciones.</small>
-            </div> --}}
-            {{-- <select name="author_ids[]" multiple required>
-                @foreach($authors as $author)
-                    <option value="{{ $author->id }}">{{ $author->name }}</option>
-                @endforeach
-            </select> --}}
-            {{-- <div>
-                <label for="collections">Colecciones:</label>
-                <select name="collections" id="collections" multiple>
-                    @foreach($collections as $collection)
-                        <option value="{{ $collection->id }}">{{ $collection->name }}</option>
-                    @endforeach
-                </select>
-            </div> --}}
 
             <button type="submit" class="btn btn-primary">Guardar</button>
         </form>
