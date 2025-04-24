@@ -27,7 +27,7 @@
                     <th>Calificación</th>
                     <th>Editar</th>
                     <th>Eliminar</th>
-                    <th>Descargar</th>
+                    <th>Detalles</th>
                 </tr>
             </thead>
             <tbody>
@@ -54,13 +54,17 @@
                             />
                         </td>
                         <td>
-                            @if($book->file) <!-- Verifica si el archivo existe -->
+                            <a href="/books/{{$book->id}}" class="btn btn-success">
+                                <i class="bi bi-eye-fill"></i>
+                            </a>
+                            
+                            {{-- @if($book->file) <!-- Verifica si el archivo existe -->
                                 <a href="{{ asset('storage/' . $book->file) }}" class="btn btn-success" download>
-                                    <i class="bi bi-download"></i>
+                                    <i class="bi bi-eye-fill"></i>
                                 </a>
                             @else
                                 <span class="text-muted">No disponible</span>
-                            @endif
+                            @endif --}}
                         </td>
                     </tr>
                 @endforeach
