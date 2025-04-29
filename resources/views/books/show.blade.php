@@ -1,4 +1,7 @@
+@php use Illuminate\Support\Str; @endphp
 @extends('layouts.app')
+
+
 
 @section('title', $book->title)
 
@@ -106,7 +109,7 @@
     <div class="row book-meta mt-4">
         <div class="col-md-6">
             <p><span class="meta-label">Título en inglés:</span> {{ $book->title_en ?? 'N/A' }}</p>
-            <p><span class="meta-label">Páginas:</span> {{ $book->pages ?? 'N/A' }}</p>
+            <p><span class="meta-label">Categorías:</span>            </p>
             <p><span class="meta-label">Idioma:</span> {{ $book->language ?? 'Español' }}</p>
         </div>
         <div class="col-md-6">
@@ -118,21 +121,23 @@
     <div class="download-section">
         <p><span class="meta-label">Opciones:</span></p>
         <div class="d-flex justify-content-center flex-wrap gap-3">
-            @if($book->file)
-                <a href="{{ asset('storage/' . $book->file) }}" class="btn btn-custom">
-                    <i class="bi bi-file-earmark-arrow-down"></i> Descargar EPUB
-                </a>
-            @else
-                <span class="text-muted">No disponible</span>
-            @endif
-
-            <a href="#" class="btn btn-outline-secondary">
+            @if($book->file && Str::endsWith($book->file, '.epub'))
+            <a href="{{ url('/lector-epub/' . basename($book->file)) }}" class="btn btn-outline-secondary">
                 <i class="bi bi-book"></i> Leer en línea
             </a>
+            @else
+                <span class="text-muted">No disponible para lectura en línea</span>
+            @endif
+
+{{-- 
+            <a href="#" class="btn btn-outline-secondary">
+                <i class="bi bi-book"></i> Leer en línea
+            </a> --}}
         </div>
     </div>
 </div>
 @endsection
+
 
 
 

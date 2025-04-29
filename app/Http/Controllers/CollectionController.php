@@ -37,7 +37,7 @@ class CollectionController extends Controller
 
     public function create(){
         return view('collections.create');
-    }
+    } 
     public function store(Request $request){
         try {
             $validatedData = $request->validate([

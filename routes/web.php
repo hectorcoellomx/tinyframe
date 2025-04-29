@@ -11,6 +11,7 @@ use App\Models\Author;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Storage;
 
 
 // Route::get('/',function(){
@@ -22,6 +23,10 @@ use Illuminate\Contracts\View\View;
 
 Route::get('/books',function(){
     return view('layouts.books');
+});
+
+Route::get('/lector-example',function(){
+    return view('epub.example');
 });
 // Mostrar el formulario de login
 Route::get('/', [AuthController::class, 'login'])->name('auth.login');
@@ -36,6 +41,29 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 Route::middleware('auth.custom')->group(function () {
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
 });
+
+
+
+Route::get('/lector-epub/{archivo}', function ($archivo) {
+    $safeFile = basename($archivo); // Previene directory traversal
+    
+    $path = 'files/' . $safeFile;
+    
+    if (!Storage::disk('public')->exists($path)) {
+        abort(404, 'El archivo no existe');
+    }
+    
+    // Verificar extensión .epub
+    if (!preg_match('/\.epub$/i', $safeFile)) {
+        abort(400, 'El archivo debe tener extensión .epub');
+    }
+    
+    return view('epub.lector-epub', [
+        'archivo' => $safeFile
+    ]);
+});
+// ->where('archivo', '[a-zA-Z0-9\-_]+\.epub');
+
 
 
 Route::get('/users',[UserController::class, 'index']);

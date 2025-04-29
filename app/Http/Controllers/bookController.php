@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use ePub;
 
 use function Laravel\Prompts\error;
 
@@ -280,11 +281,28 @@ class bookController extends Controller
    
 
     public function ver($book){
-
+        $collections = Collection::all();
         $book = Book::find($book);
+        
         //return $book;
-        return view('books.show',compact('book'));
+        return view('books.show',compact('book', 'collections'));
     }
+
+    public function leerEpub($id)
+    {
+        $book = Book::findOrFail($id); // Asume modelo Book
+        
+        // Verifica que el archivo exista
+        if (!Storage::disk('public')->exists("files/{$book->file}")) {
+            abort(404);
+        }
+
+        return view('epub.lector-epub', [
+            'book' => $book,
+            'epubUrl' => asset("storage/files/{$book->file}")
+        ]);
+    }
+
     public function edit($book){
         $collections = Collection::all();
         $book = Book::find($book);
@@ -297,71 +315,71 @@ class bookController extends Controller
         return view('books.edit', compact('book', 'collections', 'authors', 'categories', 'selectedCollections', 'selectedAuthors', 'selectedCategories'));
     }
     public function update(Request $request, $book)
-{
-    try {
-        // Validación de datos (campos opcionales para archivos)
-        $validatedData = $request->validate([
-            'title' => 'required|string|max:200',
-            'cover_photo' => 'sometimes|image|mimes:jpeg,png,jpg|max:2048', // Opcional
-            'description' => 'required|string|max:900',
-            'file' => 'sometimes|mimes:epub|max:10000', // Opcional
-            'year' => 'required|integer|min:1900|max:' . date('Y'),
-            'keywords' => 'required|string|max:200',
-            'author_ids' => 'required|array', // Validar que se envíen autores
-            'category_ids' => 'required|array', // Validar que se envíen categorías
-            'collection_ids' => 'required|array', // Validar que se envíen colecciones
-        ]);
-    } catch (\Illuminate\Validation\ValidationException $e) {
-        return redirect()->back()->withErrors($e->errors())->withInput();
-    }
-
-    // Buscar el libro a actualizar
-    $book = Book::findOrFail($book);
-
-    try {
-        // Procesar la imagen de portada si se subió una nueva
-        if ($request->hasFile('cover_photo')) {
-            // Eliminar la imagen anterior si existe
-            if ($book->cover_photo && Storage::disk('public')->exists($book->cover_photo)) {
-                Storage::disk('public')->delete($book->cover_photo);
-            }
-            // Guardar la nueva imagen
-            $coverPhotoPath = $request->file('cover_photo')->store('covers', 'public');
-            $book->cover_photo = $coverPhotoPath;
+    {
+        try {
+            // Validación de datos (campos opcionales para archivos)
+            $validatedData = $request->validate([
+                'title' => 'required|string|max:200',
+                'cover_photo' => 'sometimes|image|mimes:jpeg,png,jpg|max:2048', // Opcional
+                'description' => 'required|string|max:900',
+                'file' => 'sometimes|mimes:epub|max:10000', // Opcional
+                'year' => 'required|integer|min:1900|max:' . date('Y'),
+                'keywords' => 'required|string|max:200',
+                'author_ids' => 'required|array', // Validar que se envíen autores
+                'category_ids' => 'required|array', // Validar que se envíen categorías
+                'collection_ids' => 'required|array', // Validar que se envíen colecciones
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->back()->withErrors($e->errors())->withInput();
         }
 
-        // Procesar el archivo PDF si se subió uno nuevo
-        if ($request->hasFile('file')) {
-            // Eliminar el archivo anterior si existe
-            if ($book->file && Storage::disk('public')->exists($book->file)) {
-                Storage::disk('public')->delete($book->file);
+        // Buscar el libro a actualizar
+        $book = Book::findOrFail($book);
+
+        try {
+            // Procesar la imagen de portada si se subió una nueva
+            if ($request->hasFile('cover_photo')) {
+                // Eliminar la imagen anterior si existe
+                if ($book->cover_photo && Storage::disk('public')->exists($book->cover_photo)) {
+                    Storage::disk('public')->delete($book->cover_photo);
+                }
+                // Guardar la nueva imagen
+                $coverPhotoPath = $request->file('cover_photo')->store('covers', 'public');
+                $book->cover_photo = $coverPhotoPath;
             }
-            // Guardar el nuevo archivo
-            $filePath = $request->file('file')->store('files', 'public');
-            $book->file = $filePath;
+
+            // Procesar el archivo PDF si se subió uno nuevo
+            if ($request->hasFile('file')) {
+                // Eliminar el archivo anterior si existe
+                if ($book->file && Storage::disk('public')->exists($book->file)) {
+                    Storage::disk('public')->delete($book->file);
+                }
+                // Guardar el nuevo archivo
+                $filePath = $request->file('file')->store('files', 'public');
+                $book->file = $filePath;
+            }
+
+            // Actualizar los demás campos
+            $book->title = $request->title;
+            $book->description = $request->description;
+            $book->year = $request->year;
+            $book->keywords = $request->keywords;
+
+            // Guardar los cambios en la base de datos
+            $book->save();
+
+            $book->authors()->sync($request->author_ids);
+            $book->categories()->sync($request->category_ids);
+            $book->collections()->sync($request->collection_ids);
+
+
+            // Redirigir con un mensaje de éxito
+            return redirect("/books/{$book->id}")->with('success', 'Libro actualizado exitosamente.');
+        } catch (\Exception $e) {
+            // Manejar cualquier error inesperado
+            return redirect()->back()->with('error', 'Ocurrió un error al actualizar el libro: ' . $e->getMessage());
         }
-
-        // Actualizar los demás campos
-        $book->title = $request->title;
-        $book->description = $request->description;
-        $book->year = $request->year;
-        $book->keywords = $request->keywords;
-
-        // Guardar los cambios en la base de datos
-        $book->save();
-
-        $book->authors()->sync($request->author_ids);
-        $book->categories()->sync($request->category_ids);
-        $book->collections()->sync($request->collection_ids);
-
-
-        // Redirigir con un mensaje de éxito
-        return redirect("/books/{$book->id}")->with('success', 'Libro actualizado exitosamente.');
-    } catch (\Exception $e) {
-        // Manejar cualquier error inesperado
-        return redirect()->back()->with('error', 'Ocurrió un error al actualizar el libro: ' . $e->getMessage());
     }
-}
     public function destroy($book){
         $book = Book::find($book);
         $book->delete();

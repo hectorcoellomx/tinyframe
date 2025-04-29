@@ -27,7 +27,6 @@ class AuthController extends Controller
                 //'password' => 'admin', // Contraseña en texto plano (solo para este ejemplo)
                 'type' => 3, // Tipo de usuario (3 = administrador)
             ],
-            // Puedes agregar más usuarios aquí si lo necesitas
         ];
 
         // Buscar el usuario en el array
