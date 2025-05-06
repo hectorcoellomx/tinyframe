@@ -125,6 +125,9 @@
             <a href="{{ url('/lector-epub/' . basename($book->file)) }}" class="btn btn-outline-secondary">
                 <i class="bi bi-book"></i> Leer en línea
             </a>
+            <a href="{{ asset('storage/' . $book->file) }}" class="btn btn-outline-secondary" download>
+                <i class="bi bi-cloud-arrow-down"></i> Descargar Epub
+            </a>
             @else
                 <span class="text-muted">No disponible para lectura en línea</span>
             @endif
@@ -134,6 +137,7 @@
                 <i class="bi bi-book"></i> Leer en línea
             </a> --}}
         </div>
+        
     </div>
 </div>
 @endsection

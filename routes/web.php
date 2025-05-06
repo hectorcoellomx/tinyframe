@@ -21,9 +21,9 @@ use Illuminate\Support\Facades\Storage;
 
 //Route::get('/login',[AuthController::class, 'login']);
 
-Route::get('/books',function(){
-    return view('layouts.books');
-});
+// Route::get('/books',function(){
+//     return view('layouts.books');
+// });
 
 Route::get('/lector-example',function(){
     return view('epub.example');

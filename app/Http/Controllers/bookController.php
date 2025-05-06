@@ -212,7 +212,7 @@ class bookController extends Controller
     public function store(Request $request)
 {
     try {
-        // Validar los datos del formulario
+        
         $validatedData = $request->validate([
             'title' => 'required|string|max:200',
             'cover_photo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
@@ -288,19 +288,27 @@ class bookController extends Controller
         return view('books.show',compact('book', 'collections'));
     }
 
-    public function leerEpub($id)
+    public function leerEpub(Book $book)
     {
-        $book = Book::findOrFail($id); // Asume modelo Book
+        $archivo = basename($book->file);
+        return view('epub.lector-epub', compact('archivo'));
+        // $book = Book::findOrFail($id);
+        // $archivo = basename($book->file); // nombre de archivo como 'milibro.epub'
+    
+        // return view('epub.lector-epub', compact('archivo'));
+        // $book = Book::findOrFail($id); // Asume modelo Book
         
-        // Verifica que el archivo exista
-        if (!Storage::disk('public')->exists("files/{$book->file}")) {
-            abort(404);
-        }
+        // // Verifica que el archivo exista
+        // if (!Storage::disk('public')->exists("files/{$book->file}")) {
+        //     abort(404);
+        // }
 
-        return view('epub.lector-epub', [
-            'book' => $book,
-            'epubUrl' => asset("storage/files/{$book->file}")
-        ]);
+        
+
+        // return view('epub.lector-epub', [
+        //     'book' => $book,
+        //     'epubUrl' => asset("storage/files/{$book->file}")
+        // ]);
     }
 
     public function edit($book){
