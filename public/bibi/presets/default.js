@@ -23,7 +23,8 @@ Bibi.preset({
 "autostart-embedded"            : "no", // "yes" or "no" or "desktop" or "mobile" (It takes priority over "autostart" when the book is embedded in a webpage)
 "start-embedded-in-new-window"  : "mobile", // "yes" or "no" or "desktop" or "mobile" (It is used only when "autostart" (or "autostart-embedded") is NOT enabled)
 
-
+"use-full-size-in-iframe": true,   // deja que Bibi se acomode sin romper el iframe
+"start-in-new-window": false,
 //==============================================================================================================================================
 //-- UI / Design
 //----------------------------------------------------------------------------------------------------------------------------------------------

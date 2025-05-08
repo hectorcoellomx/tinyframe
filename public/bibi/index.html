@@ -1,46 +1,110 @@
 <!DOCTYPE html>
-
-
-
 <html id="bibi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>This E-Book is Published with Bibi | EPUB Reader on your website.</title>
+
+	<link id="bibi-style" rel="stylesheet" href="/bibi/resources/styles/bibi.css" />
+	<link id="bibi-dress" rel="stylesheet" href="/bibi/wardrobe/everyday/bibi.dress.css" />
+	<script id="bibi-script" src="/bibi/resources/scripts/bibi.js"></script>
+	<script id="bibi-preset" src="/bibi/presets/default.js" data-bibi-bookshelf=""></script>
 
 
-	<head>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const params = new URLSearchParams(window.location.search);
+            const bookURL = params.get("book");
 
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            if (bookURL) {
+                document.body.setAttribute("data-bibi-book", bookURL);
+            } else {
+                console.error("No se proporcionó el parámetro ?book= en la URL.");
+            }
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          const select = document.getElementById("theme-select");
+          const html = document.querySelector("html#bibi");
+      
+          // Aplicar tema guardado si existe
+          const savedTheme = localStorage.getItem("bibi-theme");
+          if (savedTheme) {
+            html.dataset.bibiTheme = savedTheme;
+            select.value = savedTheme;
+          }
+      
+          // Guardar nuevo tema
+          select.addEventListener("change", () => {
+            const theme = select.value;
+            html.dataset.bibiTheme = theme;
+            localStorage.setItem("bibi-theme", theme);
+          });
+        });
+      </script>
+      
+    <style>
+        html#bibi[data-bibi-theme="light"] {
+          --bibi-background: #ffffff;
+          --bibi-text-color: #000000;
+        }
+        html#bibi[data-bibi-theme="dark"] {
+          --bibi-background: #1a1a1a;
+          --bibi-text-color: #f0f0f0;
+        }
+        html#bibi[data-bibi-theme="sepia"] {
+          --bibi-background: #f4ecd8;
+          --bibi-text-color: #5b4636;
+        }
+      
+        body[data-bibi-ui] {
+          background-color: var(--bibi-background) !important;
+          color: var(--bibi-text-color) !important;
+        }
+      
+        #bibi-stage * {
+          background-color: var(--bibi-background) !important;
+          color: var(--bibi-text-color) !important;
+          transition: background-color 0.3s, color 0.3s;
+        }
+      </style>
+      
+</head>
 
-		<title>This E-Book is Published with Bibi | EPUB Reader on your website.</title>
+<body data-bibi-ui="full" data-bibi-book="">
+	<!-- <div id="bibi-stage" style="width:100%;height:100%;"></div>
+    <div style="position:fixed;top:10px;right:10px;z-index:9999;background:#fff;padding:6px 12px;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.2);font-family:sans-serif;">
+        <label for="theme-select">Tema:</label>
+        <select id="theme-select">
+            <option value="light">Claro</option>
+            <option value="dark">Oscuro</option>
+            <option value="sepia">Sepia</option>
+        </select>
+    </div>
 
-		<!-- # Bibi | EPUB Reader on your website. : © Satoru Matsushima - https://bibi.epub.link or https://github.com/satorumurmur/bibi / Licensed under the MIT License - https://github.com/satorumurmur/bibi/blob/master/LICENSE -->
+    <div id="theme-switcher" style="position: fixed; top: 10px; right: 10px; z-index: 9999; background: white; padding: 5px; border-radius: 5px;">
+        <label for="theme-select">Tema:</label>
+        <select id="theme-select">
+          <option value="light">Claro</option>
+          <option value="dark">Oscuro</option>
+          <option value="sepia">Sepia</option>
+        </select>
+    </div>
+       -->
+    
+    <div id="bibi-info">
+		
+        <h1>This E-Book is Published on the Web with Bibi | EPUB Reader on your website.</h1>
+        <ul>
+            <li><a href="https://bibi.epub.link">Bibi | EPUB Reader on your website. (Official Website / Japanese)</a></li>
+            <li><a href="https://github.com/satorumurmur/bibi">Bibi on GitHub (English)</a></li>
+        </ul>
+    </div>
 
-		<!-- 「わたしのことは『ビビ』と呼んでください。『ビビ』はわたしの名前なんです」 —— エレクトラ・パブリケーヌ『ビビのみぎくるぶし』 -->
-		<!-- 「まあ！　それじゃあやっぱり、『ビビ』はわたしの“名前”だったのですね？」 —— ソフィア・パインアイランド『ビビさんたちのこと』 -->
-		<!-- 「このあたりにビビさんという人がいると聞いて来たのですが、あなたですか？」 —— ビビ・ララルー『ポケットに眼鏡』 -->
-
-		<link id="bibi-style" rel="stylesheet" href="resources/styles/bibi.css" />
-		<link id="bibi-dress" rel="stylesheet" href="wardrobe/everyday/bibi.dress.css" />
-		<script id="bibi-script" src="resources/scripts/bibi.js"></script>
-		<script id="bibi-preset" src="presets/default.js" data-bibi-bookshelf=""></script>
-
-	</head>
-
-
-	<body data-bibi-book="">
-
-		<div id="bibi-info">
-			<h1>This E-Book is Published on the Web with Bibi | EPUB Reader on your website.</h1>
-			<ul>
-				<li><a href="https://bibi.epub.link">Bibi | EPUB Reader on your website. (Official Website / Japanese)</a></li>
-				<li><a href="https://github.com/satorumurmur/bibi">Bibi on GitHub (English)</a></li>
-			</ul>
-		</div>
-
-		<div id="bibi-book-data" data-bibi-book-mimetype="application/epub+zip" hidden="hidden">
-		</div>
-
-	</body>
-
-
+    <div id="bibi-book-data" data-bibi-book-mimetype="application/epub+zip" hidden="hidden"></div>
+</body>
 </html>
