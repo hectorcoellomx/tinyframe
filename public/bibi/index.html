@@ -26,52 +26,7 @@
             }
         });
     </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-          const select = document.getElementById("theme-select");
-          const html = document.querySelector("html#bibi");
-      
-          // Aplicar tema guardado si existe
-          const savedTheme = localStorage.getItem("bibi-theme");
-          if (savedTheme) {
-            html.dataset.bibiTheme = savedTheme;
-            select.value = savedTheme;
-          }
-      
-          // Guardar nuevo tema
-          select.addEventListener("change", () => {
-            const theme = select.value;
-            html.dataset.bibiTheme = theme;
-            localStorage.setItem("bibi-theme", theme);
-          });
-        });
-      </script>
-      
-    <style>
-        html#bibi[data-bibi-theme="light"] {
-          --bibi-background: #ffffff;
-          --bibi-text-color: #000000;
-        }
-        html#bibi[data-bibi-theme="dark"] {
-          --bibi-background: #1a1a1a;
-          --bibi-text-color: #f0f0f0;
-        }
-        html#bibi[data-bibi-theme="sepia"] {
-          --bibi-background: #f4ecd8;
-          --bibi-text-color: #5b4636;
-        }
-      
-        body[data-bibi-ui] {
-          background-color: var(--bibi-background) !important;
-          color: var(--bibi-text-color) !important;
-        }
-      
-        #bibi-stage * {
-          background-color: var(--bibi-background) !important;
-          color: var(--bibi-text-color) !important;
-          transition: background-color 0.3s, color 0.3s;
-        }
-      </style>
+   
       
 </head>
 
