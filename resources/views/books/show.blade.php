@@ -98,9 +98,20 @@
     </div>
 
     <div class="book-title">{{ $book->title }}</div>
-    <div class="book-author">
+    {{-- <div class="book-author">
         <i class="bi bi-person-circle"></i> {{ $book->author ?? 'Autor desconocido' }}
+    </div> --}}
+    <div class="book-author">
+        <i class="bi bi-person-circle"></i>
+        @if($book->authors->count())
+            @foreach($book->authors as $author)
+                {{ $author->name }}@if(!$loop->last), @endif
+            @endforeach
+        @else
+            Autor desconocido
+        @endif
     </div>
+
 
     <div class="book-description">
         {{ $book->description }}
@@ -109,12 +120,32 @@
     <div class="row book-meta mt-4">
         <div class="col-md-6">
             <p><span class="meta-label">Título en inglés:</span> {{ $book->title_en ?? 'N/A' }}</p>
-            <p><span class="meta-label">Categorías:</span>            </p>
+            <p><span class="meta-label">Collecciones:</span>  
+                
+                @if($book->collections->count())
+                    @foreach($book->collections as $collection)
+                        {{ $collection->name }}@if(!$loop->last), @endif
+                @endforeach
+                @else
+                    Sin colecciones
+                @endif
+                
+            </p>
             <p><span class="meta-label">Idioma:</span> {{ $book->language ?? 'Español' }}</p>
         </div>
         <div class="col-md-6">
-            <p><span class="meta-label">Formato:</span> {{ $book->format ?? 'Desconocido' }}</p>
+            {{-- <p><span class="meta-label">Formato:</span> {{ $book->format  }}</p> --}}
             <p><span class="meta-label">Código:</span> {{ $book->code ?? 'N/A' }}</p>
+            <p><span class="meta-label">Categorías:</span>
+                    {{-- <i class="bi bi-person-circle"></i> --}}
+                @if($book->categories->count())
+                    @foreach($book->categories as $category)
+                        {{ $category->name }}@if(!$loop->last), @endif
+                    @endforeach
+                @else                        Sin categorias
+                @endif
+                
+            </p>
         </div>
     </div>
 

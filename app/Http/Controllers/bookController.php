@@ -281,9 +281,9 @@ class bookController extends Controller
    
 
     public function ver($book){
-        $collections = Collection::all();
-        $book = Book::find($book);
-        
+        // $collections = Collection::all();
+        // $book = Book::find($book);
+        $book = Book::with('authors','collections')->findOrFail($book);
         //return $book;
         return view('books.show',compact('book', 'collections'));
     }
