@@ -6,6 +6,7 @@ use App\Http\Controllers\bookController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\LibraryController;
+use App\Http\Controllers\LookBookController;
 use App\Http\Controllers\UserController;
 use App\Models\Author;
 use App\Models\Category;
@@ -42,6 +43,10 @@ Route::middleware('auth.custom')->group(function () {
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
 });
 
+// Route::get('/books-public',function(){
+//     return view('books');
+// });
+Route::get('/books-public',[LookBookController::class, 'index'])->name('books');
 
 
 Route::get('/lector-epub/{archivo}', function ($archivo) {
