@@ -13,6 +13,19 @@ class LookBookController extends Controller
         $books = Book::all();
         $collections = Collection::all();
         $categories = Category::all();
+        
         return view('books',compact('books', 'collections', 'categories'));
+    } 
+
+    public function search($book){
+        
+        $book = Book::find($book);
+        $collections  = Collection::all();
+        $categories = Category::all();
+
+        $selectedCollections = $book->collections->pluck('id')->toArray();
+        $selectedCategories = $book->categories->pluck('id')->toArray();
+
+        return view('books', compact('book','selectedCollections', 'selectedCategories'));
     }
 }
