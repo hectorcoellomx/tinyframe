@@ -9,61 +9,23 @@
     <link rel="stylesheet" href="{{ asset('css/lookbook.css') }}">
   </head>
   <body class="light-mode">
+    <nav class="navbar sticky-top navbar-light bg-dark">
+        <div class="d-flex justify-content-between">
+          <a class="navbar-brand" href="#">Navbar</a>
+          <form class="form-inline">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+    </nav>
     <div class="container my-4">
             <nav class="navbar navbar-light bg-light px-4 mb-3 justify-content-end">
     <button id="toggle-theme" class="btn btn-outline-dark">
         <i class="bi bi-moon-fill"></i> Modo oscuro
     </button>
     </nav>
-    <!-- Filtros -->
-    {{-- <form method="GET" action="{{ url('/libros') }}" class="mb-4">
-    <div class="row g-3">
-        <div class="col-md-6">
-        <label for="collections" class="form-label">Filtrar por colecciones</label>
-        <select name="collections[]" id="collections" class="form-select" multiple>
-            @foreach ($collections as $collection)
-            <option value="{{ $collection->id }}" {{ collect(request('collections'))->contains($collection->id) ? 'selected' : '' }}>
-                {{ $collection->name }}
-            </option>
-            @endforeach
-        </select>
-        </div>
 
-        <div class="col-md-6">
-        <label for="categories" class="form-label">Filtrar por categorías</label>
-        <select name="categories[]" id="categories" class="form-select" multiple>
-            @foreach ($categories as $category)
-            <option value="{{ $category->id }}" {{ collect(request('categories'))->contains($category->id) ? 'selected' : '' }}>
-                {{ $category->name }}
-            </option>
-            @endforeach
-        </select>
-        </div>
-
-        <div class="col-12 text-end">
-        <button type="submit" class="btn btn-primary">
-            <i class="bi bi-filter"></i> Aplicar filtros
-        </button>
-        </div>
-    </div>
-    </form> --}}
-
-
-      <!-- Buscador -->
-      {{-- <div class="row mb-4">
-        <div class="col-md-6 mx-auto">
-          <form method="GET" action="{{ url('/libros') }}">
-            <div class="input-group shadow-sm">
-              <input type="text" name="search" class="form-control" placeholder="Buscar libro por título..." value="{{ request('search') }}">
-              <button class="btn btn-outline-primary" type="submit">
-                <i class="bi bi-search"></i>
-              </button>
-            </div>
-          </form>
-        </div>
-      </div> --}}
-
-      <!-- Libros -->
+    
       <div class="row-cols-2">
         <div class="col">
             <select class="card h-100 shadow-sm hover-card" name="tittle" id="tittle">
@@ -77,7 +39,7 @@
         </div>
 
         <div class="col">
-             <select class="card h-100 shadow-sm hover-card" name="tittle" id="tittle">
+             <select class="card h-100 shadow-sm" name="tittle" id="tittle">
                 @foreach ($categories as $category)
                     <option value="">
                         {{ $category->name }}
@@ -136,6 +98,7 @@
     });
     </script>
 
+  
   </body>
 </html>
 
