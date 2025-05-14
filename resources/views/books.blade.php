@@ -9,15 +9,16 @@
     <link rel="stylesheet" href="{{ asset('css/lookbook.css') }}">
   </head>
   <body class="light-mode">
-    <nav class="navbar sticky-top navbar-light bg-dark">
-        <div class="d-flex justify-content-between">
-          <a class="navbar-brand" href="#">Navbar</a>
-          <form class="form-inline">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-          </form>
-        </div>
+    <nav class="navbar sticky-top navbar-dark bg-dark px-4">
+      <div class="container-fluid d-flex justify-content-between align-items-center">
+        <a class="navbar-brand" href="{{ route('books') }}">LeeUnach</a>
+        <form class="d-flex ms-auto" method="GET" action="{{ route('books') }}">
+          <input class="form-control form-control-sm me-2" style="width: 200px;" type="search" name="search" placeholder="Buscar por título" value="{{ request('search') }}">
+          <button class="btn btn-outline-success btn-sm" type="submit">Buscar</button>
+        </form>
+      </div>
     </nav>
+
     <div class="container my-4">
             <nav class="navbar navbar-light bg-light px-4 mb-3 justify-content-end">
     <button id="toggle-theme" class="btn btn-outline-dark">
@@ -25,34 +26,103 @@
     </button>
     </nav>
 
-    
-      <div class="row-cols-2">
-        <div class="col">
-            <select class="card h-100 shadow-sm hover-card" name="tittle" id="tittle">
+    <form method="GET" action="{{ route('books') }}">
+      <div class="row mb-4">
+        <div class="col-md-5">
+          <div class="accordion">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+              <span>Colecciones</span>
+            </div>
+            <div class="accordion-body">
+              <div class="genre-checkbox">
+                <label>
+                  <input type="checkbox" id="select-all-collections"> Todas las colecciones
+                </label>
                 @foreach ($collections as $collection)
-                    <option value="">
-                        {{ $collection->name }}
-                    </option>
-                    
+                  <label>
+                    <input type="checkbox" name="collections[]" value="{{ $collection->id }}"
+                      {{ in_array($collection->id, request('collections', [])) ? 'checked' : '' }}>
+                    {{ $collection->name }}
+                  </label>
                 @endforeach
-            </select>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div class="col">
-             <select class="card h-100 shadow-sm" name="tittle" id="tittle">
+        <div class="col-md-5">
+          <div class="accordion">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+              <span>Categorías</span>
+            </div>
+            <div class="accordion-body">
+              <div class="genre-checkbox">
+                <label>
+                  <input type="checkbox" id="select-all-categories"> Todas las categorías
+                </label>
                 @foreach ($categories as $category)
-                    <option value="">
-                        {{ $category->name }}
-                    </option>
-                    
+                  <label>
+                    <input type="checkbox" name="categories[]" value="{{ $category->id }}"
+                      {{ in_array($category->id, request('categories', [])) ? 'checked' : '' }}>
+                    {{ $category->name }}
+                  </label>
                 @endforeach
-            </select>
+              </div>
+            </div>
+          </div>
         </div>
-        
 
-       
-
+        <div class="col d-flex align-items-end">
+          <button class="btn btn-outline-primary w-100" type="submit">Filtrar</button>
+        </div>
       </div>
+    </form>
+
+    
+      {{-- <form method="GET" action="{{ route('books') }}">
+        <div class="row mb-4">
+          <div class="col">
+            <div class="accordion">
+              <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span>Colecciones</span>
+                </div>
+                <div class="accordion-body">
+                <div class="genre-checkbox">
+                @foreach ($collections as $collection)
+                  <label>
+                    <input type="checkbox" name="collections[]" value="{{ $collection->id }}"
+                      {{ in_array($collection->id, request('collections', [])) ? 'checked' : '' }}>
+                    {{ $collection->name }}
+                  </label>
+                @endforeach
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="accordion">
+              <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span>Categorias</span>
+              </div>
+              <div class="accordion-body">
+              <div class="genre-checkbox">
+                @foreach ($categories as $category)
+                  <label>
+                    <input type="checkbox" name="categories[]" value="{{ $category->id }}"
+                      {{ in_array($category->id, request('categories', [])) ? 'checked' : '' }}>
+                    {{ $category->name }}
+                  </label>
+                @endforeach
+              </div>
+            </div>
+          </div>
+          </div>
+          
+          <div class="col d-flex align-items-end">
+            <button class="btn btn-outline-primary" type="submit">Filtrar</button>
+          </div>
+        </div>
+      </form> --}}
+
       <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-4">
         @foreach ($books as $book)
           <div class="col">
@@ -72,32 +142,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-    const body = document.body;
-    const toggleBtn = document.getElementById('toggle-theme');
-    const currentTheme = localStorage.getItem('theme');
-
-    if (currentTheme === 'dark') {
-        body.classList.replace('light-mode', 'dark-mode');
-        toggleBtn.innerHTML = '<i class="bi bi-sun-fill"></i> Modo claro';
-        toggleBtn.classList.replace('btn-outline-dark', 'btn-outline-light');
-    }
-
-    toggleBtn.addEventListener('click', () => {
-        if (body.classList.contains('light-mode')) {
-        body.classList.replace('light-mode', 'dark-mode');
-        toggleBtn.innerHTML = '<i class="bi bi-sun-fill"></i> Modo claro';
-        toggleBtn.classList.replace('btn-outline-dark', 'btn-outline-light');
-        localStorage.setItem('theme', 'dark');
-        } else {
-        body.classList.replace('dark-mode', 'light-mode');
-        toggleBtn.innerHTML = '<i class="bi bi-moon-fill"></i> Modo oscuro';
-        toggleBtn.classList.replace('btn-outline-light', 'btn-outline-dark');
-        localStorage.setItem('theme', 'light');
-        }
-    });
-    </script>
-
+    <script src="{{ asset('js/lookbook.js') }}"></script>
   
   </body>
 </html>

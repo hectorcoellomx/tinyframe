@@ -15,16 +15,6 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Storage;
 
 
-// Route::get('/',function(){
-//     return view('users.index');
-// });
-//Route::get('/',[UserController::class,'index']);
-
-//Route::get('/login',[AuthController::class, 'login']);
-
-// Route::get('/books',function(){
-//     return view('layouts.books');
-// });
 
 Route::get('/lector-example',function(){
     return view('epub.example');
@@ -50,7 +40,7 @@ Route::get('/books-public',[LookBookController::class, 'index'])->name('books');
 
 
 Route::get('/lector-epub/{archivo}', function ($archivo) {
-    $safeFile = basename($archivo); // Previene directory traversal
+    $safeFile = basename($archivo); 
     
     $path = 'files/' . $safeFile;
     
