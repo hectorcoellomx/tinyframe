@@ -148,66 +148,7 @@ class bookController extends Controller
         $authors = Author::all();
         return view('books.create',compact('collections', 'categories', 'authors'));
     }
-    // public function store(Request $request)
-    // {
-    //     // dd($request->all());
-    //     try {
-             
-    //     $validatedData = $request->validate([
-    //         'title' => 'required|string|max:200',
-    //         'cover_photo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-    //         'description' => 'required|string|max:900',
-    //         'file' => 'required|mimes:epub|max:10000',
-    //         'year' => 'required|integer|min:1900|max:' . date('Y'),
-    //         'keywords' => 'required|string|max:200',
-    //         'author_ids' => 'required|array', // Validar que se envíen autores
-    //         'collection_ids' => 'required|array', // Validar que se envíen categorías
-    //     ]);
-    //     //dd( $validatedData);
-
-
-    //     } catch (\Illuminate\Validation\ValidationException $e) {
-    //         dd($e->errors());
-
-    //     }
-    //     // $coverPhotoPath = $request->file('cover_photo')->store('covers', 'public');
-    //     // $filePath = $request->file('file')->store('files', 'public');
-    //     try {
-    //         $coverPhotoPath = $request->file('cover_photo')->store('covers', 'public');
-    //     $filePath = $request->file('file')->store('files', 'public');
-        
-
-    //     $book = Book::create([
-    //         'id' => Str::uuid(),
-    //         'title' => $request->title,
-    //         'cover_photo' => $coverPhotoPath,
-    //         'description' => $request->description,
-    //         'file' => $filePath,
-    //         'year' => $request->year,
-    //         'keywords' => $request->keywords,
-    //         'status' => 1,
-    //     ]);
-
-    //     //dd($book);
-
-    //     return redirect('/books')->with('success', 'Libro creado exitosamente.');
-
-    //     }  catch (\Exception $e) {
-    //         dd('Error: ' . $e->getMessage());
-    //     }
-
-    //      // Asociar el libro con autores
-    //      $book->authors()->attach($request->author_ids);
-
-    //      // Asociar el libro con categorías
-    //      $book->categories()->attach($request->category_ids);
- 
-    //      // Asociar el libro con colecciones
-    //      $book->collections()->attach($request->collection_ids);
-       
-        
-
-    // }
+   
 
     public function store(Request $request)
 {
@@ -285,30 +226,13 @@ class bookController extends Controller
         // $book = Book::find($book);
         $book = Book::with('authors','collections')->findOrFail($book);
         //return $book;
-        return view('books.show',compact('book', 'collections'));
+        return view('books.show',compact('book'));
     }
 
     public function leerEpub(Book $book)
     {
         $archivo = basename($book->file);
         return view('epub.lector-epub', compact('archivo'));
-        // $book = Book::findOrFail($id);
-        // $archivo = basename($book->file); // nombre de archivo como 'milibro.epub'
-    
-        // return view('epub.lector-epub', compact('archivo'));
-        // $book = Book::findOrFail($id); // Asume modelo Book
-        
-        // // Verifica que el archivo exista
-        // if (!Storage::disk('public')->exists("files/{$book->file}")) {
-        //     abort(404);
-        // }
-
-        
-
-        // return view('epub.lector-epub', [
-        //     'book' => $book,
-        //     'epubUrl' => asset("storage/files/{$book->file}")
-        // ]);
     }
 
     public function edit($book){

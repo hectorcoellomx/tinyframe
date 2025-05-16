@@ -9,6 +9,10 @@
     <link rel="stylesheet" href="{{ asset('css/lookbook.css') }}">
   </head>
   <body class="light-mode">
+    @php
+      $filtersActive = request()->has('search') || request()->has('collections') || request()->has('categories');
+    @endphp
+
     <nav class="navbar sticky-top navbar-dark bg-dark px-4">
       <div class="container-fluid d-flex justify-content-between align-items-center">
         <a class="navbar-brand" href="{{ route('books') }}">LeeUnach</a>
@@ -21,62 +25,78 @@
 
     <div class="container my-4">
             <nav class="navbar navbar-light bg-light px-4 mb-3 justify-content-end">
-    <button id="toggle-theme" class="btn btn-outline-dark">
-        <i class="bi bi-moon-fill"></i> Modo oscuro
-    </button>
+      <button id="toggle-theme" class="btn btn-outline-dark">
+          <i class="bi bi-moon-fill"></i> Modo oscuro
+      </button>
+    
     </nav>
-
-    <form method="GET" action="{{ route('books') }}">
-      <div class="row mb-4">
-        <div class="col-md-5">
-          <div class="accordion">
-            <div class="accordion-header" onclick="toggleAccordion(this)">
-              <span>Colecciones</span>
-            </div>
-            <div class="accordion-body">
-              <div class="genre-checkbox">
-                <label>
-                  <input type="checkbox" id="select-all-collections"> Todas las colecciones
-                </label>
-                @foreach ($collections as $collection)
-                  <label>
-                    <input type="checkbox" name="collections[]" value="{{ $collection->id }}"
-                      {{ in_array($collection->id, request('collections', [])) ? 'checked' : '' }}>
-                    {{ $collection->name }}
-                  </label>
-                @endforeach
-              </div>
-            </div>
+    <div class="row mb-4">
+      <div class="col-md-5">
+        @if (!$filtersActive)
+          <div class="col d-flex align-items-end">
+            <button id="fitoggle" class="btn btn-outline-primary w-100" type="button">Filtrar</button>
           </div>
-        </div>
-
-        <div class="col-md-5">
-          <div class="accordion">
-            <div class="accordion-header" onclick="toggleAccordion(this)">
-              <span>Categorías</span>
-            </div>
-            <div class="accordion-body">
-              <div class="genre-checkbox">
-                <label>
-                  <input type="checkbox" id="select-all-categories"> Todas las categorías
-                </label>
-                @foreach ($categories as $category)
-                  <label>
-                    <input type="checkbox" name="categories[]" value="{{ $category->id }}"
-                      {{ in_array($category->id, request('categories', [])) ? 'checked' : '' }}>
-                    {{ $category->name }}
-                  </label>
-                @endforeach
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col d-flex align-items-end">
-          <button class="btn btn-outline-primary w-100" type="submit">Filtrar</button>
-        </div>
+        @endif
       </div>
-    </form>
+
+    </div>
+    <div div id="filter-form" style="display: {{ $filtersActive ? 'block' : 'none' }};">
+      <form method="GET" action="{{ route('books') }}">
+        <div class="row mb-4">
+          <div class="col-md-5">
+            <div class="accordion">
+              <div class="accordion-header">
+                <span>Colecciones</span>
+              </div>
+              <div class="accordion-body show">
+                <div class="genre-checkbox">
+                  <label>
+                    <input type="checkbox" id="select-all-collections"> Todas las colecciones
+                  </label>
+                  @foreach ($collections as $collection)
+                    <label>
+                      <input type="checkbox" class="collection-checkbox" name="collections[]" value="{{ $collection->id }}"
+                        {{ in_array($collection->id, request('collections', [])) ? 'checked' : '' }}>
+                      {{ $collection->name }}
+                    </label>
+                  @endforeach
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-5">
+            <div class="accordion">
+              <div class="accordion-header">
+                <span>Categorías</span>
+              </div>
+              <div class="accordion-body show">
+                <div class="genre-checkbox">
+                  <label>
+                    <input type="checkbox" id="select-all-categories"> Todas las categorías
+                  </label>
+                  @foreach ($categories as $category)
+                    <label>
+                      <input type="checkbox" class="category-checkbox" name="categories[]" value="{{ $category->id }}"
+                        {{ in_array($category->id, request('categories', [])) ? 'checked' : '' }}>
+                      {{ $category->name }}
+                    </label>
+                  @endforeach
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col d-flex align-items-end">
+            <button id="filter-close" class="btn btn-outline-primary w-100" type="button">Cerrar</button>
+          </div>
+          <div class="col d-flex align-items-end">
+            <button class="btn btn-outline-primary w-100" type="submit">Aplicar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    
 
     
       {{-- <form method="GET" action="{{ route('books') }}">

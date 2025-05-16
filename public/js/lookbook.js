@@ -1,6 +1,7 @@
     const body = document.body;
     const toggleBtn = document.getElementById('toggle-theme');
     const currentTheme = localStorage.getItem('theme');
+    const fitoggleBtn = document.getElementById('fitoggle');
 
     if (currentTheme === 'dark') {
         body.classList.replace('light-mode', 'dark-mode');
@@ -22,13 +23,7 @@
         }
     });
 
-    function toggleAccordion(header) {
-        const body = header.nextElementSibling;
-        body.classList.toggle("show");
-        const arrow = header.querySelector("span:last-child");
-        arrow.textContent = body.classList.contains("show") ? "▲" : "▼";
-    }
-
+    
     // === Selección de filtros ===
     document.addEventListener('DOMContentLoaded', function () {
         // COLECCIONES
@@ -36,18 +31,18 @@
         const collectionCheckboxes = document.querySelectorAll('.collection-checkbox');
 
         if (selectAllCollections) {
-        selectAllCollections.addEventListener('change', function () {
-            if (this.checked) {
-            collectionCheckboxes.forEach(cb => cb.checked = false);
-            }
-        });
-
-        collectionCheckboxes.forEach(cb => {
-            cb.addEventListener('change', () => {
-            if (cb.checked) {
-                selectAllCollections.checked = false;
-            }
+            selectAllCollections.addEventListener('change', function () {
+                if (this.checked) {
+                collectionCheckboxes.forEach(cb => cb.checked = false);
+                }
             });
+
+            collectionCheckboxes.forEach(cb => {
+                cb.addEventListener('change', () => {
+                if (cb.checked) {
+                    selectAllCollections.checked = false;
+                }
+                });
         });
         }
 
@@ -56,18 +51,39 @@
         const categoryCheckboxes = document.querySelectorAll('.category-checkbox');
 
         if (selectAllCategories) {
-        selectAllCategories.addEventListener('change', function () {
-            if (this.checked) {
-            categoryCheckboxes.forEach(cb => cb.checked = false);
-            }
-        });
-
-        categoryCheckboxes.forEach(cb => {
-            cb.addEventListener('change', () => {
-            if (cb.checked) {
-                selectAllCategories.checked = false;
-            }
+            selectAllCategories.addEventListener('change', function () {
+                if (this.checked) {
+                categoryCheckboxes.forEach(cb => cb.checked = false);
+                }
             });
+
+            categoryCheckboxes.forEach(cb => {
+                cb.addEventListener('change', () => {
+                if (cb.checked) {
+                    selectAllCategories.checked = false;
+                }
+                });
         });
         }
+        const fitoggleBtn = document.getElementById('fitoggle');
+        const filterForm = document.getElementById('filter-form');
+        const closeBtn = document.getElementById('filter-close');
+
+        if (fitoggleBtn) {
+        fitoggleBtn.addEventListener('click', function () {
+            filterForm.style.display = 'block';
+            fitoggleBtn.style.display = 'none';
+            });
+        }
+
+    // Ocultar filtros al hacer clic en "Cerrar"
+        if (closeBtn) {
+            closeBtn.addEventListener('click', function () {
+                filterForm.style.display = 'none';
+                if (fitoggleBtn) {
+                    fitoggleBtn.style.display = 'block';
+                }
+            });
+    }
+       
     });
