@@ -32,13 +32,14 @@
     </nav>
     <div class="row mb-4">
       <div class="col-md-5">
-        @if (!$filtersActive)
           <div class="col d-flex align-items-end">
-            <button id="fitoggle" class="btn btn-outline-primary w-100" type="button">Filtrar</button>
+            <button id="fitoggle" 
+              class="btn btn-outline-primary w-100" 
+              type="button"
+              style="display: {{ $filtersActive ? 'none' : 'block' }};">
+              Filtrar</button>
           </div>
-        @endif
       </div>
-
     </div>
     <div div id="filter-form" style="display: {{ $filtersActive ? 'block' : 'none' }};">
       <form method="GET" action="{{ route('books') }}">
