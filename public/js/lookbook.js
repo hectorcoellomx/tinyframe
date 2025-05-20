@@ -30,18 +30,21 @@
         const selectAllCollections = document.getElementById('select-all-collections');
         const collectionCheckboxes = document.querySelectorAll('.collection-checkbox');
 
+        updateFilterCount(); 
+
         if (selectAllCollections) {
             selectAllCollections.addEventListener('change', function () {
                 if (this.checked) {
                 collectionCheckboxes.forEach(cb => {
                     cb.checked = false;
-                    cb.disabled = true;
+                    updateFilterCount();
+                    // cb.disabled = true;
                     }
                 );
                 }
                 else{
                     collectionCheckboxes.forEach(cb =>{
-                        cb.disabled = false;
+                        // cb.disabled = false;
                     });
                 }
             });
@@ -68,12 +71,13 @@
                 if (this.checked) {
                 categoryCheckboxes.forEach(cb => {
                     cb.checked = false;
-                    cb.disabled = true;
+                    updateFilterCount();
+                    // cb.disabled = true;
                 });
                 }
                 else{
                     categoryCheckboxes.forEach(cb => {
-                        cb.disabled = false;
+                        // cb.disabled = false;
                     })
                 }
             });
@@ -84,7 +88,8 @@
                     selectAllCategories.checked = false;
 
                     collectionCheckboxes.forEach(cb => {
-                        cb.disabled = false;
+                        
+                        // cb.disabled = false;
                     });
                 }
                 });
@@ -128,7 +133,33 @@
                     fitoggleBtn.style.display = 'block';
                 }
             });
-    }
+        }
+
+        function updateFilterCount() {
+            const collectionChecks = document.querySelectorAll('.collection-checkbox');
+            const categoryChecks = document.querySelectorAll('.category-checkbox');
+            
+            let activeCount = 0;
+
+            collectionChecks.forEach(cb => {
+                if (cb.checked) activeCount++;
+            });
+
+            categoryChecks.forEach(cb => {
+                if (cb.checked) activeCount++;
+            });
+
+            const badge = document.getElementById('filter-count');
+
+            if (activeCount > 0) {
+                badge.textContent = activeCount;
+                badge.style.display = 'inline-block';
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+
+        
         
        
     });

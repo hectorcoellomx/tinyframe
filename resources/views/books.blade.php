@@ -38,7 +38,7 @@
               class="btn btn-outline-primary w-100" 
               type="button"
               style="display: {{ $filtersActive ? 'none' : 'inline-block' }}; min-width: 140px; height: 42px">
-              Filtrar
+              Filtrar<span id="filter-count" class="badge bg-primary ms-1" style="display: none;">0</span>
           </button>
 
           <button id="toggle-theme" class="btn btn-outline-dark" style="min-width: 140px; height: 42px; white-space: nowrap;">
@@ -58,7 +58,7 @@
               <div class="accordion-body show">
                 <div class="genre-checkbox">
                   <label>
-                    <input type="checkbox" id="select-all-collections" name="collections[]" value=""> Todas las colecciones
+                    {{-- <input type="checkbox" id="select-all-collections" name="collections[]" value=""> Todas las colecciones --}}
                   </label>
                   @foreach ($collections as $collection)
                     <label>
@@ -80,7 +80,7 @@
               <div class="accordion-body show">
                 <div class="genre-checkbox">
                   <label>
-                    <input type="checkbox" id="select-all-categories" name="categories[]" value=""> Todas las categorías
+                    {{-- <input type="checkbox" id="select-all-categories" name="categories[]" value=""> Todas las categorías --}}
                   </label>
                   @foreach ($categories as $category)
                     <label>
@@ -133,6 +133,12 @@
             </div>
           </div>
         @endforeach
+        @if ($books->isEmpty())
+          <div class="alert alert-warning text-center w-100 mt-4" role="alert">
+            <i class="bi bi-exclamation-circle"></i> No se encontraron libros.
+          </div>
+        @endif
+
       </div>
       
     </div>
