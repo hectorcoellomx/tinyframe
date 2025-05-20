@@ -10,8 +10,15 @@
   </head>
   <body class="light-mode">
     @php
+    $filtersActive = !session('filters_applied') && (
+      request()->has('search') || request()->has('collections') || request()->has('categories')
+    );
+  @endphp
+
+
+    {{-- @php
       $filtersActive = request()->has('search') || request()->has('collections') || request()->has('categories');
-    @endphp
+    @endphp --}}
 
     <nav class="navbar sticky-top navbar-dark bg-dark px-4">
       <div class="container-fluid d-flex justify-content-between align-items-center">
@@ -24,23 +31,22 @@
     </nav>
 
     <div class="container my-4">
-            <nav class="navbar navbar-light bg-light px-4 mb-3 justify-content-end">
-      <button id="toggle-theme" class="btn btn-outline-dark">
-          <i class="bi bi-moon-fill"></i> Modo oscuro
-      </button>
-    
-    </nav>
-    <div class="row mb-4">
-      <div class="col-md-5">
-          <div class="col d-flex align-items-end">
-            <button id="fitoggle" 
+      <nav class="navbar navbar-light bg-light px-4 mb-3 justify-content-end">
+      
+        <div class="d-flex gap-2">
+          <button id="fitoggle" 
               class="btn btn-outline-primary w-100" 
               type="button"
-              style="display: {{ $filtersActive ? 'none' : 'block' }};">
-              Filtrar</button>
-          </div>
-      </div>
-    </div>
+              style="display: {{ $filtersActive ? 'none' : 'inline-block' }}; min-width: 140px; height: 42px">
+              Filtrar
+          </button>
+
+          <button id="toggle-theme" class="btn btn-outline-dark" style="min-width: 140px; height: 42px; white-space: nowrap;">
+            <i class="bi bi-moon-fill"></i> Modo oscuro
+          </button>
+        </div>
+        
+      </nav>
     <div div id="filter-form" style="display: {{ $filtersActive ? 'block' : 'none' }};">
       <form method="GET" action="{{ route('books') }}">
         <div class="row mb-4">
@@ -52,7 +58,7 @@
               <div class="accordion-body show">
                 <div class="genre-checkbox">
                   <label>
-                    <input type="checkbox" id="select-all-collections"> Todas las colecciones
+                    <input type="checkbox" id="select-all-collections" name="collections[]" value=""> Todas las colecciones
                   </label>
                   @foreach ($collections as $collection)
                     <label>
@@ -74,7 +80,7 @@
               <div class="accordion-body show">
                 <div class="genre-checkbox">
                   <label>
-                    <input type="checkbox" id="select-all-categories"> Todas las categorías
+                    <input type="checkbox" id="select-all-categories" name="categories[]" value=""> Todas las categorías
                   </label>
                   @foreach ($categories as $category)
                     <label>
@@ -87,62 +93,30 @@
               </div>
             </div>
           </div>
-
-          <div class="col d-flex align-items-end">
-            <button id="filter-close" class="btn btn-outline-primary w-100" type="button">Cerrar</button>
-          </div>
-          <div class="col d-flex align-items-end">
-            <button class="btn btn-outline-primary w-100" type="submit">Aplicar</button>
-          </div>
         </div>
-      </form>
-    </div>
-    
 
-    
-      {{-- <form method="GET" action="{{ route('books') }}">
-        <div class="row mb-4">
-          <div class="col">
-            <div class="accordion">
-              <div class="accordion-header" onclick="toggleAccordion(this)">
-                <span>Colecciones</span>
-                </div>
-                <div class="accordion-body">
-                <div class="genre-checkbox">
-                @foreach ($collections as $collection)
-                  <label>
-                    <input type="checkbox" name="collections[]" value="{{ $collection->id }}"
-                      {{ in_array($collection->id, request('collections', [])) ? 'checked' : '' }}>
-                    {{ $collection->name }}
-                  </label>
-                @endforeach
-              </div>
-            </div>
+        <div class="container my-4">
+          <nav class="navbar navbar-light bglight px-4 mb-3 justify-content-end">
+            <div class="d-flex gap-2">
+              <button id="filter-close" class="btn btn-outline-primary w-100" type="button" style="min-width: 110px; height: 42px;">Cerrar</button>
+
+              <button id="apply-filters" class="btn btn-outline-primary w-100" type="submit" style="min-width: 110px; height: 42px;">Aplicar</button>
           </div>
-          <div class="col">
-            <div class="accordion">
-              <div class="accordion-header" onclick="toggleAccordion(this)">
-                <span>Categorias</span>
-              </div>
-              <div class="accordion-body">
-              <div class="genre-checkbox">
-                @foreach ($categories as $category)
-                  <label>
-                    <input type="checkbox" name="categories[]" value="{{ $category->id }}"
-                      {{ in_array($category->id, request('categories', [])) ? 'checked' : '' }}>
-                    {{ $category->name }}
-                  </label>
-                @endforeach
-              </div>
-            </div>
-          </div>
+          </nav>
+        </div>
+        {{-- <div class="row align-items-end">
+          <div class="col d-flex">
+            
           </div>
           
-          <div class="col d-flex align-items-end">
-            <button class="btn btn-outline-primary" type="submit">Filtrar</button>
+          <div class="col d-flex">
+            
           </div>
-        </div>
-      </form> --}}
+        </div> --}}
+        
+
+      </form>
+    </div>
 
       <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-4">
         @foreach ($books as $book)
@@ -160,6 +134,7 @@
           </div>
         @endforeach
       </div>
+      
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>

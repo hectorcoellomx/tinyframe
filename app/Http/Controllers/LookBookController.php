@@ -19,22 +19,41 @@ class LookBookController extends Controller
     }
 
     // Filtro por colecciones (funciona incluso si no hay categorías seleccionadas)
-    if ($request->has('collections') && is_array($request->collections)) {
-        $query->whereHas('collections', function ($q) use ($request) {
-            $q->whereIn('collections.id', $request->collections);
-        });
+    if ($request->has('collections')) {
+        $collectionIds = $request->collections;
+
+        if (is_array($collectionIds) && count(array_filter($collectionIds)) > 0) {
+            $query->whereHas('collections', function ($q) use ($collectionIds) {
+                $q->whereIn('collections.id', array_filter($collectionIds));
+            });
+        } else {
+            $query->whereHas('collections');
+        }
     }
 
+
     // Filtro por categorías (funciona incluso si no hay colecciones seleccionadas)
-    if ($request->has('categories') && is_array($request->categories)) {
-        $query->whereHas('categories', function ($q) use ($request) {
-            $q->whereIn('categories.id', $request->categories);
-        });
+    if ($request->has('categories')) {
+        $categoryIds = $request->categories;
+
+        if (is_array($categoryIds) && count(array_filter($categoryIds)) > 0) {
+            // Categorías seleccionadas (excluyendo valores vacíos)
+            $query->whereHas('categories', function ($q) use ($categoryIds) {
+                $q->whereIn('categories.id', array_filter($categoryIds));
+            });
+        } else {
+            // Solo se seleccionó "todas las categorías" (sin categorías específicas)
+            $query->whereHas('categories');
+        }
     }
+
 
     $books = $query->get();
     $collections = Collection::all();
     $categories = Category::all();
+
+    session()->flash('filters_applied', true);
+
 
     return view('books', compact('books', 'collections', 'categories'));
     } 

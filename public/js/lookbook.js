@@ -33,7 +33,16 @@
         if (selectAllCollections) {
             selectAllCollections.addEventListener('change', function () {
                 if (this.checked) {
-                collectionCheckboxes.forEach(cb => cb.checked = false);
+                collectionCheckboxes.forEach(cb => {
+                    cb.checked = false;
+                    cb.disabled = true;
+                    }
+                );
+                }
+                else{
+                    collectionCheckboxes.forEach(cb =>{
+                        cb.disabled = false;
+                    });
                 }
             });
 
@@ -41,6 +50,10 @@
                 cb.addEventListener('change', () => {
                 if (cb.checked) {
                     selectAllCollections.checked = false;
+
+                    collectionCheckboxes.forEach(cb => {
+                        cb.disabled = false;
+                    });
                 }
                 });
         });
@@ -53,7 +66,15 @@
         if (selectAllCategories) {
             selectAllCategories.addEventListener('change', function () {
                 if (this.checked) {
-                categoryCheckboxes.forEach(cb => cb.checked = false);
+                categoryCheckboxes.forEach(cb => {
+                    cb.checked = false;
+                    cb.disabled = true;
+                });
+                }
+                else{
+                    categoryCheckboxes.forEach(cb => {
+                        cb.disabled = false;
+                    })
                 }
             });
 
@@ -61,6 +82,10 @@
                 cb.addEventListener('change', () => {
                 if (cb.checked) {
                     selectAllCategories.checked = false;
+
+                    collectionCheckboxes.forEach(cb => {
+                        cb.disabled = false;
+                    });
                 }
                 });
         });
@@ -68,6 +93,25 @@
         const fitoggleBtn = document.getElementById('fitoggle');
         const filterForm = document.getElementById('filter-form');
         const closeBtn = document.getElementById('filter-close');
+
+        const applyBtn = document.getElementById('apply-filters');
+
+        if (applyBtn) {
+            applyBtn.addEventListener('click', function () {
+                // Oculta los filtros
+                if (filterForm) {
+                    filterForm.style.display = 'none';
+                }
+
+                // Muestra el botón de abrir filtros
+                if (fitoggleBtn) {
+                    fitoggleBtn.style.display = 'block';
+                }
+
+                // (Opcional) podrías hacer submit programático si no quieres que el formulario lo haga por defecto
+                // document.querySelector('#filter-form form').submit();
+            });
+        }
 
         if (fitoggleBtn) {
         fitoggleBtn.addEventListener('click', function () {
@@ -85,5 +129,6 @@
                 }
             });
     }
+        
        
     });
