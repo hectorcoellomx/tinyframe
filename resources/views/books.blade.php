@@ -31,7 +31,7 @@
     </nav>
 
     <div class="container my-4">
-      <nav class="navbar navbar-light bg-light px-4 mb-3 justify-content-end">
+      <nav class="navbar navbar-light bg-light px-4 mb-4 justify-content-end">
       
         <div class="d-flex gap-2">
           <button id="fitoggle" 
@@ -47,77 +47,62 @@
         </div>
         
       </nav>
-    <div div id="filter-form" style="display: {{ $filtersActive ? 'block' : 'none' }};">
-      <form method="GET" action="{{ route('books') }}">
-        <div class="row mb-4">
-          <div class="col-md-5">
-            <div class="accordion">
-              <div class="accordion-header">
-                <span>Colecciones</span>
-              </div>
-              <div class="accordion-body show">
-                <div class="genre-checkbox">
-                  <label>
-                    {{-- <input type="checkbox" id="select-all-collections" name="collections[]" value=""> Todas las colecciones --}}
-                  </label>
+    <div class="container">
+      <div id="filter-form"
+          class="py-4 filter-wrapper"
+          style="display: {{ $filtersActive ? 'block' : 'none' }};">
+        <form method="GET" action="{{ route('books') }}">
+          <div class="row mb-4">
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-header fw-bold">Colecciones</div>
+                <div class="card-body">
                   @foreach ($collections as $collection)
-                    <label>
-                      <input type="checkbox" class="collection-checkbox" name="collections[]" value="{{ $collection->id }}"
-                        {{ in_array($collection->id, request('collections', [])) ? 'checked' : '' }}>
-                      {{ $collection->name }}
-                    </label>
+                    <div class="form-check">
+                      <input type="checkbox"
+                            class="form-check-input collection-checkbox"
+                            id="collection-{{ $collection->id }}"
+                            name="collections[]"
+                            value="{{ $collection->id }}"
+                            {{ in_array($collection->id, request('collections', [])) ? 'checked' : '' }}>
+                      <label class="form-check-label" for="collection-{{ $collection->id }}">
+                        {{ $collection->name }}
+                      </label>
+                    </div>
                   @endforeach
                 </div>
               </div>
             </div>
-          </div>
 
-          <div class="col-md-5">
-            <div class="accordion">
-              <div class="accordion-header">
-                <span>Categorías</span>
-              </div>
-              <div class="accordion-body show">
-                <div class="genre-checkbox">
-                  <label>
-                    {{-- <input type="checkbox" id="select-all-categories" name="categories[]" value=""> Todas las categorías --}}
-                  </label>
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-header fw-bold">Categorías</div>
+                <div class="card-body">
                   @foreach ($categories as $category)
-                    <label>
-                      <input type="checkbox" class="category-checkbox" name="categories[]" value="{{ $category->id }}"
-                        {{ in_array($category->id, request('categories', [])) ? 'checked' : '' }}>
-                      {{ $category->name }}
-                    </label>
+                    <div class="form-check">
+                      <input type="checkbox"
+                            class="form-check-input category-checkbox"
+                            id="category-{{ $category->id }}"
+                            name="categories[]"
+                            value="{{ $category->id }}"
+                            {{ in_array($category->id, request('categories', [])) ? 'checked' : '' }}>
+                      <label class="form-check-label" for="category-{{ $category->id }}">
+                        {{ $category->name }}
+                      </label>
+                    </div>
                   @endforeach
                 </div>
               </div>
             </div>
           </div>
+
+        <div class="d-flex justify-content-end gap-2">
+          <button id="filter-close" class="btn btn-outline-primary" type="button">Cerrar</button>
+          <button id="apply-filters" class="btn btn-outline-primary" type="submit">Aplicar</button>
         </div>
-
-        <div class="container my-4">
-          <nav class="navbar navbar-light bglight px-4 mb-3 justify-content-end">
-            <div class="d-flex gap-2">
-              <button id="filter-close" class="btn btn-outline-primary w-100" type="button" style="min-width: 110px; height: 42px;">Cerrar</button>
-
-              <button id="apply-filters" class="btn btn-outline-primary w-100" type="submit" style="min-width: 110px; height: 42px;">Aplicar</button>
-          </div>
-          </nav>
-        </div>
-        {{-- <div class="row align-items-end">
-          <div class="col d-flex">
-            
-          </div>
-          
-          <div class="col d-flex">
-            
-          </div>
-        </div> --}}
-        
-
       </form>
     </div>
-
+  </div>
       <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-4">
         @foreach ($books as $book)
           <div class="col">
@@ -125,10 +110,28 @@
               <img src="{{ asset('storage/' . $book->cover_photo) }}" class="card-img-top book-img" alt="Portada del libro">
               <div class="card-body d-flex flex-column">
                 <h5 class="card-title text-truncate" title="{{ $book->tittle }}">{{ $book->tittle }}</h5>
-                <p class="card-text flex-grow-1">{{ Str::limit($book->description, 100) }}</p>
-                <a href="{{ url('/lector-epub/' . basename($book->file)) }}" class="btn btn-outline-secondary mt-auto">
-                  <i class="bi bi-book"></i> Leer en línea
-                </a>
+                <div class="flex-grow-1 mb-3" style="min-height: 90px;">
+                  <p class="card-text">{{ Str::limit($book->description, 100) }}</p>
+                </div>
+                <div class="container mt-auto">
+                  <div class="row mb-4 gx-2">
+                    <div class="col-6 col-md-12 col-lg-6 mb-2">
+                      <a href="{{ url('/lector-epub/' . basename($book->file)) }}" 
+                        class="btn custom-button w-100">
+                        <i class="bi bi-book fs-3"></i> 
+                        <span>Leer en linea</span> 
+                      </a>
+                    </div>
+                    <div class="col-6 col-md-12 col-lg-6">
+                      <a href="{{ asset('storage/' . $book->file) }}" 
+                        class="btn custom-button w-100"
+                        download>
+                        <i class="bi bi-cloud-arrow-down fs-3"></i>
+                        <span>Descargar <br> Epub</span> 
+                      </a>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

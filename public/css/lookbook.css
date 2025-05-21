@@ -50,6 +50,46 @@ body.dark-mode .form-control {
   border-color: #444;
 }
 
+/* Estilo del contenedor del formulario de filtros */
+.filter-wrapper {
+  background-color: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+}
+
+/* Modo oscuro del contenedor de filtros */
+body.dark-mode .filter-wrapper {
+  background-color: transparent;
+  color: #f1f1f1;
+}
+
+/* Tarjetas internas del filtro */
+body.dark-mode .card-header {
+  background-color: #2a2a2a;
+  color: #f1f1f1;
+}
+
+body.dark-mode .card-body {
+  background-color: #2c2c2c;
+  color: #f1f1f1;
+}
+
+/* Checkboxes */
+body.dark-mode .form-check-label {
+  color: #f1f1f1;
+}
+
+/* Botones en modo oscuro */
+body.dark-mode .btn-outline-primary {
+  border-color:  #0d6efd;
+  color: #fff;
+}
+
+body.dark-mode .btn-outline-primary:hover {
+  background-color: #0d6efd;
+  color: #fff;
+}
+
 /* Estilos generales */
 .card-title {
   font-weight: 600;
@@ -136,5 +176,49 @@ body.dark-mode .accordion-body {
   display: flex;
   align-items: center;
   gap: 6px;
+}
+
+/* Alertas */
+body.dark-mode .alert-warning {
+  background-color: #1e1e1e;
+  color: #dae3e2;
+  border-color: #2c2c2c;
+}
+
+.custom-button {
+  height: 100px;
+  width: 100%;
+  border: 1px solid #888;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 5px;
+  padding: 10px;
+  box-sizing: border-box;
+  font-size: 14px;
+  white-space: normal; 
+  word-break: break-word;
+  line-height: 1.2; 
+  border-radius: 8px;
+  
+}
+.custom-button i {
+  font-size: 0.9rem;
+}
+
+body.dark-mode .custom-button {
+  color: #f1f1f1;
+  background-color: transparent;
+  border-color: #888;
+}
+
+body.dark-mode .custom-button:hover {
+  background-color: #444;
+}
+
+.description-container {
+  min-height: 80px; /* Ajusta a lo que necesites */
 }
 
