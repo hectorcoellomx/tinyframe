@@ -115,14 +115,14 @@
                 </div>
                 <div class="container mt-auto">
                   <div class="row mb-4 gx-2">
-                    <div class="col-6 col-md-12 col-lg-6 mb-2">
+                    <div class="col-12 mb-3">
                       <a href="{{ url('/lector-epub/' . basename($book->file)) }}" 
                         class="btn custom-button w-100">
                         <i class="bi bi-book fs-3"></i> 
                         <span>Leer en linea</span> 
                       </a>
                     </div>
-                    <div class="col-6 col-md-12 col-lg-6">
+                    <div class="col-12">
                       <a href="{{ asset('storage/' . $book->file) }}" 
                         class="btn custom-button w-100"
                         download>
