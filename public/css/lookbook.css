@@ -23,9 +23,12 @@ body.dark-mode .card {
 }
 
 body.dark-mode .card-title,
-body.dark-mode .card-text,
-body.dark-mode .btn {
+body.dark-mode .card-text {
   color: #f1f1f1;
+}
+
+body .dark-mode .btn{
+  color: #131313;
 }
 
 body.dark-mode .btn-outline-secondary {
@@ -35,6 +38,7 @@ body.dark-mode .btn-outline-secondary {
 
 body.dark-mode .btn-outline-secondary:hover {
   background-color: #444;
+  color: #131313;
 }
 
 /* Navbar en modo oscuro */
@@ -81,13 +85,13 @@ body.dark-mode .form-check-label {
 
 /* Botones en modo oscuro */
 body.dark-mode .btn-outline-primary {
-  border-color:  #0d6efd;
+  border-color:  #fcfcfc;
   color: #fff;
 }
 
 body.dark-mode .btn-outline-primary:hover {
-  background-color: #0d6efd;
-  color: #fff;
+  background-color: #fcfdfd;
+  color: #131313;
 }
 
 /* Estilos generales */
@@ -186,11 +190,11 @@ body.dark-mode .alert-warning {
 }
 
 .custom-button {
-  height: 80px;
+  height: 50px;
   width: 140px;
   border: 1px solid #888;
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   align-items: center;
   justify-content: center;
   text-align: center;
@@ -198,8 +202,8 @@ body.dark-mode .alert-warning {
   padding: 10px;
   box-sizing: border-box;
   font-size: 14px;
-  white-space: normal; 
-  word-break: break-word;
+  /* white-space: normal; 
+  word-break: break-word; */
   line-height: 1.2; 
   border-radius: 8px;
   
@@ -212,7 +216,7 @@ body.dark-mode .alert-warning {
 }
 
 .custom-button i {
-  font-size: 0.6rem;
+  font-size: 1.5rem;
 }
 
 body.dark-mode .custom-button {
@@ -238,7 +242,13 @@ body.dark-mode .custom-button:hover {
 }
 
 .custom-navbar{
-   background-color: #1e1e1e; /* o #f8f9fa si prefieres */
+   background-color: #f6f6f6; /* o #f8f9fa si prefieres */
+  border-bottom: 1px solid #eeebeb;
+}
+
+body.dark-mode .custom-navbar {
+  background-color: #1e1e1e;
   border-bottom: 1px solid #333;
 }
+
 

@@ -10475,7 +10475,6 @@
 
    .sidebar .sidebar-brand .sidebar-brand-icon img {
     max-height: 40px;
-    max-width: 50px;
     height: auto;
     width: auto;
     object-fit: contain;
@@ -10500,6 +10499,20 @@
       }
   }
 
+  @media (min-width: 992px) {
+    .sidebar .sidebar-brand-icon img {
+      max-height: 30px;
+      height: auto;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .sidebar .sidebar-brand{
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+    }
+
+  }
 
   
   .sidebar .sidebar-brand .sidebar-brand-text {
@@ -10656,6 +10669,9 @@
     }
     .sidebar.toggled .sidebar-brand .sidebar-brand-icon i {
       font-size: 2rem;
+    }
+    .sidebar.toggled .sidebar-brand .sidebar-brand-icon img {
+      max-height: 28px;
     }
     .sidebar.toggled .sidebar-brand .sidebar-brand-text {
       display: none;

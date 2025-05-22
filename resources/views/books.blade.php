@@ -32,10 +32,9 @@
         </form>
       </div>
     </nav>
-    
+
     <div class="container my-4">
       <nav class="navbar navbar-light bg-light px-4 mb-4 justify-content-end">
-      
         <div class="d-flex gap-2">
           <button id="fitoggle" 
               class="btn btn-outline-primary w-100" 
@@ -45,10 +44,9 @@
           </button>
 
           <button id="toggle-theme" class="btn btn-outline-dark" style="min-width: 140px; height: 42px; white-space: nowrap;">
-            <i class="bi bi-moon-fill"></i> Modo oscuro
+            <i class="bi bi-moon-fill me-2"></i> Modo oscuro
           </button>
         </div>
-        
       </nav>
     <div class="container">
       <div id="filter-form"
@@ -106,7 +104,7 @@
       </form>
     </div>
   </div>
-      <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-4">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
         @foreach ($books as $book)
           <div class="col">
             <div class="card h-100 shadow-sm hover-card">
@@ -121,7 +119,7 @@
                     <div class="col-12 mb-3">
                       <a href="{{ url('/lector-epub/' . basename($book->file)) }}" 
                         class="btn custom-button w-100">
-                        <i class="bi bi-book fs-3"></i> 
+                        <i class="bi bi-book me-1"></i> 
                         <span>Leer en linea</span> 
                       </a>
                     </div>
@@ -129,8 +127,8 @@
                       <a href="{{ asset('storage/' . $book->file) }}" 
                         class="btn custom-button w-100"
                         download>
-                        <i class="bi bi-cloud-arrow-down fs-3"></i>
-                        <span>Descargar <br> Epub</span> 
+                        <i class="bi bi-cloud-arrow-down me-1"></i>
+                        <span>Descargar Epub</span> 
                       </a>
                     </div>
                   </div>
