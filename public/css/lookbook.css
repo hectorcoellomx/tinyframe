@@ -204,6 +204,13 @@ body.dark-mode .alert-warning {
   border-radius: 8px;
   
 }
+
+.custom-button:hover {
+  background-color: #f0f0f0;
+  border-color: #444;
+  cursor: pointer;
+}
+
 .custom-button i {
   font-size: 0.6rem;
 }
@@ -220,5 +227,18 @@ body.dark-mode .custom-button:hover {
 
 .description-container {
   min-height: 80px; /* Ajusta a lo que necesites */
+}
+
+.logo-img {
+  width: clamp(100px, 18vw, 185px);
+  height: auto;
+  display: block;
+  /* display: block;
+  margin-top: 4px; */
+}
+
+.custom-navbar{
+   background-color: #1e1e1e; /* o #f8f9fa si prefieres */
+  border-bottom: 1px solid #333;
 }
 

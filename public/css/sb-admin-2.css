@@ -10453,16 +10453,54 @@
     text-decoration: none;
     font-size: 1rem;
     font-weight: 800;
-    padding: 1.5rem 1rem;
+    padding: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
+    overflow: hi;
     text-transform: uppercase;
     letter-spacing: 0.05rem;
     z-index: 1;
   }
   
-  .sidebar .sidebar-brand .sidebar-brand-icon i {
-    font-size: 2rem;
+  .sidebar .sidebar-brand .sidebar-brand-icon {
+    max-width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* height: 2rem;
+    width: auto; */
   }
+
+   .sidebar .sidebar-brand .sidebar-brand-icon img {
+    max-height: 40px;
+    max-width: 50px;
+    height: auto;
+    width: auto;
+    object-fit: contain;
+  }
+  @media (max-width: 576px) {
+    .sidebar .sidebar-brand {
+        padding: 0.25rem;
+      }
+
+      .sidebar .sidebar-brand-icon img {
+          max-height: 32px;
+      }
+  }
+
+  @media (max-width: 576px) {
+    .sidebar .sidebar-brand {
+        padding: 0.25rem;
+      }
+
+      .sidebar .sidebar-brand-icon img {
+          max-height: 32px;
+      }
+  }
+
+
   
   .sidebar .sidebar-brand .sidebar-brand-text {
     display: none;
@@ -10559,9 +10597,11 @@
     .sidebar .nav-item .nav-link[data-toggle="collapse"].collapsed::after {
       content: '\f105';
     }
-    .sidebar .sidebar-brand .sidebar-brand-icon i {
+    .sidebar .sidebar-brand .sidebar-brand-icon img {
       font-size: 2rem;
     }
+
+    
     .sidebar .sidebar-brand .sidebar-brand-text {
       display: inline;
     }

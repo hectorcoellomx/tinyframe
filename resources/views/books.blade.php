@@ -20,16 +20,19 @@
       $filtersActive = request()->has('search') || request()->has('collections') || request()->has('categories');
     @endphp --}}
 
-    <nav class="navbar sticky-top navbar-dark bg-dark px-4">
-      <div class="container-fluid d-flex justify-content-between align-items-center">
-        <a class="navbar-brand" href="{{ route('books') }}">LeeUnach</a>
+    <nav class="navbar sticky-top px-3 py-2 custom-navbar">
+      <div class="container-fluid d-flex justify-content-between align-items-center flex-wrap">
+        <a class="navbar-brand me-3" href="{{ route('books') }}">
+          <img src="{{ asset('img/logo.svg') }}" alt="Logo" class="logo-img">
+        </a>
+
         <form class="d-flex ms-auto" method="GET" action="{{ route('books') }}">
           <input class="form-control form-control-sm me-2" style="width: 200px;" type="search" name="search" placeholder="Buscar por título" value="{{ request('search') }}">
           <button class="btn btn-outline-success btn-sm" type="submit">Buscar</button>
         </form>
       </div>
     </nav>
-
+    
     <div class="container my-4">
       <nav class="navbar navbar-light bg-light px-4 mb-4 justify-content-end">
       
