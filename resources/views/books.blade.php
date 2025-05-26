@@ -28,7 +28,7 @@
 
         <form class="d-flex ms-auto" method="GET" action="{{ route('books') }}">
           <input class="form-control form-control-sm me-2" style="width: 200px;" type="search" name="search" placeholder="Buscar por título" value="{{ request('search') }}">
-          <button class="btn btn-outline-success btn-sm" type="submit">Buscar</button>
+          <button class="btn btn-outline-success btn-sm" type="submit"><i class="bi bi-search me-2"></i> Buscar</button>
         </form>
       </div>
     </nav>
@@ -40,6 +40,7 @@
               class="btn btn-outline-primary w-100" 
               type="button"
               style="display: {{ $filtersActive ? 'none' : 'inline-block' }}; min-width: 140px; height: 42px">
+              <i class="bi bi-funnel"></i>
               Filtrar<span id="filter-count" class="badge bg-primary ms-1" style="display: none;">0</span>
           </button>
 
@@ -119,7 +120,7 @@
                     <div class="col-12 mb-3">
                       <a href="{{ url('/lector-epub/' . basename($book->file)) }}" 
                         class="btn custom-button w-100">
-                        <i class="bi bi-book me-1"></i> 
+                        <i class="bi bi-book me-2"></i> 
                         <span>Leer en linea</span> 
                       </a>
                     </div>
@@ -127,7 +128,7 @@
                       <a href="{{ asset('storage/' . $book->file) }}" 
                         class="btn custom-button w-100"
                         download>
-                        <i class="bi bi-cloud-arrow-down me-1"></i>
+                        <i class="bi bi-cloud-arrow-down me-2"></i>
                         <span>Descargar Epub</span> 
                       </a>
                     </div>
