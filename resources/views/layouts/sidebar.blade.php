@@ -34,31 +34,31 @@
 
         <!-- Nav Item - Gestor de Libros -->
         <li class="nav-item">
-            <a href="/users" class="nav-link">
+            <a href="{{ route('users.index') }}" class="nav-link">
                 <i class="bi bi-people"></i>
                 <span>Usuarios</span>
             </a>
         </li>
         <li class="nav-item">
-            <a href="/books" class="nav-link">
+            <a href="{{ route('books.index') }}" class="nav-link">
                 <i class="bi bi-book"></i>
                 <span>Libros</span>
             </a>
         </li>
         <li class="nav-item">
-            <a href="/categories" class="nav-link">
+            <a href="{{ route('categories.index') }}" class="nav-link">
                 <i class="bi bi-bookmark-star"></i>
                 <span>Categorías</span>
             </a>
         </li>
         <li class="nav-item">
-            <a href="/authors" class="nav-link">
+            <a href="{{ route('authors.index') }}" class="nav-link">
                 <i class="bi bi-person-square"></i>
                 <span>Autores</span>
             </a>
         </li>
         <li class="nav-item">
-            <a href="/collections" class="nav-link">
+            <a href="{{ route('collections.index') }}" class="nav-link">
                 <i class="bi bi-collection"></i>
                 <span>Colecciones</span>
             </a>
