@@ -4,9 +4,9 @@
 
 @section('content')
     <div class="container">
-        <a href="/collections" class="btn btn-primary mb-3">Volver</a>
+        <a href="{{ route('collections.index') }}" class="btn btn-primary mb-3">Volver</a>
         <h2>Crear Coleccion</h2>
-        <form method="POST">
+        <form method="POST" action="{{ route('collections.store') }}">
             @csrf
             <div class="form-group">
                 <label for="name">Nombre</label>

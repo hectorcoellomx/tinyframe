@@ -5,7 +5,7 @@
 @section('content')
     <div class="container">
         <h2>Editar Libro</h2>
-        <form action="/books/{{$book->id}}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('books.update', $book->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="form-group">

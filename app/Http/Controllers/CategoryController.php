@@ -46,9 +46,9 @@ class CategoryController extends Controller
                 'name' => $request->name,
             ]);
 
-        return redirect('/categories')->with('succes', 'Categoria creada exitosamente');
+        return redirect()->route('categories.index')->with('succes', 'Categoria creada exitosamente');
         } catch (\Exception $e) {
-            dd('Error: ' .$e->getMessage());
+            ;
         }
     }
 
@@ -61,10 +61,34 @@ class CategoryController extends Controller
         return view('categories.show', compact('category'));
     }
 
+    public function edit($category){
+        $category = Category::find($category);
+        return view('categories.edit', compact('category'));
+    }
+
+    public function update(Request $request, $category){
+        try {
+            $validatedData = $request->validate([
+                'name' => 'sometimes|string|max:200'
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->back()->withErrors($e->errors())->withInput();
+            //throw $th;
+        }
+        $category = Category::findOrFail($category);
+
+        $category->name = $request->name;
+
+        $category->save();
+
+        return redirect()->route('categories.show', $category->id)->with('succes', 'Categoría actualizada');
+
+    }
+
     public function destroy($category){
         $category = Category::find($category);
         $category->delete();
-        return redirect('/categories');
+        return redirect()->route('categories.index')->with('succes', 'Se elimino la categoria');
     }
 
 }

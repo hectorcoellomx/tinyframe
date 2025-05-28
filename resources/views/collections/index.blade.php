@@ -6,7 +6,7 @@
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>Listado de Colecciones</h2>
-        <a href="/collections/create"  class="btn btn-primary mb-3">Agregar Coleccion</a>
+        <a href="{{ route('collections.create') }}"  class="btn btn-primary mb-3">Agregar Coleccion</a>
         </div>
         @if(session('success'))
             <div class="alert alert-success">
@@ -31,12 +31,12 @@
                         <td>{{ $collection->name }}</td>
                         <td>
 
-                            <a href="/collections/{{$collection -> id}}/edit" class="btn btn-warning mb-3 me-5">
+                            <a href="{{ route('collections.edit', $collection->id) }}" class="btn btn-warning mb-3 me-5">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
                         <td>
                             <x-delete-confirmation 
-                                :actionUrl="'/collections/' . $collection->id" 
+                                :actionUrl="route('collections.destroy', $collection->id)" 
                                 :itemName="$collection->name" 
                                 :itemId="$collection->id" 
                             />

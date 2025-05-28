@@ -6,7 +6,7 @@
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>Listado de Libros</h2>
-            <a href="/books/create" class="btn btn-primary">Agregar Libro</a>
+            <a href="{{ route('books.create') }}" class="btn btn-primary">Agregar Libro</a>
         </div>
 
         @if(session('success'))
@@ -42,29 +42,21 @@
                         <td>{{ $book->year }}</td>
                         <td>{{ number_format($book->calificacion, 1) }}</td> <!-- Mostrar el promedio -->
                         <td>
-                            <a href="/books/{{$book->id}}/edit" class="btn btn-warning">
+                            <a href="{{ route('books.edit', $book->id) }}" class="btn btn-warning">
                                 <i class="bi bi-pencil-square"></i>
-                            </a>
+                            </a>       
                         </td>
                         <td>
                             <x-delete-confirmation 
-                                :actionUrl="'/books/' . $book->id" 
+                                :actionUrl="route('books.destroy', $book->id)" 
                                 :itemName="$book->title" 
                                 :itemId="$book->id" 
                             />
                         </td>
                         <td>
-                            <a href="/books/{{$book->id}}" class="btn btn-success">
+                            <a href="{{ route('books.ver', $book->id) }}" class="btn btn-success">
                                 <i class="bi bi-eye-fill"></i>
                             </a>
-                            
-                            {{-- @if($book->file) <!-- Verifica si el archivo existe -->
-                                <a href="{{ asset('storage/' . $book->file) }}" class="btn btn-success" download>
-                                    <i class="bi bi-eye-fill"></i>
-                                </a>
-                            @else
-                                <span class="text-muted">No disponible</span>
-                            @endif --}}
                         </td>
                     </tr>
                 @endforeach

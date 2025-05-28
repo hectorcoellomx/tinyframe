@@ -53,9 +53,9 @@ class CollectionController extends Controller
                     'name'=> $request->name
                 ]
                 );
-        return redirect('/collections')->with('success','Colección creada exitosamente');
+        return redirect()->route('collections.index')->with('success','Colección creada exitosamente');
         } catch (\Exception $e) {
-            dd('Error: '. $e->getMessage());
+            ;
         }
     }
 
@@ -87,12 +87,12 @@ class CollectionController extends Controller
         $collection->name = $request->name;
 
         $collection->save();
-        return redirect("/collections/{$collection->id}")->with('succes','Colleccion actualizada');
+        return redirect()->route('collections.show', $collection->id)->with('succes','Colleccion actualizada');
     }
     public function destroy($collection){
         $collection = Collection::find($collection);
         $collection->delete();
-        return redirect('/collections');
+        return redirect()->route('collections.index');
     }
     
 }

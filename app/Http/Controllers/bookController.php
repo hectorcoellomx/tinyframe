@@ -146,6 +146,7 @@ class bookController extends Controller
         $collections = Collection::all();
         $categories = Category::all();
         $authors = Author::all();
+        // return redirect()->route('books.create', compact('collections', 'categories', 'authors'));
         return view('books.create',compact('collections', 'categories', 'authors'));
     }
    
@@ -159,7 +160,7 @@ class bookController extends Controller
             'cover_photo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             'description' => 'required|string|max:900',
             'file' => 'required|mimes:epub|max:10000',
-            'year' => 'required|integer|min:1900|max:' . date('Y'),
+            'year' => 'required|integer|min:1800|max:' . date('Y'),
             'keywords' => 'required|string|max:200',
             'author_ids' => 'required|array', // Validar que se envíen autores
             'category_ids' => 'required|array',// Validar que se envíen categorías
@@ -187,9 +188,9 @@ class bookController extends Controller
         $book->categories()->attach($request->category_ids);
         $book->collections()->attach($request->collection_ids);
 
-        return redirect('/books')->with('success', 'Libro creado exitosamente.');
+        return redirect()->route('books.index')->with('success', 'Libro creado exitosamente.');
     } catch (\Exception $e) {
-        return redirect()->back()->with('error', 'Ocurrió un error: ' . $e->getMessage());
+        return redirect()->back()->with('error', 'Ocurrió un error: ');
     }
 }
     // public function index(){
@@ -215,7 +216,7 @@ class bookController extends Controller
             return view('books.index', compact('books'));
         } catch (\Exception $e) {
             // Manejar errores
-            return redirect()->back()->with('error', 'Ha ocurrido un error inesperado: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Ha ocurrido un error inesperado');
         }
     }
 
@@ -306,7 +307,7 @@ class bookController extends Controller
 
 
             // Redirigir con un mensaje de éxito
-            return redirect("/books/{$book->id}")->with('success', 'Libro actualizado exitosamente.');
+            return redirect()->route('books.ver',$book->id)->with('success', 'Libro actualizado exitosamente.');
         } catch (\Exception $e) {
             // Manejar cualquier error inesperado
             return redirect()->back()->with('error', 'Ocurrió un error al actualizar el libro: ' . $e->getMessage());
@@ -315,7 +316,7 @@ class bookController extends Controller
     public function destroy($book){
         $book = Book::find($book);
         $book->delete();
-        return redirect('/books');
+        return redirect()->route('books.index')->with('success', 'Libro eliminado exitosamente.');
     }
     
 }

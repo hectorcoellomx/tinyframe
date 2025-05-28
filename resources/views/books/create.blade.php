@@ -5,7 +5,7 @@
 @section('content')
     <div class="container">
         <h2>Crear Libro</h2>
-        <form action="/books" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('books.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="title">Título:</label>

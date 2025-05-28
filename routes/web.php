@@ -5,13 +5,9 @@ use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\bookController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CollectionController;
-use App\Http\Controllers\LibraryController;
 use App\Http\Controllers\LookBookController;
 use App\Http\Controllers\UserController;
-use App\Models\Author;
-use App\Models\Category;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -31,38 +27,24 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 // Ruta protegida para la vista de usuarios
 Route::middleware('auth.custom')->group(function () {
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
-    Route::get('users/create',[UserController::class, 'create']);
+    Route::get('users/create',[UserController::class, 'create'])->name('users.create');
 
-    Route::get('/books/create',[bookController::class, 'create']);
+    Route::get('/books/create',[bookController::class, 'create'])->name('books.create');
     Route::get('/books',[bookController::class, 'index'])->name('books.index');
-    Route::get('/books/{book}',[bookController::class, 'ver']);
-    Route::post('/books',[bookController::class, 'store']);
-    Route::get('/books/{book}/edit',[bookController::class, 'edit']);
-    Route::put('/books/{book}',[bookController::class,'update']);
-    Route::delete('/books/{book}', [bookController::class, 'destroy']);
+    Route::get('/books/{book}',[bookController::class, 'ver'])->name('books.ver');
+    Route::post('/books',[bookController::class, 'store'])->name('books.store');
+    Route::get('/books/{book}/edit',[bookController::class, 'edit'])->name('books.edit');
+    Route::put('/books/{book}',[bookController::class,'update'])->name('books.update');
+    Route::delete('/books/{book}', [bookController::class, 'destroy'])->name('books.destroy'); 
 
-    Route::get('/categories/create',[CategoryController::class, 'create']);
-    Route::get('/categories',[CategoryController::class, 'index'])->name('categories.index');
-    Route::get('/categories/{category}',[CategoryController::class, 'show']);
-    Route::post('/categories',[CategoryController::class, 'store']);
-    Route::delete('/categories/{category}', [CategoryController::class, 'destroy']);
-
-    Route::get('/authors/create',[AuthorController::class, 'create']);
-    Route::get('/authors',[AuthorController::class, 'index'])->name('authors.index');
-    Route::get('/authors/{author}',[AuthorController::class, 'show']);
-    Route::post('/authors',[AuthorController::class, 'store']);
-    Route::get('/authors/{author}/edit',[AuthorController::class, 'edit']);
-    Route::put('/authors/{author}',[AuthorController::class,'update']);
-    Route::delete('/authors/{author}', [AuthorController::class, 'destroy']);
-
-    Route::get('/collections/create',[CollectionController::class, 'create']);
-    Route::get('/collections',[CollectionController::class, 'index'])->name('collections.index');
-    Route::get('/collections/{collection}',[CollectionController::class, 'show']);
-    Route::post('/collections/{collection}',[CollectionController::class, 'store']);
-    Route::get('/collections/{collection}/edit',[CollectionController::class, 'edit']);
-    Route::put('/collections/{collection}',[CollectionController::class,'update']);
-    Route::delete('/collections/{collection}', [CollectionController::class, 'destroy']);
-
+    //Rutas Autores
+    Route::resource('authors' ,AuthorController::class);
+    
+    //Rutas Colecciones
+    Route::resource('collections', CollectionController::class);
+    
+    //Rutas Categorías 
+    Route::resource('categories', CategoryController::class);
 });
 
 // Route::get('/books-public',function(){
@@ -89,9 +71,5 @@ Route::get('/lector-epub/{archivo}', function ($archivo) {
         'archivo' => $safeFile
     ]);
 });
-// ->where('archivo', '[a-zA-Z0-9\-_]+\.epub');
 
-
-
-// Route::get('/users',[UserController::class, 'index']);
 

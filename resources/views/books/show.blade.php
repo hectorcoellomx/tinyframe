@@ -89,7 +89,7 @@
 </style>
 
 <div class="container book-container">
-    <a href="/books" class="btn btn-outline-primary mb-4">
+    <a href="{{ route('books.index') }}" class="btn btn-outline-primary mb-4">
         <i class="bi bi-arrow-left"></i> Volver al listado
     </a>
 

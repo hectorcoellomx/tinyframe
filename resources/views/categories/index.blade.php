@@ -6,7 +6,7 @@
     <div class="container"> 
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>Listado de Categorías</h2>
-            <a href="/categories/create"  class="btn btn-primary mb-3">Agregar Categoría</a>
+            <a href="{{ route('categories.create') }}"  class="btn btn-primary mb-3">Agregar Categoría</a>
         </div>
         @if(session('success'))
             <div class="alert alert-success">
@@ -29,13 +29,13 @@
                         <td>{{ $category->id }}</td>
                         <td>{{ $category->name }}</td>
                         <td>
-                            <a href="categories/{{$category -> id}}" class="btn btn-warning mb-3">
+                            <a href="{{ route('categories.edit',$category->id) }}" class="btn btn-warning mb-3">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
                         </td>
                         <td>
                             <x-delete-confirmation 
-                                :actionUrl="'/categories/' . $category->id" 
+                                :actionUrl="route('categories.destroy', $category->id)" 
                                 :itemName="$category->name" 
                                 :itemId="$category->id" 
                             />
