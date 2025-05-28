@@ -21,7 +21,7 @@ Route::get('/lector-example',function(){
 });
 // Mostrar el formulario de login
 Route::get('/', [AuthController::class, 'login'])->name('auth.login');
-
+Route::get('/login', [AuthController::class, 'login']);
 // Manejar el inicio de sesión
 Route::post('/login', [AuthController::class, 'authenticate'])->name('auth.authenticate');
 
