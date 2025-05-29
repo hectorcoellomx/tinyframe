@@ -34,19 +34,20 @@
     </nav>
 
     <div class="container my-4">
-      <nav class="navbar navbar-light bg-light px-4 mb-4 justify-content-end">
+      <nav class="navbar transparent-navbar px-4 mb-4 justify-content-end">
         <div class="d-flex gap-2">
           <button id="fitoggle" 
-              class="btn btn-outline-primary w-100" 
+              class="btn btn-custom w-100 shadow-sm" 
               type="button"
               style="display: {{ $filtersActive ? 'none' : 'inline-block' }}; min-width: 140px; height: 42px">
-              <i class="bi bi-funnel"></i>
+              <i class="bi bi-sliders"></i>
               Filtrar<span id="filter-count" class="badge bg-primary ms-1" style="display: none;">0</span>
           </button>
 
-          <button id="toggle-theme" class="btn btn-outline-dark" style="min-width: 140px; height: 42px; white-space: nowrap;">
+          <button id="toggle-theme" class="btn btn-custom shadow-sm" style="min-width: 140px; height: 42px; white-space: nowrap;">
             <i class="bi bi-moon-fill me-2"></i> Modo oscuro
           </button>
+        
         </div>
       </nav>
     <div class="container">
@@ -111,7 +112,7 @@
             <div class="card h-100 shadow-sm hover-card">
               <img src="{{ asset('storage/' . $book->cover_photo) }}" class="card-img-top book-img" alt="Portada del libro">
               <div class="card-body d-flex flex-column">
-                <h5 class="card-title text-truncate" title="{{ $book->tittle }}">{{ $book->tittle }}</h5>
+                <h5 class="card-title text-truncate mb-4" title="{{ $book->title }}">{{ $book->title }}</h5>
                 <div class="flex-grow-1 mb-3" style="min-height: 90px;">
                   <p class="card-text">{{ Str::limit($book->description, 100) }}</p>
                 </div>
@@ -119,14 +120,14 @@
                   <div class="row mb-4 gx-2">
                     <div class="col-12 mb-3">
                       <a href="{{ url('/lector-epub/' . basename($book->file)) }}" 
-                        class="btn custom-button w-100">
+                        class="btn custom-button w-100 shadow-sm">
                         <i class="bi bi-book me-2"></i> 
                         <span>Leer en linea</span> 
                       </a>
                     </div>
                     <div class="col-12">
                       <a href="{{ asset('storage/' . $book->file) }}" 
-                        class="btn custom-button w-100"
+                        class="btn custom-button-download w-100 shadow-sm"
                         download>
                         <i class="bi bi-cloud-arrow-down me-2"></i>
                         <span>Descargar Epub</span> 
