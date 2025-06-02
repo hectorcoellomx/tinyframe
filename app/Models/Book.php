@@ -18,12 +18,14 @@ class Book extends Model
 
     public static function most_read()
     {
-        return DB::table('books')
+        return self::select('books.id', 'books.title', 'books.cover_photo', 'books.description')
+        ->with('authors') 
         ->join('progress', 'progress.book_id', '=', 'books.id')
-        ->select('books.id', 'books.title', 'books.cover_photo', 'books.description', DB::raw('COUNT(progress.id) as total'))
+        ->selectRaw('COUNT(progress.id) as total')
         ->groupBy('books.id', 'books.title', 'books.cover_photo', 'books.description')
         ->orderBy('total', 'desc')
         ->get();
+
     }
 
     public static function average($id, $user_id)
