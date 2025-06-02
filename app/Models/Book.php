@@ -20,8 +20,8 @@ class Book extends Model
     {
         return DB::table('books')
         ->join('progress', 'progress.book_id', '=', 'books.id')
-        ->select('books.*', DB::raw('COUNT(progress.id) as total'))
-        ->groupBy('books.id')
+        ->select('books.id', 'books.title', 'books.cover_photo', 'books.description', DB::raw('COUNT(progress.id) as total'))
+        ->groupBy('books.id', 'books.title', 'books.cover_photo', 'books.description')
         ->orderBy('total', 'desc')
         ->get();
     }
