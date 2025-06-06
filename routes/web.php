@@ -16,7 +16,7 @@ Route::get('/lector-example',function(){
     return view('epub.example');
 });
 // Mostrar el formulario de login
-Route::get('/', [AuthController::class, 'login'])->name('auth.login');
+
 Route::get('/login', [AuthController::class, 'login']);
 // Manejar el inicio de sesión
 Route::post('/login', [AuthController::class, 'authenticate'])->name('auth.authenticate');
@@ -50,7 +50,7 @@ Route::middleware('auth.custom')->group(function () {
 // Route::get('/books-public',function(){
 //     return view('books');
 // });
-Route::get('/books-public',[LookBookController::class, 'index'])->name('books');
+Route::get('/',[LookBookController::class, 'index'])->name('books');
 
 
 Route::get('/lector-epub/{archivo}', function ($archivo) {
