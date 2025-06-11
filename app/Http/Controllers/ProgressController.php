@@ -45,7 +45,7 @@ class ProgressController extends Controller
                 return response()->json([
                     "success" => true,
                     "message" => 'OK',
-                    "data" => $progress
+                    "data" => null
                 ]);
 
             }else{
@@ -65,7 +65,7 @@ class ProgressController extends Controller
                     return response()->json([
                         "success" => true,
                         "message" => 'OK',
-                        "data" => $progress
+                        "data" => null
                     ]);
                 }else {
                     return response()->json([
