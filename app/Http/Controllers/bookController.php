@@ -38,9 +38,8 @@ class bookController extends Controller
 
                 switch ($filter) {
                     case 'category':
-                        $books->whereHas('categories', function ($query) use ($value) {
-                            $query->where('category_id', $value);
-                        });
+                        //$books->whereHas('categories', function ($query) use ($value) { $query->where('category_id', $value) });
+                        $result = Book::getByCategory($user_id, $value);
                         break;
     
                     case 'collection':
@@ -57,6 +56,8 @@ class bookController extends Controller
     
                     case 'most_read':
                         $result = Book::getTopBooksForUser($user_id);
+                        break;
+
                     case 'search':
                         $keywords = explode(' ', trim($value)); // Dividir el valor en palabras con la funcion explode eliminando espacios en blanco
 
@@ -71,7 +72,7 @@ class bookController extends Controller
                     break;
                 }
 
-                $books = ($filter!="most_read") ? $books->get() : $result;
+                $books = ($filter!="most_read" && $filter!="category") ? $books->get() : $result;
     
                 return response()->json([
                     "success" => true,
