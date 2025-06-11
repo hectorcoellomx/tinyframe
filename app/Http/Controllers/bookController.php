@@ -25,6 +25,8 @@ class bookController extends Controller
         try {
             $filter = $request->query('filter');
             $value = $request->query('value');
+            $user_id = $request->query('user_id');
+
             
             $options = array("category", "collection", "shelving", "most_read", "search");
             $books = null;
@@ -54,7 +56,7 @@ class bookController extends Controller
                         break;
     
                     case 'most_read':
-                        $result = Book::most_read();
+                        $result = Book::getTopBooksForUser($user_id);
                     case 'search':
                         $keywords = explode(' ', trim($value)); // Dividir el valor en palabras con la funcion explode eliminando espacios en blanco
 
