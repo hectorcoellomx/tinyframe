@@ -25,9 +25,11 @@ class RatingController extends Controller
             ]);
 
             return response()->json([
+                "success" => true,
                 "message"=> "Rating updated successfully",
                 "data"=> $existingRating
             ],200);
+            
            }else {
                 $newRating = Rating::create([
                     'point' => $validated['point'],
