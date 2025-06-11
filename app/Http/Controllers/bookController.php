@@ -43,9 +43,8 @@ class bookController extends Controller
                         break;
     
                     case 'collection':
-                        $books->whereHas('collections', function ($query) use ($value) {
-                            $query->where('collection_id', $value);
-                        });
+                        //$books->whereHas('collections', function ($query) use ($value) { $query->where('collection_id', $value) });
+                        $result = Book::getByCollection($user_id, $value);
                         break;
     
                     case 'shelving':
@@ -72,7 +71,7 @@ class bookController extends Controller
                     break;
                 }
 
-                $books = ($filter!="most_read" && $filter!="category") ? $books->get() : $result;
+                $books = ($filter!="most_read" && $filter!="category" && $filter!="collection") ? $books->get() : $result;
     
                 return response()->json([
                     "success" => true,

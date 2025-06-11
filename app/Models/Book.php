@@ -106,6 +106,52 @@ class Book extends Model
         ]);
     }
 
+    public static function getByCollection($userId, $collectionId)
+    {
+        $sql = "
+            SELECT 
+                b.id,
+                b.title,
+                b.cover_photo,
+                b.description,
+                b.file,
+                b.year,
+                b.keywords,
+                b.status,
+                COALESCE(GROUP_CONCAT(DISTINCT a.name ORDER BY a.name SEPARATOR ', '), '') AS authors,
+                0 AS shelving_users,
+                COALESCE(ROUND(AVG(r.point), 1), 0) AS ranking,
+                COALESCE(p.position, 0) AS position,
+                IF(MAX(s2.book_id) IS NULL, FALSE, TRUE) AS my_shelving
+            FROM books b
+            LEFT JOIN book_authors ba ON ba.book_id = b.id
+            LEFT JOIN authors a ON a.id = ba.author_id
+            LEFT JOIN ratings r ON r.book_id = b.id
+            LEFT JOIN book_collection bc ON bc.book_id  = b.id
+            LEFT JOIN progress p ON p.book_id = b.id AND p.user_id = :user_id_1
+            LEFT JOIN shelving s2 ON s2.book_id = b.id AND s2.user_id = :user_id_2
+            WHERE bc.collection_id = :collection_id 
+            GROUP BY 
+                b.id, 
+                b.title, 
+                b.cover_photo, 
+                b.description, 
+                b.file, 
+                b.year, 
+                b.keywords, 
+                b.status, 
+                p.position
+            ORDER BY 
+                b.id
+        ";
+
+        return DB::select($sql, [
+            'user_id_1' => $userId,
+            'user_id_2' => $userId,
+            'collection_id' => $collectionId
+        ]);
+    }
+
 
 
     public static function average($id, $user_id)
