@@ -57,17 +57,8 @@ class bookController extends Controller
                         break;
 
                     case 'search':
-                        $keywords = explode(' ', trim($value)); // Dividir el valor en palabras con la funcion explode eliminando espacios en blanco
-
-                        $books->where(function ($query) use ($keywords) {
-                            foreach ($keywords as $word) {
-                                $query->where(function ($subQuery) use ($word) {
-                                    $subQuery->where('keywords', 'LIKE', '%' . $word . '%')
-                                            ->orWhere('title', 'LIKE', '%' . $word . '%');
-                                });
-                            }
-                        });
-                    break;
+                        $result = Book::getBySearch($user_id, trim($value));
+                        break;
                 }
 
                 $books = $result;
