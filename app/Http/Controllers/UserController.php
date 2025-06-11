@@ -10,46 +10,6 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class UserController extends Controller
 {
-    // public function login(Request $request)
-    // {
-    //     $credentials = $request->only(['name','email']);
-
-    //     $user = User::where('name', $credentials['name'])
-    //                 ->where('email', $credentials['email'])
-    //                 ->first();
-
-    //     if(! $user) {
-    //         return response()->json(['error' => 'Unauthorized'], 401);
-    //     }
-    //     $token = JWTAuth::fromUser($user);
-    //     return $this->respondWithToken($token);
-    // }
-    // public function me()
-    // {
-    //     $user = JWTAuth::parseToken()->authenticate();
-
-    //     return response()->json($user);
-    // }
-
-    // public function logout()
-    // {
-    //     Auth::logout();
-    //     return response()->json(['message' => 'Successfully logged out']);
-    // }
-
-    // public function refresh()
-    // {
-    //     return $this->respondWithToken (Auth::refresh());
-    // }
-
-    // protected function respondWithToken($token)
-    // {
-    //     return response()->json([
-    //         'token_type' => 'bearer',
-    //         'access_token'=> $token,
-    //         'expires_in' => Auth::factory()->getTTL() * 60
-    //     ]);
-    // }
 
     // Mostrar listado de usuarios
     public function index()
@@ -71,23 +31,28 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:200',
             'email' => 'required|string|email|max:80',
-            'type' => 'required|in:0,1,2,3',
-            'last_access' => 'required|date',
+            'type' => 'required|in:0,1,2,3'
         ]);
 
-        $validator->sometimes('email', 'regex:/^[a-zA-Z0-9.]+@unach\.mx$/i', function ($input) {
-            return in_array($input->type, [1, 2, 3]);
-        });
-
+        if(strpos($request->input('email'), "@unach.mx")!== false && $request->input('type')==0){
+            return response()->json([
+                "success" => false,
+                "data"=> null,
+                "message" => "Si tienes un correo UNACH, no debes ingresar como invitado",
+                'error' => [
+                        'code' => 400, 
+                        'details' => "",
+                        ]
+            ], 400);
+        }
     
         if ($validator->fails()) {
             return response()->json([
                 "success" => false,
                 "data"=> null,
-                "message" => "Error en la validación",
+                "message" => "Los datos ingresados son inválidos",
                 'error' => [
-                        'code' => 400,
-                        'message' => 'Error en la validación',
+                        'code' => 400, 
                         'details' => $validator->errors()->first(),
                         ]
             ], 400);
@@ -95,12 +60,13 @@ class UserController extends Controller
     
         try {
             $validatedData = $validator->validated();
-            $validatedData ['email'] = strtolower($validatedData['email']);
+            $validatedData['email'] = strtolower($validatedData['email']);
 
             $user = User::where('email', $request->input('email'))->first();
 
             if ($user) {
-                $user->last_access = $request->input('last_access');
+
+                $user->last_access = date("Y-m-d h:i:s");
                 $user->save();
     
                 return response()->json([
@@ -108,12 +74,14 @@ class UserController extends Controller
                     'data'=> $user,
                     'message' => 'OK'
                 ], 201);
+
             } else {
+                
                 $user = new User();
-                $user->name = $validatedData['name'];
-                $user->email = $validatedData['email'];
-                $user->type = $validatedData['type'];
-                $user->last_access = $validatedData['last_access'];
+                $user->name = $request->input('name');
+                $user->email = $request->input('email');
+                $user->type = $request->input('type');
+                $user->last_access = date("Y-m-d h:i:s");
         
                 if ($user->save()) {
                     return response()->json([
