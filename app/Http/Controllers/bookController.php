@@ -103,7 +103,7 @@ class bookController extends Controller
 
         try{
 
-        $averageData = Book::average($id, $user_id);
+        $averageData = Book::getSingle($id, $user_id);
 
         if ($averageData) {
             return response()->json([

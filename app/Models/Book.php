@@ -240,17 +240,49 @@ class Book extends Model
         ]);
     }
 
-    public static function average($id, $user_id)
+    public static function getSingle($bookId, $userId)
     {
-         // Usar el query builder para construir la consulta SQL
-        return DB::table('ratings as r')
-        ->join('progress as p', 'r.book_id', '=', 'p.book_id')  // Inner join de ratings y progress
-        ->join('users as u', 'u.id', '=', 'r.user_id')          // Inner join de ratings y users
-        ->select('r.point', 'p.position', 'u.id')               // Seleccionamos los campos deseados
-        ->where('r.book_id', $id)                           // Filtramos por el libro
-        ->where('u.id', $user_id)
-        ->first();
+        $sql = "
+            SELECT 
+                b.id,
+                b.title,
+                b.cover_photo,
+                b.description,
+                b.file,
+                b.year,
+                b.keywords,
+                b.status,
+                COALESCE(GROUP_CONCAT(DISTINCT a.name ORDER BY a.name SEPARATOR ', '), '') AS authors,
+                0 AS shelving_users,
+                COALESCE(ROUND(AVG(r.point), 1), 0) AS ranking,
+                COALESCE(p.position, 0) AS position,
+                IF(MAX(s2.book_id) IS NULL, FALSE, TRUE) AS my_shelving
+            FROM books b
+            LEFT JOIN book_authors ba ON ba.book_id = b.id
+            LEFT JOIN authors a ON a.id = ba.author_id
+            LEFT JOIN ratings r ON r.book_id = b.id
+            LEFT JOIN progress p ON p.book_id = b.id AND p.user_id = :user_id_1
+            LEFT JOIN shelving s2 ON s2.book_id = b.id AND s2.user_id = :user_id_2
+            WHERE b.id = :book_id 
+            GROUP BY 
+                b.id, 
+                b.title, 
+                b.cover_photo, 
+                b.description, 
+                b.file, 
+                b.year, 
+                b.keywords, 
+                b.status, 
+                p.position
+        ";
+
+        return DB::selectOne($sql, [
+            'user_id_1' => $userId,
+            'user_id_2' => $userId,
+            'book_id' => $bookId
+        ]);
     }
+
     public function authors()
     {
         return $this->belongsToMany(Author::class, 'book_authors', 'book_id', 'author_id');
