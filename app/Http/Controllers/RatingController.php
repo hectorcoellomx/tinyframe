@@ -60,50 +60,5 @@ class RatingController extends Controller
         }
     }
 
-    public function show($id){
-        try{
-            //validador de integridad
-           $ExistBook = Rating::where('book_id', $id)->get();
-
-           if ($ExistBook->count()){
-                $average = Rating::where('book_id', $id)->first();
-
-                // $average = Rating::where('book_id', $id)->avg('point');
-
-                // $average = round($average, 3);
-                
-                return response()->json([
-                    "success" => true,
-                    "message"=> "OK",
-                    "data"=> $average
-                ],200);
-
-           }else {
-                return response()->json([
-                            "success" => false,
-                            "message" => "Error en la validación",
-                            'error' => [
-                                        'code' => 400,
-                                        'message' => 'Error en la validación',
-                                        'details' => $ExistBook->errors(),
-                            ]
-                    ], 400);
-           }
-
-        }catch (\Exception $e) {
-            return response()->json([
-                "success" => false,
-                "data" => null,
-                'message' => "Ha ocurrido un error inesperado",
-                'error' => [
-                            'code' => $e->getCode(),
-                            'message' => 'server error',
-                            'details' => $e->getMessage(),
-                            ]
-            ], 500);
-
-        }
-    }
-
     
 }

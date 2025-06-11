@@ -95,46 +95,5 @@ class ProgressController extends Controller
             ], 500);
         }
     }
-
-    public function update(Request $request, $id)
-    {
-        try{
-            $advance = Progress::where('book_id', $id)->firstOrFail();
-            // $advance = Progress::findOrFail($id);
-
-            $validator = Validator::make($request->all(), [
-                'book_id' => 'required|string|max:50',
-                'user_id' => 'required|integer',
-                'status' => 'required|integer|in:1,2',
-                'position' => 'required|integer|min:1|max:100',
-            ]);
-            if ($validator->fails()) {
-                return response()->json([
-                    "success" => false,
-                    "data" => null,
-                    "message" => "Error de validación",
-                    "errors" => $validator->errors()
-                ], 400);
-            }
-            $advance->update($request->all());
-
-            return response()->json([
-                "success" => true,
-                "message" => "Registro actualizado correctamente",
-                "data" => $advance
-            ], 200);
-
-        } catch (\Exception $e) {
-            return response()->json([
-                "success" => false,
-                "data" => null,
-                'message' => "Ha ocurrido un error inesperado",
-                'error' => [
-                    'code' => $e->getCode(),
-                    'message' => 'server error',
-                    'details' => $e->getMessage(),
-                ]
-            ], 500);
-        }
-    }    
+   
 }
