@@ -5,7 +5,6 @@ namespace App\Controllers;
 require_once './app/models/App.php';
 
 use Core\Request;
-use Core\Validator;
 use Core\View;
 
 use App\Models\App;
@@ -20,8 +19,6 @@ class HomeController{
 
         $logged = $req->input('logged');
         $version = get_version();
-        
-        //vd($version);
 
         $data = array(
             'app' => "TinyApp",
@@ -47,15 +44,15 @@ class HomeController{
 
     }
 
-    public function login(){
+    public function login(Request $req){
 
-        Validator::check([
+        $req->validate([
             [ 'email', [ 'email', 'trim' ] ],
             [ 'password', [ 'min(1)', 'trim' ] ],
         ]);
 
-        // $username = input('username');
-        // $password = input('password');
+        // $username = $req->input('username');
+        // $password = $req->input('password');
         
         redir('?logged=1');
 

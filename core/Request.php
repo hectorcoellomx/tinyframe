@@ -72,4 +72,9 @@ class Request {
         return $value;
     }
 
+    function validate($rules){
+        $validator = new \Core\Validator(); 
+        $validator->check($rules);
+    }
+
 }

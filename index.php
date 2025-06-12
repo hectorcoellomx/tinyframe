@@ -39,8 +39,8 @@
     }
 
     require './core/Response.php';
-    require './core/Request.php';
     require './core/Validator.php';
+    require './core/Request.php';
     require './core/View.php';
 
     if($tinyapp_config->load_upload_files){

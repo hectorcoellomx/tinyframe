@@ -5,7 +5,7 @@ namespace Core;
 class Validator
 {
 
-    public static function check($rules, $redirect = true)
+    function check($rules, $redirect = true)
     {
 
         $errors = array();

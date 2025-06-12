@@ -221,13 +221,13 @@
             
             use App\Libraries\TokenAuth;
 
-            use Core\Validator;
+            use Core\Request;
             use Core\File;
 
             class HomeController
             {
 
-                public function index(){
+                public function index(Request $req){
 
                     // Crear un token
 
@@ -271,13 +271,13 @@
         <div class="code">
             namespace App\Controllers;
 
-            use Core\Validator;
+            use Core\Request;
             use Core\File;
 
             class HomeController
             {
 
-                public function index(){
+                public function index(Request $req){
 
                     // Tres vistas siendo llamadas
 
@@ -550,20 +550,19 @@
 
     <section id="validaciones" class="section">
         <div class="title">Validaciones</div>
-        <p>Para usar las validaciones en los controladores se debe implementar <span class="color-main">use
-                Core\Validator;</span>.</p>
+        <p>Para usar las validaciones debes llamar el método validate() de la instancia del <span class="color-main">Request $req</span>.</p>
 
         <div class="code">
             namespace App\Controllers;
 
-            use Core\Validator;
+            use Core\Request;
 
             class HomeController
             {
 
-                public function index(){
+                public function index(Request $req){
 
-                    Validator::check([
+                    $req->validate([
                         [ 'user', [ 'string' ] ],
                         [ 'email', [ 'email', 'min(8)' ] ],
                     ]);
@@ -702,9 +701,6 @@
                 
             // Devuelve la versión del framework
             get_version()
-
-            // Imprime un var_dump personalizado
-            vd($vars, $stop=true)
 
             // Guardar errores temporales
             set_errors($errors)
