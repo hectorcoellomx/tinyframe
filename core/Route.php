@@ -10,7 +10,7 @@ class Route
     public static function register($type, $route_pattern, $controller, $middlewares = [])
     {
         $get_route = (isset($_GET['route'])) ? $_GET['route'] : 'home';
-        $get_route = (trim($get_route) == "home") ? '/' : "/" . trim($get_route);
+        $get_route = (trim($get_route) === "home" || trim($get_route) === 'index.php') ? '/' : "/" . trim($get_route);
         $get_route = ($get_route != "/" && $get_route[strlen($get_route) - 1] == "/") ? substr($get_route, 0, strlen($get_route) - 1) : $get_route;
 
         $finally_route_pattern = "/";
