@@ -14,13 +14,14 @@ class Route
         $get_route = ($get_route != "/" && $get_route[strlen($get_route) - 1] == "/") ? substr($get_route, 0, strlen($get_route) - 1) : $get_route;
 
         $finally_route_pattern = "/";
-        $route_pattern_array = explode('/', $route_pattern);
+        
 
         if ($route_pattern != "/") {
 
             global $tinyapp_url_response;
             $tinyapp_url_response = [];
 
+            $route_pattern_array = explode('/', $route_pattern);
             $slash = "";
             $pos = 0;
 
@@ -33,21 +34,27 @@ class Route
             }
         }
 
-        if ($finally_route_pattern == $get_route && strtolower($_SERVER['REQUEST_METHOD']) == $type) {
+        if ($finally_route_pattern == $get_route && strtolower($_SERVER['REQUEST_METHOD']) == strtolower($type)) {
 
             if (count($middlewares) > 0) {
                 foreach ($middlewares as $middleware) {
-                    self::middleware($middleware);
+                    if (!empty($middleware)) {
+                        self::middleware($middleware);
+                    }
                 }
             }
+            if (is_array($controller) &&  count($controller) == 2 && class_exists($controller[0]) && method_exists(new $controller[0], $controller[1])) {
+                
+                $object = new $controller[0];
+                $method = $controller[1];
+                $object->$method();
 
-            $object = new $controller[0];
-            $method = $controller[1];
-            $object->$method();
+                DB::db_close();
 
-            DB::db_close();
-
-            exit;
+                exit;
+            }else{
+                trigger_error("Invalid controller or method specified", E_USER_ERROR);
+            }
 
         } else {
             global $tinyapp_nofound;
