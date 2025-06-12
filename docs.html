@@ -133,15 +133,19 @@
     <section id="controladores" class="section">
         <div class="title">Controladores</div>
         <p>Debes crear tus controladores en la carpeta <span class="color-main">app/controllers</span> y colocar en cada uno de ellos el namespace <span class="color-main">App\Controllers</span>. Se sugiere nombrar a los controladores en formato <span class="color-main">CamelCase</span> con la palabra Controllers al final (app/controllers/HomeController.php).</p> 
-        <p>Para obtener los datos recibidos por GET, POST o parámetro URL en el controlador, debes usar la función <span class="color-main">input()</span> y poner de parámetro el nombre del parámetro.</p>
+        <p>Para obtener los datos recibidos por GET, POST o parámetro URL en el controlador, debes usar el método <span class="color-main">input()</span> del Request y poner de parámetro el nombre del parámetro.</p>
 
         <div class="code">
             namespace App\Controllers;
 
+            use Core\Request;
+
             class HomeController
             {
 
-                $username = input('username'); // GET (Query params) or POST or URL Param
+                public function login(Request $req){
+                    $username = $req->input('username'); // GET (Query params) or POST or URL Param
+                }
 
             }
 
@@ -157,11 +161,12 @@
         <div class="code">
             namespace App\Controllers;
 
+            use Core\Request;
             use Core\Response;
 
             class StudentApiController extends Response
             {
-                public function index(){
+                public function index(Request $req){
 
                     $students = array(
                         array('id' => 100, "name" => 'Mary Jones' ),
@@ -574,12 +579,12 @@
             <footer>app/controllers/HomeController.php</footer>
         </div>
 
-        <p>El primer parámetro del método <span class="color-main">Validator::check()</span> recibe un arreglo de
+        <p>El primer parámetro del método <span class="color-main">$req->validate</span> recibe un arreglo de
             dos dimensiones. La primer dimensión tiene el nombre del valor que se está recibiendo (input). La
             segunda dimensión es un arreglo con las validaciones aplicables a ese valor. </p>
         <p>Las validaciones aplicables son las siguientes: <span class="color-main">string, numeric, integer, float,
                 boolean, email, file, max(5), min(4), val(1, 0), allows_null</span>. </p>
-        <p>El método <span class="color-main">Validator::check()</span> recibe un segundo parámetro, este es tipo
+        <p>El método <span class="color-main">$req->validate</span> recibe un segundo parámetro, este es tipo
             booleano y sirve para habilitar o deshabilitar la redireción automática en la validación. Por defecto es
             true.</p>
     </section>
@@ -599,31 +604,34 @@
         <div class="code">
             namespace App\Controllers;
 
+            use Core\Request;
             use Core\Session;
 
             class HomeController
             {
 
-                // Crear una sesión
-                $session = new Session();
-                $data_session = array( "id"=> 100, "username"=> 'Hector');
-                $session->create($data_session);
+                public function index(Request $req){
+                    // Crear una sesión
+                    $session = new Session();
+                    $data_session = array( "id"=> 100, "username"=> 'Hector');
+                    $session->create($data_session);
 
-                // Cambiar datos de sesión
-                $session = new Session();
-                $session->set_data("username", "Hector Coello");
+                    // Cambiar datos de sesión
+                    $session = new Session();
+                    $session->set_data("username", "Hector Coello");
 
-                // Obtener datos de sesión
-                $session = new Session();
-                $id = $session->get_data("id");
+                    // Obtener datos de sesión
+                    $session = new Session();
+                    $id = $session->get_data("id");
 
-                // Validar sesión
-                $session = new Session();
-                $validate = $session->validate();
-                $validate = $session->validate("login");
+                    // Validar sesión
+                    $session = new Session();
+                    $validate = $session->validate();
+                    $validate = $session->validate("login");
 
-                // Eliminar sesión
-                $session->delete();
+                    // Eliminar sesión
+                    $session->delete();
+                }
 
             }
 
@@ -642,15 +650,16 @@
         <div class="code">
             namespace App\Controllers;
 
+            use Core\Request;
             use Core\Validator;
             use Core\File;
 
             class HomeController
             {
 
-                public function index(){
+                public function index(Request $req){
 
-                    Validator::check([
+                    $req->validate([
                         [ 'photo', [ 'file' ] ],
                     ]);
 
@@ -713,16 +722,6 @@
             
             // Devuelve el URL de Assets del proyecto
             assets($add="")
-            
-            // Recibir el valor de un parámetro recibido
-            input($name, $type="all")
-            
-            // Verificar si un parámetro está siendo recibido
-            exist_input($name)
-
-            // Recibe un parámetro JSON recibido
-            input_json()
-            
             
         </div>
     </section>
