@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 require_once './app/models/App.php';
 
+use Core\Request;
 use Core\Validator;
 use Core\View;
 
@@ -12,12 +13,12 @@ use App\Models\App;
 class HomeController{
     
 
-    public function index(){
+    public function index(Request $req){
 
         $app = new App();
         $message = $app->message();
 
-        $logged = input('logged');
+        $logged = $req->input('logged');
         $version = get_version();
         
         //vd($version);

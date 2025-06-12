@@ -39,6 +39,7 @@
     }
 
     require './core/Response.php';
+    require './core/Request.php';
     require './core/Validator.php';
     require './core/View.php';
 

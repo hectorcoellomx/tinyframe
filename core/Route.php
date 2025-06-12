@@ -47,7 +47,10 @@ class Route
                 
                 $object = new $controller[0];
                 $method = $controller[1];
-                $object->$method();
+                //$object->$method();
+
+                $request = new \Core\Request(); 
+                call_user_func_array([$object, $method], [$request]);
 
                 DB::db_close();
 
