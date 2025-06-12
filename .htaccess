@@ -1,15 +1,25 @@
+# Activar el motor de reescritura de URLs
 RewriteEngine On
+
+# Evitar que los directorios se puedan listar (por seguridad)
 Options All -Indexes
 
+# Proteger el archivo .htaccess para que no sea visible por el navegador
 <files .htaccess>
-    order allow,deny
-    deny from all
+    Order Allow,Deny
+    Deny from all
 </files>
 
-#RewriteCond %{REQUEST_URI} ^/admin/$
-#RewriteRule ^$ index.php?route=index.php [QSA,L]
+# Redirigir la raíz del sitio (/) a la ruta 'home'
+RewriteRule ^$ index.php?route=home [QSA,L]
 
-RewriteCond %{REQUEST_URI} !assets/([0-9a-zA-Z-_@./]+)$
-RewriteCond %{REQUEST_URI} !upload/([0-9a-zA-Z-_@./]+)$
+# NO reescribir si el archivo o directorio físico realmente existe
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
 
-RewriteRule ^([0-9a-zA-Z-_@./]+)$ index.php?route=$1 [QSA]
+# Excluir directorios públicos como 'assets' y 'upload' de la reescritura
+RewriteCond %{REQUEST_URI} !^/assets/
+RewriteCond %{REQUEST_URI} !^/upload/
+
+# Regla principal: redirigir URLs limpias a index.php usando el parámetro "route"
+RewriteRule ^([0-9a-zA-Z-_@./]+)$ index.php?route=$1 [QSA,L]
