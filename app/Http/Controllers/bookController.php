@@ -32,7 +32,7 @@ class bookController extends Controller
             $books = null;
             $result = null;
             
-            if ( in_array($filter, $options) && (($filter!="most_read" && $value) || $filter=="most_read" ) ) {
+            if ( in_array($filter, $options) && $user_id && (( ($filter!="most_read" && $filter!="shelving") && $value) || $filter=="most_read"  || $filter=="shelving" ) ) {
 
                 $books = Book::query();
 
