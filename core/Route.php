@@ -106,12 +106,11 @@ class Route
             
             $value = "";
             $params = explode('/', $get_route);
-
+            
             if (isset($params[$pos]) && $params[$pos] != "") {
-
-                $value = $params[$pos];
-                $var = substr($route_single, 1, -1);
                 global $tinyapp_url_response;
+                $value = htmlspecialchars($params[$pos], ENT_QUOTES, 'UTF-8');
+                $var = substr($route_single, 1, -1);
                 $tinyapp_url_response[$var] = $value;
 
             }
