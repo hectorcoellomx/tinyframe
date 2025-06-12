@@ -14,8 +14,10 @@ class Validator
 
         foreach ($rules as $rule) {
 
-            $exist_param = exist_input($rule[0]);
-            $value_param = input($rule[0]);
+            $req = new \Core\Request();
+
+            $exist_param = $req->exist_input($rule[0]);
+            $value_param = $req->input($rule[0]);
             $rules_param = isset($rule[1]) ? $rule[1] : [];
 
             $allows_null = in_array("allows_null", $rules_param);
