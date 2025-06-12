@@ -65,41 +65,39 @@ class Route
 
     public static function middleware($name)
     {
-        if ($name != "") {
 
-            $middlewareFileName = ucfirst(strtolower($name)) . '.php';
-            $middlewareFilePath = './app/middlewares/' . $middlewareFileName;
+        if (!preg_match('/^[A-Z][a-zA-Z]*$/', $name)) {
+            trigger_error("Invalid middleware name format: '$name'. Must start with an uppercase letter and contain only letters.", E_USER_ERROR);
+            return;
+        }        
 
-            if (preg_match('/^[a-zA-Z_]+\.php$/', $middlewareFileName)) {
-                if (file_exists($middlewareFilePath)) {
-                    require_once $middlewareFilePath;
+        $middlewareFilePath = './app/middlewares/' . $name . '.php';
 
-                    $middlewareClass = '\\App\\Middlewares\\' . ucfirst(strtolower($name));
+        if (file_exists($middlewareFilePath)) {
+            require_once $middlewareFilePath;
 
-                    if (class_exists($middlewareClass)) {
-                        
-                        $middlewareInstance = new $middlewareClass();
-                        
-                        if (method_exists($middlewareInstance, 'run')) {
-                            $middlewareInstance->run();
-                        } else {
-                            trigger_error("The '$name' middleware does not have a 'run' method", E_USER_ERROR);
-                        }
+            $middlewareClass = '\\App\\Middlewares\\' . $name;
 
-                    }else{
-                        trigger_error("Middleware class '$middlewareClass' does not exist", E_USER_ERROR);
-                    }
-
-                }else {
-                    trigger_error("The middleware file does not exist '" .  $middlewareFilePath . "'", E_USER_ERROR);
+            if (class_exists($middlewareClass)) {
+                
+                $middlewareInstance = new $middlewareClass();
+                
+                if (method_exists($middlewareInstance, 'run')) {
+                    $middlewareInstance->run();
+                } else {
+                    trigger_error("The '$name' middleware does not have a 'run' method", E_USER_ERROR);
                 }
+
             }else{
-                trigger_error("The file name for the middleware is invalid (Only letters and underscore) '" .  $middlewareFilePath . "'", E_USER_ERROR);
+                trigger_error("Middleware class '$middlewareClass' does not exist", E_USER_ERROR);
             }
-            
-        } else {
-            exit;
+
+        }else {
+            trigger_error("The middleware file does not exist '" .  $middlewareFilePath . "'", E_USER_ERROR);
         }
+
+            
+ 
     }
 
     public static function verify_param($route_single, $pos, $get_route)
