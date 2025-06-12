@@ -514,9 +514,9 @@
             require_once './app/controllers/HomeController.php';
 
 
-            // Middleware "test"
+            // Middleware "Test"
 
-            Route::register("get", "/", HomeController::class, 'index' , [ 'test' ] );
+            Route::register("get", "/", HomeController::class, 'index' , [ 'Test' ] );
 
             <footer>app/routes.php</footer>
         </div>
@@ -542,6 +542,8 @@
 
             <footer>app/middlewares/Test.php</footer>
         </div>
+
+        <p>EL nombre de los middlewares tanto en archivo como en el nombre de la clase y en su llamado en las rutas deben comenzar con una letra mayúscula y solo letras.</p>
 
     </section>
 
