@@ -3,15 +3,23 @@
 namespace App\Controllers;
 
 require_once './app/models/App.php';
+require_once './app/services/AuthService.php';
 
 use Core\Request;
 use Core\View;
 
 use App\Models\App;
+use App\Services\AuthService;
 
 class HomeController{
-    
 
+    private $service;
+
+    public function __construct()
+    {
+        $this->service = new AuthService();
+    }
+    
     public function index(Request $req){
 
         $app = new App();
@@ -51,10 +59,15 @@ class HomeController{
             [ 'password', [ 'min(1)', 'trim' ] ],
         ]);
 
-        // $username = $req->input('username');
-        // $password = $req->input('password');
+        $login = $this->service->login($req->all());
         
-        redir('?logged=1');
+        if($login){
+            redir('?logged=1');
+        }
+        
+        set_errors(['Claves incorrectas']);
+        redir('login');
+        
 
     }
 

@@ -4,72 +4,40 @@ namespace Core;
 
 class Request {
 
-    function input($name, $type="all"){
+    protected $data;
+    protected $headers;
 
-        $value= NULL;
-        
-        if ( $type=="post" || $type=="put" || $type=="delete" || $type=="all" ) {
-            $value = isset($_POST[$name]) ? $_POST[$name] : NULL;
-            
-            if($value==NULL){
-                
-                $data = file_get_contents("php://input");
-                $data_decode = json_decode($data, true);
-    
-                if($data_decode==NULL){
-                    parse_str(file_get_contents("php://input"), $data_decode);
-                }
-    
-                $value = isset($data_decode[$name]) ? $data_decode[$name] : NULL;
-            }
-        }
-    
-        if( $type=="get" || ($type=="all" && $value==NULL) ){
-            $value = isset($_GET[$name]) ? $_GET[$name] : NULL;
-        }
-    
-        if( $type=="url"  || ($type=="all" && $value==NULL) ){
-            global $tinyapp_url_response;
-            $value = isset( $tinyapp_url_response[$name] ) ? $tinyapp_url_response[$name] : NULL;
-        }
-    
-        if( $type=="headers" || ($type=="all" && $value==NULL) ){
-            $value = isset( getallheaders()[$name] ) ? getallheaders()[$name] : NULL;
-        }
-        
-        return $value;
+    public function __construct() {
+        $this->data = $this->parseInput();
+        //$this->headers = getallheaders();
     }
 
-    function exist_input($name){
-        $value= false;
-        
-        if ( isset($_POST[$name]) || isset($_GET[$name]) ) {
-            $value = true;
-        }else{
-    
-            $data = file_get_contents("php://input");
-            $data_decode = json_decode($data, true);
-    
-            if($data_decode==NULL){
-                parse_str(file_get_contents("php://input"), $data_decode);
-            }
-            
-            $value = isset($data_decode[$name]);
-    
-            if(!$value){
-                global $tinyapp_url_response;
-                if( isset( $tinyapp_url_response[$name] ) ){
-                    $value = true;
-                }
-            }
-    
-            if(!$value){
-                $value = isset( getallheaders()[$name] );
-            }
-            
+    protected function parseInput() {
+        $input = $_POST + $_GET;
+        $raw = file_get_contents("php://input");
+        $decoded = json_decode($raw, true);
+
+        if (is_array($decoded)) {
+            $input = array_merge($input, $decoded);
         }
-        
-        return $value;
+
+        return $input;
+    }
+
+    public function input($key, $default = null) {
+        return $this->data[$key] ?? $default;
+    }
+
+    function exist_input($key){
+        return (isset($this->data[$key]));
+    }
+
+    public function header($key, $default = null) {
+        return $this->headers[$key] ?? $default;
+    }
+
+    public function all($type="input") {
+        return ($type=="input") ? $this->data : ( ($type=="header") ? $this->headers : null );
     }
 
     function validate($rules){
