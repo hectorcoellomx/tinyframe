@@ -138,9 +138,10 @@
         <div class="code">
             namespace App\Controllers;
 
+            use Core\Controller;
             use Core\Request;
 
-            class HomeController
+            class HomeController extends Controller
             {
 
                 public function login(Request $req){
@@ -156,15 +157,15 @@
         <section id="api" class="section">
             <div class="title">Api Rest</div>
 
-        <p>Para el uso de controladores para API Rest, se debe extender al controlador de "Response" para así poder dar respuestas tipo JSON como se ve a continuación.</p>
+        <p>Para el uso de controladores para API Rest las respuestas tipo JSON deben darse como se ve a continuación.</p>
 
         <div class="code">
             namespace App\Controllers;
 
+            use Core\Controller;
             use Core\Request;
-            use Core\Response;
 
-            class StudentApiController extends Response
+            class StudentApiController extends Controller
             {
                 public function index(Request $req){
 
@@ -226,10 +227,11 @@
             
             use App\Libraries\TokenAuth;
 
+            use Core\Controller;
             use Core\Request;
             use Core\File;
 
-            class HomeController
+            class HomeController extends Controller 
             {
 
                 public function index(Request $req){
@@ -276,10 +278,11 @@
         <div class="code">
             namespace App\Controllers;
 
+            use Core\Controller;
             use Core\Request;
             use Core\File;
 
-            class HomeController
+            class HomeController extends Controller
             {
 
                 public function index(Request $req){
@@ -560,9 +563,10 @@
         <div class="code">
             namespace App\Controllers;
 
+            use Core\Controller;
             use Core\Request;
 
-            class HomeController
+            class HomeController extends Controller
             {
 
                 public function index(Request $req){
@@ -604,10 +608,11 @@
         <div class="code">
             namespace App\Controllers;
 
+            use Core\Controller;
             use Core\Request;
             use Core\Session;
 
-            class HomeController
+            class HomeController extends Controller
             {
 
                 public function index(Request $req){
@@ -650,11 +655,11 @@
         <div class="code">
             namespace App\Controllers;
 
+            use Core\Controller;
             use Core\Request;
-            use Core\Validator;
             use Core\File;
 
-            class HomeController
+            class HomeController extends Controller
             {
 
                 public function index(Request $req){
