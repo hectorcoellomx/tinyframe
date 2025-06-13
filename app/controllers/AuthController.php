@@ -18,7 +18,7 @@ class AuthController extends Controller {
 
     public function access(){
 
-        $data = array('app' => "TinyApp");
+        $data = array('app' => "TinyFrame");
         
         $this->renderView('login', $data, 'layout/main');
     

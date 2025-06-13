@@ -47,8 +47,7 @@ class Route
                 
                 $object = new $controller[0];
                 $method = $controller[1];
-                //$object->$method();
-
+                
                 $request = new \Core\Request(); 
                 call_user_func_array([$object, $method], [$request]);
 
@@ -60,9 +59,8 @@ class Route
             }
 
         } else {
-            http_response_code(400);
-            include('./core/pages/nofound.php');
-            exit;
+            global $tinyapp_nofound;
+            $tinyapp_nofound = true;
         }
         
     }
