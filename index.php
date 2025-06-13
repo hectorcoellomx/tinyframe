@@ -28,8 +28,6 @@
         error_reporting(E_ALL);
     }
     
-    $tinyapp_nofound = false;
-    $tinyapp_vars = null;
     $tinyapp_url_response = array();
     
     require './core/functions.php';
@@ -49,11 +47,5 @@
     require_once './app/helpers.php';
     require './core/Route.php';
     require './app/routes.php';
-
-    if($tinyapp_nofound){
-        http_response_code(400);
-        include('./core/pages/nofound.php');
-        exit;
-    }
 
 ?>

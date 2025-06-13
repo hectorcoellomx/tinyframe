@@ -60,8 +60,9 @@ class Route
             }
 
         } else {
-            global $tinyapp_nofound;
-            $tinyapp_nofound = true;
+            http_response_code(400);
+            include('./core/pages/nofound.php');
+            exit;
         }
         
     }
