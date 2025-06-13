@@ -20,9 +20,7 @@ class AuthController extends Controller {
 
         $data = array('app' => "TinyApp");
         
-        $this->view('partials/header', $data);
-        $this->view('login');
-        $this->view('partials/footer');
+        $this->renderView('login', $data, 'layout/main');
     
     }
 

@@ -22,21 +22,27 @@ class Controller {
         echo json_encode($data);
     }
 
-    public function view($_name, $_data=null){
+    public function renderView(string $view, array $data = [], string $layout = '') {
 
-        global $tinyapp_vars;
+        extract($data, EXTR_SKIP);
 
-        if($tinyapp_vars==null){
-            $tinyapp_vars = $_data;
+        ob_start();
+        include("./app/views/{$view}.php");
+        $content_view = ob_get_clean();
+
+        if ($layout) {
+            $layoutPath = "./app/views/{$layout}.php";
+
+            if (!file_exists($layoutPath)) {
+                throw new \Exception("Layout no encontrado: $layout");
+            }
+
+            include($layoutPath);
+        } else {
+            echo $content_view;
         }
-        
-        if(is_array($tinyapp_vars)){
-            extract($tinyapp_vars);
-        }
-
-        include('./app/views/'.$_name.'.php');
-        
     }
+
 
     
 }

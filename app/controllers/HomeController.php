@@ -20,10 +20,7 @@ class HomeController extends Controller {
             'logged' => $logged
         );
 
-        $this->view('partials/header', $data);
-        $this->view('home');
-        $this->view('partials/footer');
-
+        $this->renderView('home', $data, 'layout/main');
     }
 
 }
