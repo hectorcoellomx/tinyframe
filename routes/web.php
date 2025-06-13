@@ -11,18 +11,16 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
 
+Route::get('/',[ LookBookController::class, 'index' ])->name('books');
 
 Route::get('/lector-example',function(){
     return view('epub.example');
 });
-// Mostrar el formulario de login
 
 Route::get('/login', [AuthController::class, 'login']);
-// Manejar el inicio de sesión
 Route::post('/login', [AuthController::class, 'authenticate'])->name('auth.authenticate');
-
-// Cerrar sesión
 Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
+
 
 // Ruta protegida para la vista de usuarios
 Route::middleware('auth.custom')->group(function () {
@@ -36,22 +34,14 @@ Route::middleware('auth.custom')->group(function () {
     Route::get('/books/{book}/edit',[bookController::class, 'edit'])->name('books.edit');
     Route::put('/books/{book}',[bookController::class,'update'])->name('books.update');
     Route::delete('/books/{book}', [bookController::class, 'destroy'])->name('books.destroy'); 
-
-    //Rutas Autores
     Route::resource('authors' ,AuthorController::class);
-    
-    //Rutas Colecciones
     Route::resource('collections', CollectionController::class);
-    
-    //Rutas Categorías 
     Route::resource('categories', CategoryController::class);
 });
 
 // Route::get('/books-public',function(){
 //     return view('books');
 // });
-Route::get('/',[LookBookController::class, 'index'])->name('books');
-
 
 Route::get('/lector-epub/{archivo}', function ($archivo) {
     $safeFile = basename($archivo); 
