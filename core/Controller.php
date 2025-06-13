@@ -3,7 +3,7 @@
 namespace Core;
 
 
-class Response {
+class Controller {
 
     public function json($data, $code, $config_name="default")
     {
@@ -18,6 +18,22 @@ class Response {
 
         http_response_code($code);
         echo json_encode($data);
+    }
+
+    public function view($_name, $_data=null){
+
+        global $tinyapp_vars;
+
+        if($tinyapp_vars==null){
+            $tinyapp_vars = $_data;
+        }
+        
+        if(is_array($tinyapp_vars)){
+            extract($tinyapp_vars);
+        }
+
+        include('./app/views/'.$_name.'.php');
+        
     }
 
     

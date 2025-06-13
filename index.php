@@ -38,10 +38,9 @@
         require './core/Session.php';
     }
 
-    require './core/Response.php';
+    require './core/Controller.php';
     require './core/Validator.php';
     require './core/Request.php';
-    require './core/View.php';
 
     if($tinyapp_config->load_upload_files){
         require './core/File.php';

@@ -5,13 +5,13 @@ namespace App\Controllers;
 require_once './app/models/App.php';
 require_once './app/services/AuthService.php';
 
+use Core\Controller;
 use Core\Request;
-use Core\View;
 
 use App\Models\App;
 use App\Services\AuthService;
 
-class HomeController{
+class HomeController extends Controller {
 
     private $service;
 
@@ -35,9 +35,9 @@ class HomeController{
             'logged' => $logged
         );
 
-        View::get('partials/header', $data);
-        View::get('home');
-        View::get('partials/footer');
+        $this->view('partials/header', $data);
+        $this->view('home');
+        $this->view('partials/footer');
 
     }
 
@@ -45,10 +45,9 @@ class HomeController{
 
         $data = array('app' => "TinyApp");
         
-
-        View::get('partials/header', $data);
-        View::get('login');
-        View::get('partials/footer');
+        $this->view('partials/header', $data);
+        $this->view('login');
+        $this->view('partials/footer');
 
     }
 
