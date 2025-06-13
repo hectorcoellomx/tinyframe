@@ -18,8 +18,8 @@ class Route
 
         if ($route_pattern != "/") {
 
-            global $tinyapp_url_response;
-            $tinyapp_url_response = [];
+            global $tinyframe_url_response;
+            $tinyframe_url_response = [];
 
             $route_pattern_array = explode('/', $route_pattern);
             $slash = "";
@@ -59,8 +59,8 @@ class Route
             }
 
         } else {
-            global $tinyapp_nofound;
-            $tinyapp_nofound = true;
+            global $tinyframe_nofound;
+            $tinyframe_nofound = true;
         }
         
     }
@@ -110,10 +110,10 @@ class Route
             $params = explode('/', $get_route);
             
             if (isset($params[$pos]) && $params[$pos] != "") {
-                global $tinyapp_url_response;
+                global $tinyframe_url_response;
                 $value = htmlspecialchars($params[$pos], ENT_QUOTES, 'UTF-8');
                 $var = substr($route_single, 1, -1);
-                $tinyapp_url_response[$var] = $value;
+                $tinyframe_url_response[$var] = $value;
 
             }
 

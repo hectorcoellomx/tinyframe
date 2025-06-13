@@ -39,8 +39,8 @@ class Request {
     }
 
     public function urlParams(){
-        global $tinyapp_url_response;
-        return $tinyapp_url_response;
+        global $tinyframe_url_response;
+        return $tinyframe_url_response;
     }
 
     public function url($key, $default = null) {

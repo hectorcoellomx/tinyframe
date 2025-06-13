@@ -6,7 +6,7 @@ class Config
 {
     
     public $status_project = "dev"; // dev or pro
-    public $base_url = "http://localhost/tinyapp/";
+    public $base_url = "http://localhost/tinyframe/";
 
     public $databases_driver = "Mysqli"; // Mysqli (Mysql), OCI (Oracle), PDO (Mysql & Oracle)
 

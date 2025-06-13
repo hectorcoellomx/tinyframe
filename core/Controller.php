@@ -9,8 +9,8 @@ class Controller {
 
     public function json($data, $code, $config_name="default")
     {
-        global $tinyapp_config;
-        $api_config = $tinyapp_config->api_config[$config_name];
+        global $tinyframe_config;
+        $api_config = $tinyframe_config->api_config[$config_name];
 
         header("Access-Control-Allow-Origin: " . $api_config['origin']);
         header('Access-Control-Allow-Methods: ' . $api_config['methods']);

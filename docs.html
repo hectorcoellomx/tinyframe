@@ -51,7 +51,7 @@
 
         <div class="code">
             STATUS_PROJECT=dev
-            BASE_URL=http://localhost/tinyapp/
+            BASE_URL=http://localhost/tinyframe/
 
             ...
 
@@ -73,8 +73,8 @@
         <p>Si deseas realizar pruebas con el modelo <span class="color-main">App</span> que viene de prueba en el proyecto, deberás crear la siguiente base de datos:</p>
 
         <div class="code">
-            CREATE DATABASE tinyapp;
-            USE tinyapp;
+            CREATE DATABASE tinyframe;
+            USE tinyframe;
 
             CREATE TABLE `users` (
                 `id` int(5) PRIMARY KEY AUTO_INCREMENT,
@@ -293,7 +293,7 @@
 
                     // Llamada pasando datos (variables)
 
-                    $data = array( 'app' => "TinyApp", 'message' => "Hola" );
+                    $data = array( 'app' => "TinyFrame", 'message' => "Hola" );
                     View::get('home', $data);
 
                 }
@@ -366,7 +366,7 @@
             DB_MYSQL_HOST=localhost
             DB_MYSQL_USER=root
             DB_MYSQL_PASSWORD=
-            DB_MYSQL_NAME=tinyapp
+            DB_MYSQL_NAME=tinyframe
 
             DB_ORACLE_TYPE=oracle
             DB_ORACLE_HOST=localhost
@@ -385,7 +385,7 @@
             DB_MYSQL_HOST=localhost
             DB_MYSQL_USER=root
             DB_MYSQL_PASSWORD=
-            DB_MYSQL_NAME=tinyapp
+            DB_MYSQL_NAME=tinyframe
 
             DB_ORACLE_TYPE=oracle
             DB_ORACLE_HOST=localhost
@@ -400,7 +400,7 @@
             DB_DATABASEPROD_HOST=localhost
             DB_DATABASEPROD_USER=userad
             DB_DATABASEPROD_PASSWORD=12345
-            DB_DATABASEPROD_NAME=tinyapp
+            DB_DATABASEPROD_NAME=tinyframe
 
             <footer>.env</footer>
         </div>

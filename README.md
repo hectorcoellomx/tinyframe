@@ -1,4 +1,4 @@
-# Tinyapp
+# Tinyframe
 
 Creado por Héctor de Jesús Coello Gómez.
 

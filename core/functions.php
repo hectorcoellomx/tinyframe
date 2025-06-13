@@ -1,8 +1,8 @@
 <?php
 
 function assets($add=""){
-    global $tinyapp_config;
-    echo $tinyapp_config->base_url . 'assets/'. $add;
+    global $tinyframe_config;
+    echo $tinyframe_config->base_url . 'assets/'. $add;
 }
 
 function back(){
@@ -10,8 +10,8 @@ function back(){
 }
 
 function base($add=""){
-    global $tinyapp_config;
-    return $tinyapp_config->base_url . $add;
+    global $tinyframe_config;
+    return $tinyframe_config->base_url . $add;
 }
 
 function get_errors(){
@@ -27,14 +27,14 @@ function get_errors(){
 }
 
 function get_version(){
-    global $tinyapp_version;
-    return $tinyapp_version;
+    global $tinyframe_version;
+    return $tinyframe_version;
 }
 
 function redir($path, $external=false){
     if(!$external){
-        global $tinyapp_config;
-        header("Location: " . $tinyapp_config->base_url . $path);
+        global $tinyframe_config;
+        header("Location: " . $tinyframe_config->base_url . $path);
         exit();
     }else{
         header("Location: " . $path);

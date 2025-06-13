@@ -14,8 +14,8 @@ class Session {
         if($id!=""){
             $this->id = $id;
         }else{
-            global $tinyapp_config;
-            $this->id = $tinyapp_config->session_id;
+            global $tinyframe_config;
+            $this->id = $tinyframe_config->session_id;
         }
     }
 
