@@ -9,7 +9,7 @@
                 $errors = get_errors();
 
                 if($errors){
-                    echo "<ul>";
+                    echo "<ul class='errors'>";
                     foreach($errors as $error){
                         echo "<li><small>" . $error . ".</small></li>";
                     }
@@ -52,4 +52,17 @@
         cursor: pointer;
         margin-top: 10px;
     }
+
+    .errors{
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        color: red;
+    }
+
+    .errors li{
+        margin: 0;
+        padding: 0;
+    }
+
 </style>
