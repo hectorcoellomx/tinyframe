@@ -2,7 +2,7 @@
 <?php echo ($logged==1) ? '<a href="./" class="btntop">Logout</a>' : '<a href="./login" class="btntop">Login example</a>'; ?>
     
 <div class="center">
-    <?php echo ($logged==1) ? "Welcome." : $app . " (".$version.") " . $message; ?>
+    <?php echo ($logged==1) ? "Welcome." : "TinyApp (".$version.") " . "is a microframework MVC for small projects and api rest."; ?>
 </div>
 
 <style>

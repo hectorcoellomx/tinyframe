@@ -4,7 +4,11 @@ namespace App\Models;
 
 use Core\Databases\DB;
 
-class App {
+class User {
+
+    public function login($email, $password){
+        return ($email=="admin@gmail.com" && $password == "123");
+    }
 
     public function single($id){
         $db = DB::init();
@@ -29,10 +33,6 @@ class App {
     public function delete($id){
         $db = DB::init();
         return $db->db_delete("DELETE from users WHERE id = ?", [ $id ]);
-    }
-
-    public function message(){
-        return "is a microframework with MVC Architecture for small projects and api rest.";
     }
 
 }

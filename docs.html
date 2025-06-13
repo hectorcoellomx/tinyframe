@@ -555,7 +555,7 @@
 
     <section id="validaciones" class="section">
         <div class="title">Validaciones</div>
-        <p>Para usar las validaciones debes llamar el método validate() de la instancia del <span class="color-main">Request $req</span>.</p>
+        <p>Para usar las validaciones debes llamar el método verify() de la instancia del <span class="color-main">Request $req</span>.</p>
 
         <div class="code">
             namespace App\Controllers;
@@ -567,7 +567,7 @@
 
                 public function index(Request $req){
 
-                    $req->validate([
+                    $req->verify([
                         [ 'user', [ 'string' ] ],
                         [ 'email', [ 'email', 'min(8)' ] ],
                     ]);
@@ -659,7 +659,7 @@
 
                 public function index(Request $req){
 
-                    $req->validate([
+                    $req->verify([
                         [ 'photo', [ 'file' ] ],
                     ]);
 

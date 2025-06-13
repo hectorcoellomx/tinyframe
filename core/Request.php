@@ -40,7 +40,7 @@ class Request {
         return ($type=="input") ? $this->data : ( ($type=="header") ? $this->headers : null );
     }
 
-    function validate($rules){
+    function verify($rules){
         $validator = new \Core\Validator(); 
         $validator->check($rules);
     }

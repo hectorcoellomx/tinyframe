@@ -5,6 +5,8 @@ namespace Core;
 
 class Controller {
 
+    protected $service;
+
     public function json($data, $code, $config_name="default")
     {
         global $tinyapp_config;
