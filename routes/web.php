@@ -27,13 +27,13 @@ Route::middleware('auth.custom')->group(function () {
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('users/create',[UserController::class, 'create'])->name('users.create');
 
-    Route::get('/books/create',[bookController::class, 'create'])->name('books.create');
-    Route::get('/books',[bookController::class, 'index'])->name('books.index');
-    Route::get('/books/{book}',[bookController::class, 'ver'])->name('books.ver');
-    Route::post('/books',[bookController::class, 'store'])->name('books.store');
-    Route::get('/books/{book}/edit',[bookController::class, 'edit'])->name('books.edit');
-    Route::put('/books/{book}',[bookController::class,'update'])->name('books.update');
-    Route::delete('/books/{book}', [bookController::class, 'destroy'])->name('books.destroy'); 
+    Route::get('/books/create',[BookController::class, 'create'])->name('books.create');
+    Route::get('/books',[BookController::class, 'index'])->name('books.index');
+    Route::get('/books/{book}',[BookController::class, 'ver'])->name('books.ver');
+    Route::post('/books',[BookController::class, 'store'])->name('books.store');
+    Route::get('/books/{book}/edit',[BookController::class, 'edit'])->name('books.edit');
+    Route::put('/books/{book}',[BookController::class,'update'])->name('books.update');
+    Route::delete('/books/{book}', [BookController::class, 'destroy'])->name('books.destroy'); 
     Route::resource('authors' ,AuthorController::class);
     Route::resource('collections', CollectionController::class);
     Route::resource('categories', CategoryController::class);

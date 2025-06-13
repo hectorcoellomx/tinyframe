@@ -17,7 +17,7 @@ use ePub;
 
 use function Laravel\Prompts\error;
 
-class bookController extends Controller
+class BookController extends Controller
 {
     
     public function book(Request $request)
@@ -194,7 +194,7 @@ class bookController extends Controller
 
     public function index()
     {
-        try {
+        //try {
             // Obtener los libros con su calificación promedio
             $books = DB::table('books')
                 ->leftJoin('ratings', 'books.id', '=', 'ratings.book_id')
@@ -206,10 +206,10 @@ class bookController extends Controller
                 ->paginate(10); // Paginación
 
             return view('books.index', compact('books'));
-        } catch (\Exception $e) {
+        //} catch (\Exception $e) {
             // Manejar errores
-            return redirect()->back()->with('error', 'Ha ocurrido un error inesperado');
-        }
+        //    return redirect()->back()->with('error', 'Ha ocurrido un error inesperado');
+        //}
     }
 
    
