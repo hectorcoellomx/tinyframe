@@ -45,4 +45,13 @@ class Request {
         $validator->check($rules);
     }
 
+    /* 
+    
+    if( $type=="url"  || ($type=="all" && $value==NULL) ){
+        global $tinyapp_url_response;
+        $value = isset( $tinyapp_url_response[$name] ) ? $tinyapp_url_response[$name] : NULL;
+    }
+    
+    */
+
 }
