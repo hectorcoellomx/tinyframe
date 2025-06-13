@@ -197,13 +197,18 @@ class BookController extends Controller
         //try {
             // Obtener los libros con su calificación promedio
             $books = DB::table('books')
-                ->leftJoin('ratings', 'books.id', '=', 'ratings.book_id')
-                ->select(
-                    'books.*',
-                    DB::raw('IFNULL(AVG(ratings.point), 0) as calificacion') // Calcular el promedio
-                )
-                ->groupBy('books.id') // Agrupar por libro
-                ->paginate(10); // Paginación
+            ->leftJoin('ratings', 'books.id', '=', 'ratings.book_id')
+            ->select(
+                'books.id',
+                'books.title',
+                'books.cover_photo',
+                'books.description',
+                'books.year',
+                DB::raw('IFNULL(AVG(ratings.point), 0) as calificacion')
+            )
+            ->groupBy('books.id', 'books.title', 'books.cover_photo', 'books.description', 'books.year') // todos los campos seleccionados deben estar aquí
+            ->paginate(10);
+
 
             return view('books.index', compact('books'));
         //} catch (\Exception $e) {
