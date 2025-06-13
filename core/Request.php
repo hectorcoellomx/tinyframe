@@ -9,7 +9,7 @@ class Request {
 
     public function __construct() {
         $this->data = $this->parseInput();
-        //$this->headers = getallheaders();
+        $this->headers = getallheaders();
     }
 
     protected function parseInput() {
