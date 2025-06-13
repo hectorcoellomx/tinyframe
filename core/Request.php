@@ -5,10 +5,12 @@ namespace Core;
 class Request {
 
     protected $data;
+    protected $url;
     protected $headers;
 
     public function __construct() {
         $this->data = $this->parseInput();
+        $this->url = $this->urlParams();
         $this->headers = getallheaders();
     }
 
@@ -36,8 +38,17 @@ class Request {
         return $this->headers[$key] ?? $default;
     }
 
+    public function urlParams(){
+        global $tinyapp_url_response;
+        return $tinyapp_url_response;
+    }
+
+    public function url($key, $default = null) {
+        return $this->url[$key] ?? $default;
+    }
+
     public function all($type="input") {
-        return ($type=="input") ? $this->data : ( ($type=="header") ? $this->headers : null );
+        return ($type=="input") ? $this->data : ( ($type=="header") ? $this->headers : ( ($type=="url") ? $this->url : null ) );
     }
 
     function verify($rules){
@@ -48,8 +59,7 @@ class Request {
     /* 
     
     if( $type=="url"  || ($type=="all" && $value==NULL) ){
-        global $tinyapp_url_response;
-        $value = isset( $tinyapp_url_response[$name] ) ? $tinyapp_url_response[$name] : NULL;
+        
     }
     
     */
