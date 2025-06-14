@@ -12,8 +12,16 @@ class CLI
             case 'm':
                 $this->makeModel($args[0] ?? null);
                 break;
+            case 's':
+                $this->makeService($args[0] ?? null);
+                break;
             case 'mi':
                 $this->makeMiddleware($args[0] ?? null);
+                break;
+            case 'full':
+                $this->makeController($args[0] ?? null);
+                $this->makeService($args[0] ?? null);
+                $this->makeModel($args[0] ?? null);
                 break;
             default:
                 echo "Comando no reconocido: $command\n";
@@ -27,7 +35,7 @@ class CLI
             return;
         }
 
-        $className = ucfirst($name);
+        $className = ucfirst($name) . 'Controller';
         $filePath = __DIR__ . '/../app/controllers/' . $className . '.php';
 
         if (file_exists($filePath)) {
@@ -83,5 +91,27 @@ class CLI
         file_put_contents($filePath, $template);
         echo "\nMiddleware $className creado en app/middlewares.\n";
     }
+
+    protected function makeService($name)
+    {
+        if (!$name) {
+            echo "\nFalta el nombre del servicio.\n";
+            return;
+        }
+
+        $className = ucfirst($name) . 'Service';
+        $filePath = __DIR__ . '/../app/services/' . $className . '.php';
+
+        if (file_exists($filePath)) {
+            echo "\nEl servicio $className ya existe.\n";
+            return;
+        }
+
+        $template = "<?php \n\nnamespace App\\Services;\n\nclass {$className} {\n\n\n}\n";
+
+        file_put_contents($filePath, $template);
+        echo "\nServicio $className creado en app/services.\n";
+    }
+
 
 }

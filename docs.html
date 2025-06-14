@@ -53,11 +53,17 @@
         </div>
         <div>
             Nota: Para crear <span class="color-main">controladores, modelos y middlewares</span>, respectivamente, puedes usar los comandos:
-            <ul>
-                <li>php create c PostController</li>
-                <li>php create m Post</li>
-                <li>php create mi Post</li>
-            </ul>
+            <br><br>
+            <table>
+                <tr>
+                    <th>Comando</th><th>Acción</th>
+                </tr>
+                <tr><td>php create c Post</td><td>Crea un controlador PostController</td></tr>
+                <tr><td>php create s Post</td><td>Crea un servicio PostService</td></tr>
+                <tr><td>php create m Post</td><td>Crea un modelo Post</td></tr>
+                <tr><td>php create mi Post</td><td>Crea un middleware Post</td></tr>
+                <tr><td>php create full Post</td><td>Crea un controllador, un servicio y un modelo Post</td></tr>
+            </table>
         </div>
     </section>
     <section id="primerospasos" class="section">
@@ -902,6 +908,15 @@
         }
         .code .comment {
             color: gainsboro;
+        }
+        table th {
+            border: 1px solid;
+            padding: 6px 8px;
+            background-color: #1c1c1c;
+        }
+        table td {
+            border: 1px solid;
+            padding: 6px 8px;
         }
     </style>
 
