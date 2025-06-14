@@ -16,12 +16,14 @@
     <div class="logo"><a href="#bienvenida">TinyFrame</a></div>
     <span class="text-logo">Para proyectos pequeños</span>
     <br><br>
-    <div><a href="#bienvenida">Documentación</a></div>
+    <div><a href="#inicio">Documentación</a></div>
     <ul>
+        <li><a href="#inicio">Inicio</a></li>
         <li><a href="#primerospasos">Primeros pasos</a></li>
         <li><a href="#rutas">Rutas</a></li>
         <li><a href="#controladores">Controladores</a></li>
         <li><a href="#api">API Rest</a></li>
+        <li><a href="#servicios">Servicios</a></li>
         <li><a href="#vistas">Vistas</a></li>
         <li><a href="#modelos">Modelos</a></li>
         <li><a href="#basededatos">Bases de datos</a></li>
@@ -38,37 +40,43 @@
     </div>
 </div>
 <div class="container">
-    <section id="bienvenida" class="section">
+    <section id="inicio" class="section">
         <div class="title">Documentación</div>
         <div>
             Bienvenido a la documentación del microframework <strong>TinyFrame (2.0.0)</strong>. Este framework fue diseñado para el desarrollo de proyectos web pequeños, simples y funcionales. Algunas de sus funcionalidades y características principales se listan a continuación:
             <ul>
                 <li>Arquitectura MVC</li>
-                <li>Manejo de rutas</li>
-                <li>Uso de Middlewares</li>
+                <li>Manejo de rutas y middlewares</li>
                 <li>Conexión a BD</li>
                 <li>Validación de formularios</li>
                 <li>Y mucho más</li>
             </ul>
         </div>
+        <br>
         <div>
-            Nota: Para crear elementos rápidamente puedes usar los comandos siguientes desde la terminal:
+            Para crear elementos rápidamente puedes usar los comandos siguientes desde la terminal:
             <br><br>
             <table>
                 <tr>
                     <th>Comando</th><th>Acción</th>
                 </tr>
-                <tr><td><span style="font-style: italic;">php create c Product</span></td><td>Crea un controlador ProductController</td></tr>
-                <tr><td><span style="font-style: italic;">php create s Product</span></td><td>Crea un servicio ProductService</td></tr>
-                <tr><td><span style="font-style: italic;">php create m Product</span></td><td>Crea un modelo Product</td></tr>
-                <tr><td><span style="font-style: italic;">php create mi Product</span></td><td>Crea un middleware Product</td></tr>
-                <tr><td><span style="font-style: italic;">php create full Product</span></td><td>Crea un modelo Product<br>Crea un servicio ProductService<br>Crea un controllador ProductController</td></tr>
+                <tr><td><span class="command">php create m Product</span></td><td>Crea un modelo Product</td></tr>
+                <tr><td><span class="command">php create s Product</span></td><td>Crea un servicio ProductService</td></tr>
+                <tr><td><span class="command">php create c Product</span></span></td><td>Crea un controlador ProductController</td></tr>
+                <tr><td><span class="command">php create mi Product</span></td><td>Crea un middleware Product</td></tr>
+                <tr><td><span class="command">php create full Product</span></td><td>Crea un modelo Product<br>Crea un servicio ProductService<br>Crea un controllador ProductController</td></tr>
                 <tr><td colspan="2">
                     Si se desea, se pueden crear varias entidades al mismo tiempo:<br>
-                    <span style="font-style: italic;">php create c Product,Client</span><br>
-                    <span style="font-style: italic;">php create full Product,Client</span><br>
+                    <span class="command">php create m Product,Client</span><br>
+                    <span class="command">php create full Product,Client</span><br>
                 </td></tr>
             </table>
+        </div>
+        <br><br>
+        <div>
+            Para una mejor comprensión del flujo propuesto por este framework, se presenta el siguiente gráfico:
+            <br><br><br>
+            <img src="./flow.png" style="max-width: 700px;">
         </div>
     </section>
     <section id="primerospasos" class="section">
@@ -160,6 +168,8 @@
 
             <footer>app/controllers/HomeController.php</footer>
         </div>
+
+        <p>Puedes crear controladores ejecutando este comando desde la terminal: <span class="color-main">php create c Product</span></p>
 
         </section>
         <section id="api" class="section">
@@ -279,6 +289,32 @@
     </section>
 
 
+    <section id="servicios" class="section">
+        <div class="title">Servicios</div>
+        <p>Para evitar controladores 'enormes', en esta nueva versión se incluyó el uso de servicios <span class="color-main">App\Services</span>, que funcionan como una extensión de cada método de un controlador y sirve para separa la lógica del negocio de la de la aplicación.</p>
+
+        <div class="code">
+            namespace App\Services;
+
+            class PostService
+            {
+
+                public function index(){
+                    ...
+                }
+
+            }
+
+            <footer>app/services/PostService.php</footer>
+        </div>
+
+        <p>Puedes crear servicios ejecutando este comando desde la terminal: <span class="color-main">php create s Post</span></p>
+
+        <p>Para usar este servicio en un controlador, debes hacer un <span class="color-main">require_once</span> del archivo <span
+                class="color-main">require_once './app/services/PostService.php';</span> y usarlo con <span
+                class="color-main">use App\Services\PostService</span>.</p>
+    </section>
+
     <section id="vistas" class="section">
         <div class="title">Vistas</div>
         <p>Las vistas se debe llamar en los controladores con el método <span class="color-main">$this->renderView()</span>.</p>
@@ -372,7 +408,7 @@
             class App
             {
 
-                public function index(){
+                public function find(){
                     ...
                 }
 
@@ -381,7 +417,9 @@
             <footer>app/models/App.php</footer>
         </div>
 
-        <p>Para usar este modelo en un controlador, debes hacer un require_once del archivo <span
+        <p>Puedes crear modelos ejecutando este comando desde la terminal: <span class="color-main">php create m App</span></p>
+
+        <p>Para usar este modelo en un servicio, debes hacer un require_once del archivo <span
                 class="color-main">require_once './app/models/App.php';</span> y usarlo con <span
                 class="color-main">use App\Models\App</span>.</p>
     </section>
@@ -570,6 +608,8 @@
 
             <footer>app/routes.php</footer>
         </div>
+
+        <p>Puedes crear middlewares ejecutando este comando desde la terminal: <span class="color-main">php create mi Test</span></p>
 
         <p>Los archivos middlewares se deben crear en la carpeta <span class="color-main">app/middlewares/</span>,
             por ejemplo <span class="color-main">app/middlewares/Test.php</span>, el archivo debe tener el siguiente
@@ -869,6 +909,10 @@
             text-decoration: none;
         }
 
+        .command {
+            color: #11bbff;
+            font-style: italic;
+        }
 
         .code {
             max-width: 80%;
