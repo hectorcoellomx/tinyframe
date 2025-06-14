@@ -43,7 +43,17 @@ class CLI
             return;
         }
 
-        $template = "<?php \n\nnamespace App\\Controllers;\n\nuse Core\\Controller;\nuse Core\\Request;\n\nclass {$className} extends Controller {\n\n    public function __construct(){\n\n    }\n    \n    public function index(Request \$req){\n\n    }\n\n}\n\n?>";
+        $filePathService = __DIR__ . '/../app/services/' . ucfirst($name) . 'Service.php';
+
+        if (file_exists($filePathService)) {
+            $requiere_service = "require_once './app/services/" .ucfirst($name) . "Service.php';\n\n"; 
+            $use_service = "\nuse App\\services\\" . ucfirst($name) . "Service;";
+        }else{
+            $requiere_service = "";
+            $use_service = "";
+        }
+
+        $template = "<?php \n\nnamespace App\\Controllers;\n\n{$requiere_service}use Core\\Controller;\nuse Core\\Request;{$use_service}\n\nclass {$className} extends Controller {\n\n    public function __construct(){\n\n    }\n    \n    public function index(Request \$req){\n\n    }\n\n}\n\n?>";
 
         file_put_contents($filePath, $template);
         echo "\nControlador $className creado en app/controllers.\n";
