@@ -165,7 +165,7 @@
         <section id="api" class="section">
             <div class="title">Api Rest</div>
 
-        <p>Para el uso de controladores para API Rest las respuestas tipo JSON deben darse como se ve a continuación.</p>
+        <p>Para el uso de controladores para API Rest las respuestas deben ser de tipo JSON como se ve a continuación.</p>
 
         <div class="code">
             namespace App\Controllers;
@@ -295,7 +295,7 @@
 
                 public function index(Request $req){
 
-                    // Llamada pasando datos (variables)
+                    // Llamada pasando variables
 
                     $data = array( 'app' => "TinyFrame", 'message' => "Hola" );
                     $this->renderView('home', $data);
@@ -308,6 +308,10 @@
                     $this->renderView('partials/header', $data);
                     $this->renderView('home', $data);
                     $this->renderView('partials/footer', $data);
+
+                    // Uso de plantillas
+
+                    $this->renderView('home', $data, 'layout/main'); // Plantilla 'layout/main' 
 
                 }
             }
@@ -325,6 +329,34 @@
             echo $message . " " . $app; 
 
             <footer>app/views/home.php</footer>
+        </div>
+
+        <p>Ejemplos de vista que son plantillas:</p>
+
+        <div class="code">
+            
+            // PLANTILLA DE VISTAS CON HTML 
+
+            // HTML: Código HTML de la cabecera
+
+            // PHP: echo $content_view;
+
+            // HTML: Código HTML de la cabecera
+
+            <footer>app/views/layout/main.php</footer>
+        </div>
+
+        <div class="code">
+            
+            // PLANTILLA DE VISTAS CON PHP 
+            
+            include 'app/views/partials/header.php';
+
+            echo $content_view;
+
+            include 'app/views/partials/footer.php';
+
+            <footer>app/views/layout/main.php</footer>
         </div>
 
     </section>
@@ -718,25 +750,25 @@
         <div class="code">
 
             // Redireccionar a ruta local o externa
-            redir($path, $external=false)
+            redir($path, $external=false);
 
             // Redirecciona a ruta anterior
-            back()
+            back();
                 
             // Devuelve la versión del framework
-            get_version()
+            get_version();
 
             // Guardar errores temporales
-            set_errors($errors)
+            set_errors($errors);
             
             // Obtener errores temporales
-            get_errors()
+            get_errors();
             
             // Devuelve el URL base del proyecto
-            base($add="")
+            base($add="");
             
             // Devuelve el URL de Assets del proyecto
-            assets($add="")
+            assets($add="");
             
         </div>
     </section>
@@ -895,6 +927,9 @@
         .code .comment {
             color: gainsboro;
         }
+        table{
+            border-spacing: 0;
+        }
         table th {
             border: 1px solid;
             padding: 6px 8px;
@@ -903,6 +938,7 @@
         table td {
             border: 1px solid;
             padding: 6px 8px;
+            background-color: #333232;
         }
     </style>
 
@@ -910,7 +946,7 @@
         // Función para aplicar el resaltado de sintaxis
         function highlightPHPCode(code) {
 
-            const keywords = ['CREATE', 'DATABASE', 'INSERT', 'USE', 'TABLE', 'INTO', 'VALUES', 'public', 'class', 'STATUS_PROJECT', 'LOAD_SESSION', 'SESSION_ID', 'LOAD_UPLOAD_FILES', 'DATABASES_DRIVER', 'DB_MYSQL_TYPE', 'DB_MYSQL_HOST', 'DB_MYSQL_USER', 'DB_MYSQL_PASSWORD', 'DB_MYSQL_NAME', 'DB_ORACLE_TYPE', 'DB_ORACLE_HOST', 'DB_ORACLE_PORT', 'DB_ORACLE_USER', 'DB_ORACLE_PASSWORD', 'DB_ORACLE_PASSWORD', 'DB_ORACLE_SERVICE_NAME', 'DB_DATABASEPROD_TYPE', 'DB_DATABASEPROD_HOST', 'DB_DATABASEPROD_USER', 'DB_DATABASEPROD_PASSWORD', 'DB_DATABASEPROD_NAME', 'BASE_URL', 'use', 'namespace', 'array', 'renderView', 'require_once', 'Route::register', 'extends', 'set_errors', 'set_errors', 'back', 'File::upload', 'Validator::check', 'static', 'echo', 'if', 'else', 'for', 'while', 'return', 'function'];
+            const keywords = ['CREATE', 'DATABASE', 'INSERT', 'USE', 'TABLE', 'INTO', 'VALUES', 'public', 'include', 'class', 'STATUS_PROJECT', 'LOAD_SESSION', 'SESSION_ID', 'LOAD_UPLOAD_FILES', 'DATABASES_DRIVER', 'DB_MYSQL_TYPE', 'DB_MYSQL_HOST', 'DB_MYSQL_USER', 'DB_MYSQL_PASSWORD', 'DB_MYSQL_NAME', 'DB_ORACLE_TYPE', 'DB_ORACLE_HOST', 'DB_ORACLE_PORT', 'DB_ORACLE_USER', 'DB_ORACLE_PASSWORD', 'DB_ORACLE_PASSWORD', 'DB_ORACLE_SERVICE_NAME', 'DB_DATABASEPROD_TYPE', 'DB_DATABASEPROD_HOST', 'DB_DATABASEPROD_USER', 'DB_DATABASEPROD_PASSWORD', 'DB_DATABASEPROD_NAME', 'BASE_URL', 'use', 'namespace', 'array', 'renderView', 'require_once', 'Route::register', 'extends', 'assets', 'base', 'get_version', 'redir', 'get_errors', 'set_errors', 'back', 'File::upload', 'Validator::check', 'static', 'echo', 'if', 'else', 'for', 'while', 'return', 'function'];
             const keywordRegex = new RegExp(`\\b(${keywords.join('|')})\\b`, 'g');
             code = code.replace(keywordRegex, '<span class="keyword">$1</span>');
 
