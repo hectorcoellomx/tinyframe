@@ -38,6 +38,10 @@ class Request {
         return $this->headers[$key] ?? $default;
     }
 
+    function exist_header($key){
+        return (isset($this->headers[$key]));
+    }
+
     public function urlParams(){
         global $tinyframe_url_response;
         return $tinyframe_url_response;
@@ -45,6 +49,10 @@ class Request {
 
     public function url($key, $default = null) {
         return $this->url[$key] ?? $default;
+    }
+
+    function exist_url($key){
+        return (isset($this->url[$key]));
     }
 
     public function all($type="input") {
@@ -55,13 +63,5 @@ class Request {
         $validator = new \Core\Validator(); 
         $validator->check($rules);
     }
-
-    /* 
-    
-    if( $type=="url"  || ($type=="all" && $value==NULL) ){
-        
-    }
-    
-    */
 
 }
