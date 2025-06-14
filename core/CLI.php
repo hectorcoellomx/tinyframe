@@ -19,9 +19,9 @@ class CLI
                 $this->makeMiddleware($args[0] ?? null);
                 break;
             case 'full':
-                $this->makeController($args[0] ?? null);
-                $this->makeService($args[0] ?? null);
                 $this->makeModel($args[0] ?? null);
+                $this->makeService($args[0] ?? null);
+                $this->makeController($args[0] ?? null);
                 break;
             default:
                 echo "Comando no reconocido: $command\n";
@@ -107,7 +107,17 @@ class CLI
             return;
         }
 
-        $template = "<?php \n\nnamespace App\\Services;\n\nclass {$className} {\n\n\n}\n";
+        $filePathModel = __DIR__ . '/../app/models/' . ucfirst($name) . '.php';
+
+        if (file_exists($filePathModel)) {
+            $requiere_model = "require_once './app/models/" .ucfirst($name) . ".php';\n\n"; 
+            $use_model = "use App\\Models\\" . ucfirst($name) . ";\n\n";
+        }else{
+            $requiere_model = "";
+            $use_model = "";
+        }
+
+        $template = "<?php \n\nnamespace App\\Services;\n\n{$requiere_model}{$use_model}class {$className} {\n\n\n}\n";
 
         file_put_contents($filePath, $template);
         echo "\nServicio $className creado en app/services.\n";
