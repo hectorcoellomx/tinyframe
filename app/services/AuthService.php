@@ -13,9 +13,9 @@ class AuthService {
         $password = $data['password'];
 
         $user = new User();
-        $login = $user->login($email, $password);
+        $userData = $user->find($email);
 
-        return $login;
+        return ($userData && ($userData["email"]==$email && $userData["password"]==$password) );
     }
 }
 

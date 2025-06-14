@@ -6,8 +6,12 @@ use Core\Databases\DB;
 
 class User {
 
-    public function login($email, $password){
-        return ($email=="test@example.com" && $password == "123");
+    public function find($email){
+        if($email=="test@example.com"){
+            return array("email"=>"test@example.com", "password"=>"123");
+        }else{
+            return FALSE;
+        }
     }
 
 }

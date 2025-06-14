@@ -96,34 +96,13 @@
             <footer>.env</footer>
         </div>
 
-
-        <p>Si deseas realizar pruebas con el modelo <span class="color-main">User</span> que viene por default, deberás crear la siguiente base de datos:</p>
-
-        <div class="code">
-            CREATE DATABASE tinyframe;
-            USE tinyframe;
-
-            CREATE TABLE `users` (
-                `id` int(5) PRIMARY KEY AUTO_INCREMENT,
-                `fullname` VARCHAR(500) NOT NULL,
-                `status` TINYINT(1) NOT NULL DEFAULT 1
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-
-            INSERT INTO `users` (`fullname`) VALUES
-            ('Elizabeth Thompson'),
-            ('George Williams'),
-            ('Mary Jones'),
-            ('David Smith');
-        </div>
-
-        <p>Ahora puedes crear tus rutas.</p>
+        <p>Ahora veamos cómo crear tus rutas.</p>
 
     </section>
 
     <section id="rutas" class="section">
         <div class="title">Rutas</div>
-        <p>Rutas tipo <span class="color-main">GET, POST, PUT y DELETE</span>.</p>
+        <p>Rutas tipo <span class="color-main">GET, POST, PUT, PATCH y DELETE</span>.</p>
         <p>Tus rutas las debes crear en el archivo <span class="color-main">app/routes.php</span>.</p>
 
         <div class="code">
