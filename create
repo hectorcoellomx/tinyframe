@@ -1,0 +1,20 @@
+#!/usr/bin/env php
+<?php
+
+require_once __DIR__ . '/core/CLI.php'; // o tu propio loader
+
+use Core\CLI;
+
+$argv = $_SERVER['argv'];
+$argc = $_SERVER['argc'];
+
+if ($argc < 2) {
+    echo "Uso: php console [comando] [argumentos]\n";
+    exit(1);
+}
+
+$command = $argv[1];
+$args = array_slice($argv, 2);
+
+$cli = new CLI();
+$cli->handle($command, $args);
