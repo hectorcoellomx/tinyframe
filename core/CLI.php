@@ -92,11 +92,13 @@ class CLI
         }
 
         $tableName = strtolower($className) . 's';
-        $template = "<?php \n\nnamespace App\\Models;\n\nuse Core\\Databases\\DB;\n\nclass {$className} {\n\n    public function list(){\n        \$db = DB::init();\n        return \$db->db_select(\"SELECT * FROM {$tableName}\", null);\n    }\n\n}\n";
+
+        $template = "<?php \n\nnamespace App\\Models;\n\nuse Core\\Databases\\DB;\n\nclass {$className}\n{\n\n    public function find(\$id){\n        \$db = DB::init();\n        return \$db->db_select_row(\"SELECT * FROM {$tableName} WHERE id=?\", [ \$id ]);\n    }\n\n    public function all(){\n        \$db = DB::init();\n        return \$db->db_select(\"SELECT * FROM {$tableName}\");\n    }\n\n    public function create(\$name){\n        \$db = DB::init();\n        return \$db->db_insert_lastid(\"INSERT INTO {$tableName} (name) VALUES (?)\", [ \$name ]);\n    }\n\n    public function update(\$id, \$data){\n        \$db = DB::init();\n        return \$db->db_update(\"UPDATE {$tableName} SET name = ? WHERE id = ?\", [ \$data['name'], \$id ]);\n    }\n\n    public function destroy(\$id){\n        \$db = DB::init();\n        return \$db->db_delete(\"DELETE from {$tableName} WHERE id = ?\", [ \$id ]);\n    }\n\n}\n";
 
         file_put_contents($filePath, $template);
         echo "\nModelo $className creado en app/models.\n";
     }
+
 
     protected function makeService($name)
     {
