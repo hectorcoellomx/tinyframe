@@ -13,7 +13,7 @@ class Config
     public $api_config = array(
         'default' => array(
             'origin' => "*",
-            'methods' => "GET, PUT, POST, DELETE",
+            'methods' => "GET, PUT, PATCH, POST, DELETE",
             'headers' => "X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Authorization",
             'content_type' => "application/json"
         )

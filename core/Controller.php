@@ -22,9 +22,11 @@ class Controller {
         echo json_encode($data);
     }
 
-    public function renderView(string $view, array $data = [], string $layout = '') {
+    public function renderView(string $view, $data = null, string $layout = '') {
 
-        extract($data, EXTR_SKIP);
+        if(is_array($data) && count($data)>0){
+            extract($data, EXTR_SKIP);
+        }
 
         ob_start();
         include("./app/views/{$view}.php");
