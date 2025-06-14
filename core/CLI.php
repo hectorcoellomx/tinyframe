@@ -5,23 +5,40 @@ class CLI
 {
     public function handle($command, $args)
     {
+        $entities = explode(',', $args[0] ?? '');
+
+        if (empty($entities[0])) {
+            echo "\nDebes indicar al menos un elemento.\n";
+            return;
+        }
+
         switch ($command) {
             case 'c':
-                $this->makeController($args[0] ?? null);
+                foreach ($entities as $entity) {
+                    $this->makeController($entity);
+                }
                 break;
             case 'm':
-                $this->makeModel($args[0] ?? null);
+                foreach ($entities as $entity) {
+                    $this->makeModel($entity);
+                }
                 break;
             case 's':
-                $this->makeService($args[0] ?? null);
+                foreach ($entities as $entity) {
+                    $this->makeService($entity);
+                }
                 break;
             case 'mi':
-                $this->makeMiddleware($args[0] ?? null);
+                foreach ($entities as $entity) {
+                    $this->makeMiddleware($entity);
+                }
                 break;
             case 'full':
-                $this->makeModel($args[0] ?? null);
-                $this->makeService($args[0] ?? null);
-                $this->makeController($args[0] ?? null);
+                foreach ($entities as $entity) {
+                    $this->makeModel($entity);
+                    $this->makeService($entity);
+                    $this->makeController($entity);
+                }
                 break;
             default:
                 echo "Comando no reconocido: $command\n";
@@ -81,27 +98,6 @@ class CLI
         echo "\nModelo $className creado en app/models.\n";
     }
 
-     protected function makeMiddleware($name)
-    {
-        if (!$name) {
-            echo "\nFalta el nombre del middleware.\n";
-            return;
-        }
-
-        $className = ucfirst($name);
-        $filePath = __DIR__ . '/../app/middlewares/' . $className . '.php';
-
-        if (file_exists($filePath)) {
-            echo "\nEl middleware $className ya existe.\n";
-            return;
-        }
-
-        $template = "<?php \n\nnamespace App\\Middlewares;\n\nclass {$className} {\n\n    public function run(){\n        // Here is the code of your middleware\n        // You can do redirects with 'redir()' or return a json or whatever \n        return true;\n    }\n\n}\n";
-
-        file_put_contents($filePath, $template);
-        echo "\nMiddleware $className creado en app/middlewares.\n";
-    }
-
     protected function makeService($name)
     {
         if (!$name) {
@@ -133,5 +129,24 @@ class CLI
         echo "\nServicio $className creado en app/services.\n";
     }
 
+    protected function makeMiddleware($name)
+    {
+        if (!$name) {
+            echo "\nFalta el nombre del middleware.\n";
+            return;
+        }
 
+        $className = ucfirst($name);
+        $filePath = __DIR__ . '/../app/middlewares/' . $className . '.php';
+
+        if (file_exists($filePath)) {
+            echo "\nEl middleware $className ya existe.\n";
+            return;
+        }
+
+        $template = "<?php \n\nnamespace App\\Middlewares;\n\nclass {$className} {\n\n    public function run(){\n        // Here is the code of your middleware\n        // You can do redirects with 'redir()' or return a json or whatever \n        return true;\n    }\n\n}\n";
+
+        file_put_contents($filePath, $template);
+        echo "\nMiddleware $className creado en app/middlewares.\n";
+    }
 }
