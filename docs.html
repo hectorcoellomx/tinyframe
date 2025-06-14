@@ -36,20 +36,23 @@
     <div class="text-logo" style="text-align: left;">
         Framework fue creado por<br><span style="font-style: italic;">Héctor de Jesús Coello Gómez</span>
     </div>
-    <br>
-    <div class="text-logo" style="text-align: left;">
-        Este framework fue diseñado para ser una herramienta de apoyo en el desarrollo de proyectos web pequeños, simples y funcionales.
-    </div>
 </div>
 <div class="container">
     <section id="bienvenida" class="section">
         <div class="title">Documentación</div>
         <div>
-            Bienvenido a la documentación del microframework <strong>TinyFrame (2.0.0)</strong> el cuál tiene los siguiente: Control de rutas, middlewares, conexión con base de datos mysql y oracle, configuración para api restful, integración de librerías externas y archivos assets (frontend), helpers, validador de formularios, subida de archivos, manejo de sesiones; y arquitectura para uso de vistas, modelos y controladores.
+            Bienvenido a la documentación del microframework <strong>TinyFrame (2.0.0)</strong>. Este framework diseñado para ser una herramienta de apoyo en el desarrollo de proyectos web pequeños, simples y funcionales. Algunas de sus funcionalidades y características principales se listan a continuación:
+            <ul>
+                <li>Arquitectura MVC</li>
+                <li>Manejo de rutas</li>
+                <li>Uso de Middlewares</li>
+                <li>Conexión a BD</li>
+                <li>Validación de formularios</li>
+                <li>Y mucho más</li>
+            </ul>
         </div>
-        <br>
         <div>
-            Para crear <span class="color-main">controladores, modelos y middlewares</span> rápidamente, puedes usar los comandos:
+            Nota: Para crear <span class="color-main">controladores, modelos y middlewares</span>, respectivamente, puedes usar los comandos:
             <ul>
                 <li>php create c PostController</li>
                 <li>php create m Post</li>
@@ -83,7 +86,7 @@
         </div>
 
 
-        <p>Si deseas realizar pruebas con el modelo <span class="color-main">App</span> que viene de prueba en el proyecto, deberás crear la siguiente base de datos:</p>
+        <p>Si deseas realizar pruebas con el modelo <span class="color-main">User</span> que viene por default, deberás crear la siguiente base de datos:</p>
 
         <div class="code">
             CREATE DATABASE tinyframe;
@@ -139,7 +142,7 @@
             <footer>app/routes.php</footer>
         </div>
 
-        <p>Para recibir y leer los parámetros de las rutas, por ejemplo la variable "id" de la ruta "student/{id}", debes hacerlo con la función input('id') en el respectivo controlador. En la siguiente sección se detalla el uso de controladores y la forma de recibir parámetros. </p>
+        <p>Para recibir y leer los parámetros de las rutas, por ejemplo la variable "id" de la ruta "student/{id}", debes hacerlo con el método $req->url('id') en el respectivo controlador. En la siguiente sección se detalla el uso de controladores y la forma de recibir parámetros. </p>
 
     </section>
 
@@ -158,7 +161,9 @@
             {
 
                 public function login(Request $req){
-                    $username = $req->input('username'); // GET (Query params) or POST or URL Param
+                    $username = $req->input('username'); // POST or GET 
+                    $username = $req->url('username'); // URL Param
+                    $username = $req->header('username'); // Header
                 }
 
             }
@@ -904,7 +909,7 @@
         // Función para aplicar el resaltado de sintaxis
         function highlightPHPCode(code) {
 
-            const keywords = ['CREATE', 'DATABASE', 'INSERT', 'USE', 'TABLE', 'INTO', 'VALUES', 'public', 'class', 'STATUS_PROJECT', 'LOAD_SESSION', 'SESSION_ID', 'LOAD_UPLOAD_FILES', 'DATABASES_DRIVER', 'DB_MYSQL_TYPE', 'DB_MYSQL_HOST', 'DB_MYSQL_USER', 'DB_MYSQL_PASSWORD', 'DB_MYSQL_NAME', 'DB_ORACLE_TYPE', 'DB_ORACLE_HOST', 'DB_ORACLE_PORT', 'DB_ORACLE_USER', 'DB_ORACLE_PASSWORD', 'DB_ORACLE_PASSWORD', 'DB_ORACLE_SERVICE_NAME', 'DB_DATABASEPROD_TYPE', 'DB_DATABASEPROD_HOST', 'DB_DATABASEPROD_USER', 'DB_DATABASEPROD_PASSWORD', 'DB_DATABASEPROD_NAME', 'BASE_URL', 'use', 'namespace', 'array', 'View::get', 'require_once', 'Route::register', 'extends', 'input', 'set_errors', 'set_errors', 'back', 'File::upload', 'Validator::check', 'static', 'echo', 'if', 'else', 'for', 'while', 'return', 'function'];
+            const keywords = ['CREATE', 'DATABASE', 'INSERT', 'USE', 'TABLE', 'INTO', 'VALUES', 'public', 'class', 'STATUS_PROJECT', 'LOAD_SESSION', 'SESSION_ID', 'LOAD_UPLOAD_FILES', 'DATABASES_DRIVER', 'DB_MYSQL_TYPE', 'DB_MYSQL_HOST', 'DB_MYSQL_USER', 'DB_MYSQL_PASSWORD', 'DB_MYSQL_NAME', 'DB_ORACLE_TYPE', 'DB_ORACLE_HOST', 'DB_ORACLE_PORT', 'DB_ORACLE_USER', 'DB_ORACLE_PASSWORD', 'DB_ORACLE_PASSWORD', 'DB_ORACLE_SERVICE_NAME', 'DB_DATABASEPROD_TYPE', 'DB_DATABASEPROD_HOST', 'DB_DATABASEPROD_USER', 'DB_DATABASEPROD_PASSWORD', 'DB_DATABASEPROD_NAME', 'BASE_URL', 'use', 'namespace', 'array', 'View::get', 'require_once', 'Route::register', 'extends', 'input', 'url', 'header', 'set_errors', 'set_errors', 'back', 'File::upload', 'Validator::check', 'static', 'echo', 'if', 'else', 'for', 'while', 'return', 'function'];
             const keywordRegex = new RegExp(`\\b(${keywords.join('|')})\\b`, 'g');
             code = code.replace(keywordRegex, '<span class="keyword">$1</span>');
 
