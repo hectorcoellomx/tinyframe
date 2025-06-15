@@ -6,8 +6,15 @@ class File
 {
 
 
-    public static function upload($name, $destination = "", $validations = [])
+    public static function upload($name, $destination = "", $options = [])
     {
+        if (!isset($_FILES[$name])) {
+            return [
+                'status' => false,
+                'url' => '',
+                'message' => 'Archivo no encontrado en la solicitud.'
+            ];
+        }
 
         $file = $_FILES[$name];
 
@@ -15,39 +22,49 @@ class File
         $fileTempName = $file['tmp_name'];
         $fileError = $file['error'];
 
-        $fileType = $file['type'];
         $fileSize = $file['size'];
 
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $mime_real = finfo_file($finfo, $fileTempName);
+        finfo_close($finfo);
 
-        $valid_max_size = isset($validations['max_size']) ? $validations['max_size'] : 0;
-        $valid_types = isset($validations['allowed_types']) ? explode("|",  $validations['allowed_types']) : [];
+        $valid_max_size = $options['max_size'] ?? 0;
+        $valid_types = isset($options['allowed_types']) ? explode("|", $options['allowed_types']) : [];
 
-        //$validations['file_name'] = explode(",",  $validations['file_name']);
-
-        $size_aproveed = ( $valid_max_size == 0 || $fileSize <= $valid_max_size );
-        $type_aproveed = $valid_types == [] || in_array($fileType, $valid_types);
+        $size_ok = ( $valid_max_size == 0 || $fileSize <= $valid_max_size );
+        $type_ok = (empty($valid_types) || in_array($mime_real, $valid_types));
 
         $error = "";
         $moved = 0;
 
         if ($fileError == 0) {
 
-            if (!$size_aproveed) {
+            if (!$size_ok) {
                 $error = "El archivo excede el tamaño máximo permitido";
-            } elseif (!$type_aproveed) {
+            } elseif (!$type_ok) {
                 $error = "El tipo de archivo no es permitido";
             } else {
 
-                $fileNameNew = ( isset($validations['file_name']) && trim($validations['file_name'])!="" )  ? $validations['file_name'] : uniqid('', true);
+                $fileNameNew = ( isset($options['file_name']) && trim($options['file_name'])!="" )  ? $options['file_name'] : uniqid('', true);
                 $fileNameNew .= "." . strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
 
                 $destination = ($destination != "") ? "upload/" . $destination . "/" : "upload/";
 
-                if (!file_exists($destination)) {
-                    mkdir($destination, 0777);
+                if (!is_dir($destination)) {
+                    mkdir($destination, 0777, true);
                 }
 
                 $fileDestination = $destination . $fileNameNew;
+
+                $overwrite = $options['overwrite'] ?? true;
+
+                if (!$overwrite && file_exists($fileDestination)) {
+                    return [
+                        'status' => false,
+                        'url' => '',
+                        'message' => 'Ya existe un archivo con ese nombre.'
+                    ];
+                }
 
                 $moved = move_uploaded_file($fileTempName, $fileDestination);
                 $error = ($moved != 1) ? 'No se ha podido guardar el archivo "' . $name . '"' : '';

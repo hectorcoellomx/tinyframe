@@ -745,7 +745,7 @@
                     ]);
 
                     $upload = File::upload(
-                        'photo', 'photos', [ 'max_size' => 2000, 'allowed_types' => "image/jpeg|pdf"
+                        'photo', 'photos', [ 'max_size' => 2000, 'allowed_types' => "image/jpeg|pdf", 'overwrite' => false,
                     ]);
 
 
