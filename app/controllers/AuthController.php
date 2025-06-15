@@ -2,8 +2,6 @@
 
 namespace App\Controllers;
 
-require_once './app/services/AuthService.php';
-
 use Core\Controller;
 use Core\Request;
 

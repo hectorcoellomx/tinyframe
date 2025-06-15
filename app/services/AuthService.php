@@ -2,8 +2,6 @@
 
 namespace App\Services;
 
-require_once './app/models/User.php';
-
 use App\Models\User;
 
 class AuthService {
