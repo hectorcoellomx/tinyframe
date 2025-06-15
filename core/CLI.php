@@ -63,14 +63,12 @@ class CLI
         $filePathService = __DIR__ . '/../app/services/' . ucfirst($name) . 'Service.php';
 
         if (file_exists($filePathService)) {
-            $requiere_service = "require_once './app/services/" .ucfirst($name) . "Service.php';\n\n"; 
-            $use_service = "\nuse App\\services\\" . ucfirst($name) . "Service;";
+            $use_service = "\n\nuse App\\Services\\" . ucfirst($name) . "Service;";
         }else{
-            $requiere_service = "";
             $use_service = "";
         }
 
-        $template = "<?php \n\nnamespace App\\Controllers;\n\n{$requiere_service}use Core\\Controller;\nuse Core\\Request;{$use_service}\n\nclass {$className} extends Controller {\n\n    public function __construct(){\n\n    }\n    \n    public function index(Request \$req){\n\n    }\n\n}\n\n?>";
+        $template = "<?php \n\nnamespace App\\Controllers;\n\nuse Core\\Controller;\nuse Core\\Request;{$use_service}\n\nclass {$className} extends Controller {\n\n    public function __construct(){\n\n    }\n    \n    public function index(Request \$req){\n\n    }\n\n}\n\n?>";
 
         file_put_contents($filePath, $template);
         echo "\nControlador $className creado en app/controllers.\n";
@@ -118,14 +116,12 @@ class CLI
         $filePathModel = __DIR__ . '/../app/models/' . ucfirst($name) . '.php';
 
         if (file_exists($filePathModel)) {
-            $requiere_model = "require_once './app/models/" .ucfirst($name) . ".php';\n\n"; 
             $use_model = "use App\\Models\\" . ucfirst($name) . ";\n\n";
         }else{
-            $requiere_model = "";
             $use_model = "";
         }
 
-        $template = "<?php \n\nnamespace App\\Services;\n\n{$requiere_model}{$use_model}class {$className} {\n\n\n}\n";
+        $template = "<?php \n\nnamespace App\\Services;\n\n{$use_model}class {$className} {\n\n\n}\n";
 
         file_put_contents($filePath, $template);
         echo "\nServicio $className creado en app/services.\n";
