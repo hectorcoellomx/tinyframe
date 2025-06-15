@@ -59,8 +59,8 @@
     }
 
     require_once './app/helpers.php';
-    require './core/Route.php';
-    require './app/routes.php';
+    require_once './core/Route.php';
+    require_once './app/routes.php';
 
     if($tinyframe_nofound){
         http_response_code(400);

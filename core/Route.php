@@ -6,6 +6,19 @@ use Core\Databases\DB;
 
 class Route
 {
+    public static function loadMany(array $routes)
+    {
+        foreach ($routes as $index => $route) {
+            if (!is_array($route) || count($route) < 3) {
+                trigger_error("Invalid route definition at index $index", E_USER_ERROR);
+                continue;
+            }
+
+            [$method, $path, $controller, $middleware] = array_pad($route, 4, []);
+
+            self::register($method, $path, $controller, $middleware);
+        }
+    }
 
     public static function register($type, $route_pattern, $controller, $middlewares = [])
     {
@@ -43,6 +56,9 @@ class Route
                     }
                 }
             }
+            
+            $controller[0] = 'App\\Controllers\\' . $controller[0];
+
             if (is_array($controller) &&  count($controller) == 2 && class_exists($controller[0]) && method_exists(new $controller[0], $controller[1])) {
                 
                 $object = new $controller[0];
