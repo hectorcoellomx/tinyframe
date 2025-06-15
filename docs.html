@@ -114,28 +114,25 @@
         <p>Tus rutas las debes crear en el archivo <span class="color-main">app/routes.php</span>.</p>
 
         <div class="code">
-            require_once './app/controllers/HomeController.php';
-
+            
             use Core\Route;
-            use App\Controllers\HomeController;
-
 
             // Rutas
 
-            Route::register("get", "/", [ HomeController::class ], 'index' ]);
-            Route::register("post", "/login", [ HomeController::class, 'login' ]);
+            Route::register("get", "/", [ 'HomeController', 'index' ]);
+            Route::register("post", "/login", [ 'HomeController', 'login' ]);
 
 
             // Rutas con parámetros
 
-            Route::register("get", "/student/{id}", [ StudentController::class, 'show' ]);
-            Route::register("delete", "/student", [ StudentController::class, 'destroy' ]);
-            Route::register("put", "/student/{id}/status/{status}", [ StudentController::class, 'update' ]);
+            Route::register("get", "/student/{id}", [ 'StudentController', 'show' ]);
+            Route::register("delete", "/student", [ 'StudentController', 'destroy' ]);
+            Route::register("put", "/student/{id}/status/{status}", [ 'StudentController', 'update' ]);
 
 
             // Rutas para API
 
-            Route::register("get", "/api/student", [ StudentApiController::class, 'index' ]);
+            Route::register("get", "/api/student", [ 'StudentApiController', 'index' ]);
 
             <footer>app/routes.php</footer>
         </div>
@@ -240,8 +237,6 @@
 
         <div class="code">
             namespace App\Controllers;
-
-            require_once './app/libraries/TokenAuth.php';
             
             use App\Libraries\TokenAuth;
 
@@ -310,8 +305,7 @@
 
         <p>Puedes crear servicios ejecutando este comando desde la terminal: <span class="color-main">php create s Post</span></p>
 
-        <p>Para usar este servicio en un controlador, debes hacer un <span class="color-main">require_once</span> del archivo <span
-                class="color-main">require_once './app/services/PostService.php';</span> y usarlo con <span
+        <p>Para usar este servicio en un controlador, debes hacer usarlo con <span
                 class="color-main">use App\Services\PostService</span>.</p>
     </section>
 
@@ -419,8 +413,7 @@
 
         <p>Puedes crear modelos ejecutando este comando desde la terminal: <span class="color-main">php create m App</span></p>
 
-        <p>Para usar este modelo en un servicio, debes hacer un require_once del archivo <span
-                class="color-main">require_once './app/models/App.php';</span> y usarlo con <span
+        <p>Para usar este modelo en un servicio, debes hacer usarlo con <span
                 class="color-main">use App\Models\App</span>.</p>
     </section>
 
@@ -599,12 +592,10 @@
                 class="color-main">app/routes.php</span>.</p>
 
         <div class="code">
-            require_once './app/controllers/HomeController.php';
-
 
             // Middleware "Test"
 
-            Route::register("get", "/", HomeController::class, 'index' , [ 'Test' ] );
+            Route::register("get", "/", [ 'HomeController', 'index' ], [ 'Test' ] );
 
             <footer>app/routes.php</footer>
         </div>
