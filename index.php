@@ -44,7 +44,8 @@
     
     $tinyframe_nofound = false;
     $tinyframe_url_response = array();
-    $tinyframe_routes = array();
+    $tinyframe_routes = [];
+    $tinyframe_group_middlewares = [];
 
     require_once './app/helpers.php';
     require './core/functions.php';

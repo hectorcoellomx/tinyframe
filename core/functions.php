@@ -42,10 +42,12 @@ function redir($path, $external=false){
     }
     
 }
+function route($type, $url, $controller, $middlewares = []) {
+    global $tinyframe_routes, $tinyframe_group_middlewares;
 
-function route($type, $url, $controller, $middlewares = []){
-    global $tinyframe_routes;
-    $tinyframe_routes[] = [$type, $url, $controller, $middlewares];
+    $all_middlewares = array_unique(array_merge($tinyframe_group_middlewares, $middlewares));
+
+    $tinyframe_routes[] = [$type, $url, $controller, $all_middlewares];
 }
 
 function route_get($url, $controller, $middlewares = []) {
@@ -67,6 +69,18 @@ function route_patch($url, $controller, $middlewares = []) {
 function route_delete($url, $controller, $middlewares = []) {
     route('delete', $url, $controller, $middlewares);
 }
+
+function route_group(array $middlewares, callable $routes_definition) {
+    global $tinyframe_group_middlewares;
+
+    $original = $tinyframe_group_middlewares;
+    $tinyframe_group_middlewares = $middlewares;
+
+    $routes_definition();
+
+    $tinyframe_group_middlewares = $original;
+}
+
 
 function set_errors($errors){
     if (session_status() === PHP_SESSION_NONE) {
