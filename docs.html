@@ -157,7 +157,7 @@
     <section id="controladores" class="section">
         <div class="title">Controladores</div>
         <p>Debes crear tus controladores en la carpeta <span class="color-main">app/controllers</span> y colocar en cada uno de ellos el namespace <span class="color-main">App\Controllers</span>. Se sugiere nombrar a los controladores en formato <span class="color-main">CamelCase</span> con la palabra Controllers al final (app/controllers/HomeController.php).</p> 
-        <p>Para obtener los datos recibidos por GET, POST o parámetro URL en el controlador, debes usar el método <span class="color-main">input()</span> del Request y poner de parámetro el nombre del parámetro.</p>
+        <p>Para obtener los datos recibidos por GET, POST, Header o parámetro URL en el controlador, debes usar <span class="color-main">input()</span>, <span class="color-main">url()</span> o <span class="color-main">header()</span> del Request y poner de parámetro el nombre del parámetro.</p>
 
         <div class="code">
             namespace App\Controllers;
@@ -532,22 +532,22 @@
             class User
             {
 
-                public function single($id){
+                public function find($id){
                     $db = DB::init();
                     return $db->db_select_row("SELECT * FROM users WHERE id=?", [ $id ]);
                 }
 
-                public function list(){
+                public function getAll(){
                     $db = DB::init();
                     return $db->db_select("SELECT * FROM users");
                 }
 
-                public function list_by_status($status){
+                public function getByStatus($status){
                     $db = DB::init();
                     return $db->db_select("SELECT * FROM users WHERE status=?", [ $status ]);
                 }
 
-                public function insert($name){
+                public function create($name){
                     $db = DB::init();
                     return $db->db_insert_lastid("INSERT INTO users (fullname) VALUES (?)", [ $name ]);
                 }
@@ -577,12 +577,12 @@
             class User
             {
 
-                public function single($id){
+                public function find($id){
                     $db = DB::init();
                     return $db->db_select_row("SELECT * FROM users WHERE id = :id", [ "id" => $id ]);
                 }
 
-                public function insert($name, $ocupation){
+                public function create($name, $ocupation){
                     $db = DB::init();
                     $sql = "INSERT INTO users (name, ocupation) VALUES (:name, :ocupation)";
                     return $db->db_insert($sql, [ "name" => $name, "ocupation" => $ocupation]);
@@ -668,12 +668,12 @@
             <footer>app/controllers/HomeController.php</footer>
         </div>
 
-        <p>El primer parámetro del método <span class="color-main">$req->validate</span> recibe un arreglo de
+        <p>El primer parámetro del método <span class="color-main">$req->verify</span> recibe un arreglo de
             dos dimensiones. La primer dimensión tiene el nombre del valor que se está recibiendo (input). La
             segunda dimensión es un arreglo con las validaciones aplicables a ese valor. </p>
         <p>Las validaciones aplicables son las siguientes: <span class="color-main">string, numeric, integer, float,
                 boolean, email, file, max(5), min(4), val(1, 0), allows_null</span>. </p>
-        <p>El método <span class="color-main">$req->validate</span> recibe un segundo parámetro, este es tipo
+        <p>El método <span class="color-main">$req->verify</span> recibe un segundo parámetro, este es tipo
             booleano y sirve para habilitar o deshabilitar la redireción automática en la validación. Por defecto es
             true.</p>
     </section>
