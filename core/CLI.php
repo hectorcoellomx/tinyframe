@@ -69,11 +69,13 @@ class CLI
 
         if (file_exists($filePathService)) {
             $use_service = "\n\nuse App\\Services\\" . ucfirst($name) . "Service;";
+            $instanceService = "\n\n        \$this->service = new " . ucfirst($name) . "Service();";
         }else{
             $use_service = "";
+            $instanceService = "";
         }
 
-        $template = "<?php \n\nnamespace App\\Controllers;\n\nuse Core\\Controller;\nuse Core\\Request;{$use_service}\n\nclass {$className} extends Controller {\n\n    public function __construct(){\n\n    }\n    \n    public function index(Request \$req){\n\n    }\n\n}\n\n?>";
+        $template = "<?php \n\nnamespace App\\Controllers;\n\nuse Core\\Controller;\nuse Core\\Request;{$use_service}\n\nclass {$className} extends Controller {\n\n    public function __construct(){{$instanceService}\n\n    }\n    \n    public function index(Request \$req){\n\n    }\n\n}\n\n?>";
 
         file_put_contents($filePath, $template);
         echo "\nControlador $className creado en app/controllers.\n";
