@@ -56,6 +56,12 @@ class Route
                     }
                 }
             }
+
+            $controller = explode("::", $controller);
+
+            if(count($controller)!=2){
+                trigger_error("Invalid controller", E_USER_ERROR);
+            }
             
             $controller[0] = 'App\\Controllers\\' . $controller[0];
 

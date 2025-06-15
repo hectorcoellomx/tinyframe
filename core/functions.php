@@ -43,6 +43,31 @@ function redir($path, $external=false){
     
 }
 
+function route($type, $url, $controller, $middlewares = []){
+    global $tinyframe_routes;
+    $tinyframe_routes[] = [$type, $url, $controller, $middlewares];
+}
+
+function route_get($url, $controller, $middlewares = []) {
+    route('get', $url, $controller, $middlewares);
+}
+
+function route_post($url, $controller, $middlewares = []) {
+    route('post', $url, $controller, $middlewares);
+}
+
+function route_put($url, $controller, $middlewares = []) {
+    route('put', $url, $controller, $middlewares);
+}
+
+function route_patch($url, $controller, $middlewares = []) {
+    route('patch', $url, $controller, $middlewares);
+}
+
+function route_delete($url, $controller, $middlewares = []) {
+    route('delete', $url, $controller, $middlewares);
+}
+
 function set_errors($errors){
     if (session_status() === PHP_SESSION_NONE) {
         session_start();

@@ -41,17 +41,20 @@
         error_reporting(E_ALL);
     }
     
+    
     $tinyframe_nofound = false;
     $tinyframe_url_response = array();
-    
+    $tinyframe_routes = array();
+
+    require_once './app/helpers.php';
     require './core/functions.php';
 
     require './core/Controller.php';
     require './core/Request.php';
     require_once './core/Route.php';
-
+    
     require_once './app/routes.php';
-    require_once './app/helpers.php';
+    Core\Route::loadMany($tinyframe_routes);
 
     if($tinyframe_nofound){
         http_response_code(400);

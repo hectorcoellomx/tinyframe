@@ -1,14 +1,8 @@
 <?php
 
-use Core\Route;
-
-
-Route::register("get", "/", [ 'HomeController', 'index' ], ['Test'] );
-Route::register("get", "/login", ['AuthController', 'access' ] );
-Route::register("post", "/login", [ 'AuthController', 'login' ] );
-
-
-
+route_get('/', 'HomeController::index', ['Test']);
+route_get('/login', 'AuthController::access');
+route_post('/login', 'AuthController::login');
 
 
 
