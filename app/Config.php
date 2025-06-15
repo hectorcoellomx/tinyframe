@@ -33,9 +33,7 @@ class Config
             $this->status_project =                      $_ENV['STATUS_PROJECT'];
             $this->base_url =                            $_ENV['BASE_URL'];
             $this->databases_driver =                    $_ENV['DATABASES_DRIVER'];
-            $this->load_session =                        ($_ENV['LOAD_SESSION'] === 'true' || $_ENV['LOAD_SESSION'] === 'TRUE');
             $this->session_id =                          $_ENV['SESSION_ID'];
-            $this->load_upload_files =                   ($_ENV['LOAD_UPLOAD_FILES'] === 'true' || $_ENV['LOAD_UPLOAD_FILES'] === 'TRUE');
         }
         
     }

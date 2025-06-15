@@ -46,21 +46,12 @@
     
     require './core/functions.php';
 
-    if($tinyframe_config->load_session){
-        require './core/Session.php';
-    }
-
     require './core/Controller.php';
-    require './core/Validator.php';
     require './core/Request.php';
-
-    if($tinyframe_config->load_upload_files){
-        require './core/File.php';
-    }
-
-    require_once './app/helpers.php';
     require_once './core/Route.php';
+
     require_once './app/routes.php';
+    require_once './app/helpers.php';
 
     if($tinyframe_nofound){
         http_response_code(400);
