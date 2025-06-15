@@ -2,9 +2,14 @@
 
 namespace App\Libraries;
 
-class TokenAuth {
+class JWT {
 
     private static $secretKey = 'your_secret_key_here';
+
+    public static function setSecretKey($key)
+    {
+        self::$secretKey = $key;
+    }
 
     public static function generateToken($data, $expiration = null)
     {
@@ -38,11 +43,20 @@ class TokenAuth {
         $decodedSignature = self::base64UrlDecode($signature);
         $expectedSignature = hash_hmac('sha256', $header . '.' . $payload, self::$secretKey, true);
 
-        if ($decodedSignature !== $expectedSignature) {
+        if (!hash_equals($expectedSignature, $decodedSignature)) {
             return [ "status" => false, "payload" => null, "message" => "Invalid token" ];
         }
 
+        $decodedHeader = json_decode(self::base64UrlDecode($header), true);
+        if ($decodedHeader['alg'] !== 'HS256') {
+            return [ "status" => false, "payload" => null, "message" => "Unsupported algorithm" ];
+        }
+
         $decodedPayload = json_decode(self::base64UrlDecode($payload), true);
+
+        if (!is_array($decodedPayload)) {
+            return [ "status" => false, "payload" => null, "message" => "Invalid payload" ];
+        }
 
         if (isset($decodedPayload['exp']) && $decodedPayload['exp'] < time()) {
             return [ "status" => false, "payload" => null, "message" => "Expired token" ];
