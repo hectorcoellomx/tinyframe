@@ -695,23 +695,23 @@
                     // Crear una sesión
                     $session = new Session();
                     $data_session = array( "id"=> 100, "username"=> 'Hector');
-                    $session->create($data_session);
+                    $session->start($data_session);
 
                     // Cambiar datos de sesión
                     $session = new Session();
-                    $session->set_data("username", "Hector Coello");
+                    $session->set("username", "Hector Coello");
 
                     // Obtener datos de sesión
                     $session = new Session();
-                    $id = $session->get_data("id");
+                    $id = $session->get("id");
 
                     // Validar sesión
                     $session = new Session();
-                    $validate = $session->validate();
-                    $validate = $session->validate("login");
+                    $validate = $session->check();
+                    $validate = $session->check("login");
 
                     // Eliminar sesión
-                    $session->delete();
+                    $session->destroy();
                 }
 
             }

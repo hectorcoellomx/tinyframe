@@ -19,35 +19,60 @@ class Session {
         }
     }
 
-    function create($data){
+    function start($data){
         $_SESSION[$this->id] = $data;
     }
 
-    function validate($redirect=''){   
-        if($redirect==""){
-            return isset($_SESSION[$this->id]) ? $_SESSION[$this->id] : false;
-        }else{  
+    function check($redirect = '') {
+        $exists = isset($_SESSION[$this->id]);
+        
+        if (!$exists && $redirect !== '') {
             redir($redirect);
+            exit;
         }
+
+        return $exists ? $_SESSION[$this->id] : false;
     }
 
-    function get_data($key=""){   
-        $data = $_SESSION[$this->id];
+    function get($key=""){   
+        $data = isset($_SESSION[$this->id]) ? $_SESSION[$this->id] : [];
         return ($key == "") ? $data : ((isset($data[$key])) ? $data[$key] : null);
     }
 
-    function set_data($key, $value){   
-        $data = $_SESSION[$this->id];
+    function set($key, $value){   
+        $data = isset($_SESSION[$this->id]) ? $_SESSION[$this->id] : [];
         $data[$key] = $value;
         $_SESSION[$this->id] = $data;      
     }
 
-    function delete($redirect=''){
-        unset($_SESSION[$this->id]);
+    function exists() {
+        return isset($_SESSION[$this->id]);
+    }
 
-        if($redirect!=''){
+    function destroy($redirect = '') {
+        if (session_status() !== PHP_SESSION_NONE) {
+            // Limpia las variables de sesión
+            session_unset();
+
+            // Elimina la cookie de sesión (buena práctica)
+            if (ini_get("session.use_cookies")) {
+                $params = session_get_cookie_params();
+                setcookie(session_name(), '', time() - 42000,
+                    $params["path"], $params["domain"],
+                    $params["secure"], $params["httponly"]
+                );
+            }
+
+            // Destruye la sesión
+            session_destroy();
+        }
+
+        if ($redirect !== '') {
             redir($redirect);
+            exit;
         }
     }
+
+
 }
 
