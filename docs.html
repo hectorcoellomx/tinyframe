@@ -114,25 +114,36 @@
         <p>Tus rutas las debes crear en el archivo <span class="color-main">app/routes.php</span>.</p>
 
         <div class="code">
-            
-            use Core\Route;
-
             // Rutas
 
-            Route::register("get", "/", [ 'HomeController', 'index' ]);
-            Route::register("post", "/login", [ 'HomeController', 'login' ]);
+            route_get('/', 'HomeController::index');
+            route_post( '/login', 'HomeController::login');
 
 
             // Rutas con parámetros
 
-            Route::register("get", "/student/{id}", [ 'StudentController', 'show' ]);
-            Route::register("delete", "/student", [ 'StudentController', 'destroy' ]);
-            Route::register("put", "/student/{id}/status/{status}", [ 'StudentController', 'update' ]);
+            route_get('/student/{id}', 'StudentController::show');
+            route_delete('/student/{id}', 'StudentController::destroy');
+            route_put('/student/{id}', 'StudentController::update');
+            route_patch('/student/{id}/status/{status}', 'StudentController::set_status');
 
 
             // Rutas para API
 
-            Route::register("get", "/api/student", [ 'StudentApiController', 'index' ]);
+            route_get('/api/student', 'StudentApiController::index');
+
+
+            // Ruta con Middleware (Middleware: Test)
+
+            route_get('/product/{id}', 'StudentController::show', ['Test']);
+
+
+            // Rutas agrupadas con Middleware (Middleware: Test)
+
+            route_group(['Test'], function () {
+                route_get('/login', 'AuthController::access');
+                route_post('/login', 'AuthController::login');
+            });
 
             <footer>app/routes.php</footer>
         </div>
@@ -587,15 +598,14 @@
 
     <section id="middlewares" class="section">
         <div class="title">Middlewares</div>
-        <p>Los middlewares se pueden implementar en el tercer párametro del método <span
-                class="color-main">Route::register()</span>, en el archivo de rutas <span
+        <p>Los middlewares se pueden implementar en el tercer párametro del método de registro de ruta en el archivo de rutas <span
                 class="color-main">app/routes.php</span>.</p>
 
         <div class="code">
 
             // Middleware "Test"
 
-            Route::register("get", "/", [ 'HomeController', 'index' ], [ 'Test' ] );
+            route_register("get", "/", [ 'HomeController', 'index' ], [ 'Test' ] );
 
             <footer>app/routes.php</footer>
         </div>
@@ -972,7 +982,7 @@
         // Función para aplicar el resaltado de sintaxis
         function highlightPHPCode(code) {
 
-            const keywords = ['CREATE', 'DATABASE', 'INSERT', 'USE', 'TABLE', 'INTO', 'VALUES', 'public', 'include', 'class', 'STATUS_PROJECT', 'LOAD_SESSION', 'SESSION_ID', 'LOAD_UPLOAD_FILES', 'DATABASES_DRIVER', 'DB_MYSQL_TYPE', 'DB_MYSQL_HOST', 'DB_MYSQL_USER', 'DB_MYSQL_PASSWORD', 'DB_MYSQL_NAME', 'DB_ORACLE_TYPE', 'DB_ORACLE_HOST', 'DB_ORACLE_PORT', 'DB_ORACLE_USER', 'DB_ORACLE_PASSWORD', 'DB_ORACLE_PASSWORD', 'DB_ORACLE_SERVICE_NAME', 'DB_DATABASEPROD_TYPE', 'DB_DATABASEPROD_HOST', 'DB_DATABASEPROD_USER', 'DB_DATABASEPROD_PASSWORD', 'DB_DATABASEPROD_NAME', 'BASE_URL', 'use', 'namespace', 'array', 'renderView', 'require_once', 'Route::register', 'extends', 'assets', 'base', 'get_version', 'redir', 'get_errors', 'set_errors', 'back', 'File::upload', 'Validator::check', 'static', 'echo', 'if', 'else', 'for', 'while', 'return', 'function'];
+            const keywords = ['CREATE', 'DATABASE', 'INSERT', 'USE', 'TABLE', 'INTO', 'VALUES', 'public', 'include', 'class', 'STATUS_PROJECT', 'LOAD_SESSION', 'SESSION_ID', 'LOAD_UPLOAD_FILES', 'DATABASES_DRIVER', 'DB_MYSQL_TYPE', 'DB_MYSQL_HOST', 'DB_MYSQL_USER', 'DB_MYSQL_PASSWORD', 'DB_MYSQL_NAME', 'DB_ORACLE_TYPE', 'DB_ORACLE_HOST', 'DB_ORACLE_PORT', 'DB_ORACLE_USER', 'DB_ORACLE_PASSWORD', 'DB_ORACLE_PASSWORD', 'DB_ORACLE_SERVICE_NAME', 'DB_DATABASEPROD_TYPE', 'DB_DATABASEPROD_HOST', 'DB_DATABASEPROD_USER', 'DB_DATABASEPROD_PASSWORD', 'DB_DATABASEPROD_NAME', 'BASE_URL', 'use', 'namespace', 'array', 'renderView', 'require_once', 'route_group', 'route_post', 'route_get', 'route_put', 'route_patch', 'route_delete', 'extends', 'assets', 'base', 'get_version', 'redir', 'get_errors', 'set_errors', 'back', 'File::upload', 'Validator::check', 'static', 'echo', 'if', 'else', 'for', 'while', 'return', 'function'];
             const keywordRegex = new RegExp(`\\b(${keywords.join('|')})\\b`, 'g');
             code = code.replace(keywordRegex, '<span class="keyword">$1</span>');
 
