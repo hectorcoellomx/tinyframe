@@ -32,9 +32,8 @@ class Validator
                 foreach ($rules_param as $rule_single) {
 
                     $test = array('success' => true, 'message' => '');
-                    $error = "Error. La regla '" . $rule_single . "' está mal escrita o es inexistente. Verifica en la documentación la sintaxis para validaciones.";
-
-                    if($value_param != null || !$allows_null){
+                
+                    if (!empty($value_param) || $value_param === "0" || $value_param === 0 || !$allows_null){
 
                         if ($rule_single == "string") {
 
@@ -69,7 +68,7 @@ class Validator
                             $rule_value = substr($rule_single, 4, -1);
                             
                             if(!is_numeric($rule_value)){
-                                echo $error; die(); exit;
+                                throw new \Exception("Regla inválida: " . $rule_single);
                             }
 
                             $test = self::rule_max($value_param, $rule[0], $rule_value);
@@ -79,7 +78,7 @@ class Validator
                             $rule_value = trim(substr($rule_single, 4, -1));
                             
                             if(!is_numeric($rule_value)){
-                                echo $error; die(); exit;
+                                throw new \Exception("Regla inválida: " . $rule_single);
                             }
 
                             $test = self::rule_min($value_param, $rule[0], $rule_value);
@@ -89,7 +88,7 @@ class Validator
                             $rule_value = trim(substr($rule_single, 4, -1));
                             
                             if($rule_value == ""){
-                                echo $error; die(); exit;
+                                throw new \Exception("Regla inválida: " . $rule_single);
                             }
 
                             $rule_value = explode(',', $rule_value);
@@ -101,7 +100,7 @@ class Validator
                             $test = $test;
 
                         }else{
-                            echo $error; die(); exit;
+                            throw new \Exception("Regla inválida: " . $rule_single);
                         }
 
                     }
@@ -125,58 +124,43 @@ class Validator
         return $errors;
     }
 
+    private static function result($condition, $message)
+    {
+        return [ 'success' => $condition, 'message' => $message ];
+    }
+
+
     private static function rule_string($value, $name)
     {
         $value = (is_numeric($value)) ? $value * 1 : $value;
-
-        return array(
-            'success' => (is_string($value)),
-            'message' => 'El campo/valor "' . $name . '" debe ser una cadena de texto'
-        );
+        return self::result((is_string($value)), "El campo $name debe ser cadena de texto"); 
     }
 
     private static function rule_numeric($value, $name)
     {
-        return array(
-            'success' => (is_numeric($value)),
-            'message' => 'El campo/valor "' . $name . '" debe ser un dato numérico'
-        );
+        return self::result((is_numeric($value)), "El campo $name debe ser numérico");
     }
 
     private static function rule_integer($value, $name)
     {
         $value = (is_numeric($value)) ? $value * 1 : $value;
-
-        return array(
-            'success' => (is_int($value)),
-            'message' => 'El campo/valor "' . $name . '" debe ser un número entero'
-        );
+        return self::result((is_int($value)), "El campo $name debe ser número entero");
     }
 
     private static function rule_float($value, $name)
     {
         $value = (is_numeric($value)) ? $value * 1 : $value;
-
-        return array(
-            'success' => (is_float($value)),
-            'message' => 'El campo/valor "' . $name . '" debe ser un número floatante'
-        );
+        return self::result(is_float($value), "El campo $name debe ser número floatante"); 
     }
     
     private static function rule_boolean($value, $name)
     {
-        return array(
-            'success' => (is_bool($value)),
-            'message' => 'El campo/valor "' . $name . '" debe ser un dato booleano'
-        );
+        return self::result( (filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) !== null), "El campo $name debe ser booleano");
     }
 
     private static function rule_email($value, $name)
     {
-        return array(
-            'success' => (false !== filter_var($value, FILTER_VALIDATE_EMAIL)),
-            'message' => 'El campo/valor "' . $name . '" debe ser un correo electrónico'
-        );
+        return self::result( (false !== filter_var($value, FILTER_VALIDATE_EMAIL)), "El campo $name debe ser un correo electrónico"); 
     }
 
     private static function rule_max($value, $name, $rule_value)
@@ -193,11 +177,7 @@ class Validator
             $message = 'El campo/valor "' . $name . '" no debe ser mayor de ' . $rule_value . ' caracter(es)';
 
         }
-
-        return array(
-            'success' => $test,
-            'message' => $message
-        );
+        return self::result($test, $message);
     }
 
     private static function rule_min($value, $name, $rule_value)
@@ -215,26 +195,17 @@ class Validator
 
         }
 
-        return array(
-            'success' => $test,
-            'message' => $message
-        );
+        return self::result($test, $message);
     }
 
     private static function rule_val($value, $name, $rule_value)
     {
-        return array(
-            'success' => in_array($value, $rule_value),
-            'message' => 'El campo/valor "' . $name . '" no está entre los valores esperados'
-        );
+        return self::result(in_array($value, $rule_value), 'El campo "' . $name . '" no está entre los valores esperados');
     }
 
     private static function rule_file($value, $name)
     {   
-        return array(
-            'success' => (isset($_FILES[$name]) && $_FILES[$name]['error'] == 0),
-            'message' => 'El campo/valor "' . $name . '" debería contener un archivo enviado'
-        );
+        return self::result((isset($_FILES[$name]) && $_FILES[$name]['error'] == 0), 'El campo "' . $name . '" debería contener un archivo enviado');
     }
 
 }
