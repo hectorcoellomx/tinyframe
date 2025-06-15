@@ -76,7 +76,6 @@ class Route
         $middlewareFilePath = './app/middlewares/' . $name . '.php';
 
         if (file_exists($middlewareFilePath)) {
-            require_once $middlewareFilePath;
 
             $middlewareClass = '\\App\\Middlewares\\' . $name;
 

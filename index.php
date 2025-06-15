@@ -3,6 +3,19 @@
     $tinyframe_version = "2.0.0";
 
     //require_once __DIR__ . '/vendor/autoload.php';
+
+    spl_autoload_register(function ($class) {
+        
+        $classPath = str_replace("\\", DIRECTORY_SEPARATOR, $class);
+        $file = __DIR__ . '/' . $classPath . '.php';
+
+        if (file_exists($file)) {
+            require_once $file;
+        } else {
+            trigger_error("No se encontró el archivo para la clase $class en $file", E_USER_ERROR);
+        }
+        
+    });
     
     require './app/Config.php';
     use App\Config;
