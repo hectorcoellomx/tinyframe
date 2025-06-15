@@ -65,6 +65,7 @@
                 <tr><td><span class="command">php create s Product</span></td><td>Crea un servicio ProductService</td></tr>
                 <tr><td><span class="command">php create c Product</span></span></td><td>Crea un controlador ProductController</td></tr>
                 <tr><td><span class="command">php create mi Product</span></td><td>Crea un middleware Product</td></tr>
+                <tr><td><span class="command">php create li Product</span></td><td>Crea una librería Product</td></tr>
                 <tr><td><span class="command">php create full Product</span></td><td>Crea un modelo Product<br>Crea un servicio ProductService<br>Crea un controllador ProductController</td></tr>
                 <tr><td colspan="2">
                     Si se desea, se pueden crear varias entidades al mismo tiempo:<br>
@@ -245,12 +246,12 @@
             <footer>app/Config.php</footer>
         </div>
 
-        <p>Si deseas trabajar con tokens JWT puedes hacer uso de la librería: <span class="color-main">TokenAuth</span>.</p>
+        <p>Si deseas trabajar con tokens JWT puedes hacer uso de la librería: <span class="color-main">JWT</span>.</p>
 
         <div class="code">
             namespace App\Controllers;
             
-            use App\Libraries\TokenAuth;
+            use App\Libraries\JWT;
 
             use Core\Controller;
             use Core\Request;
@@ -272,12 +273,12 @@
                         'nbf' => 1357000000
                     ];
 
-                    $token = TokenAuth::generateToken($payload, $expiration);
+                    $token = JWT::generateToken($payload, $expiration);
 
 
                     // Validar un token
                     
-                    $validate = TokenAuth::validateToken($token);
+                    $validate = JWT::validateToken($token);
 
                     if ($validate["status"]===true) {
                         echo "Token válido.";
@@ -823,6 +824,8 @@
 
             <footer>app/libraries/Test.php</footer>
         </div>
+
+        <p>Puedes crear librerías ejecutando este comando desde la terminal: <span class="color-main">php create li Test</span></p>
 
     </section>
 

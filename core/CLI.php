@@ -33,6 +33,11 @@ class CLI
                     $this->makeMiddleware($entity);
                 }
                 break;
+            case 'li':
+                foreach ($entities as $entity) {
+                    $this->makeLibrary($entity);
+                }
+                break;
             case 'full':
                 foreach ($entities as $entity) {
                     $this->makeModel($entity);
@@ -95,6 +100,29 @@ class CLI
 
         file_put_contents($filePath, $template);
         echo "\nModelo $className creado en app/models.\n";
+    }
+
+    protected function makeLibrary($name)
+    {
+        if (!$name) {
+            echo "\nFalta el nombre de la librería.\n";
+            return;
+        }
+
+        $className = ucfirst($name);
+        $filePath = __DIR__ . '/../app/libraries/' . $className . '.php';
+
+        if (file_exists($filePath)) {
+            echo "\nLa librería $className ya existe.\n";
+            return;
+        }
+
+        $tableName = strtolower($className) . 's';
+
+        $template = "<?php \n\nnamespace App\\Libraries;\n\nclass {$className}\n{\n\n\n}\n";
+
+        file_put_contents($filePath, $template);
+        echo "\nLibrería $className creada en app/libraries.\n";
     }
 
 
