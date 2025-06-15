@@ -165,13 +165,31 @@
             use Core\Controller;
             use Core\Request;
 
+            use App\Services\PostService;
+
             class HomeController extends Controller
             {
 
-                public function login(Request $req){
+                // En caso de usar un servicio se sugiere instanciarlo de esta forma
+
+                public function __construct(){
+
+                    $this->service = new PostService();
+
+                }
+
+
+                // Ejemplo recibiendo parámetros
+
+                public function show(Request $req){
+
                     $name = $req->input('name'); // POST or GET 
-                    $user_id = $req->url('user_id'); // URL Param: /api/user/{user_id}
+                    $post_id = $req->url('post_id'); // URL Param: /api/post/{post_id}
                     $token = $req->header('token'); // Header
+
+                    // Usando el servicio
+                    $post = $this->service->find($post_id);
+
                 }
 
             }
