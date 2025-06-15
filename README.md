@@ -2,9 +2,14 @@
 
 Creado por Héctor de Jesús Coello Gómez.
 
-TinyFrame es un microframework MVC para proyectos pequeños y Api Restful.
+TinyFrame es un microframework MVC para proyectos pequeños y REST APIs. Algunas de sus funcionalidades y características principales se listan a continuación:
 
-Contenido: Control de rutas, middlewares, conexión con base de datos mysql y oracle, configuración para api restful, integración de librerías externas y archivos assets (frontend), helpers, validador de formularios, subida de archivos, manejo de sesiones; y arquitectura para uso de vistas, modelos y controladores.
+- Arquitectura MVC
+- CLI para generación de código
+- Manejo de rutas y middlewares
+- Conexión a BD
+- Validación de formularios
+- Y mucho más
 
 Versión: 2.0.0
 Fecha: 06/2025
