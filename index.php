@@ -1,8 +1,12 @@
 <?php
-    
-    $tinyframe_version = "2.0.0";
+
+    /**
+     * TinyFrame es un framework de uso gratuito, propiedad de Héctor de Jesús Coello Gómez (hector_m3@live.com.mx).
+     */
 
     //require_once __DIR__ . '/vendor/autoload.php';
+    
+    $tinyframe_version = "2.0.0";
 
     spl_autoload_register(function ($class) {
         
@@ -62,5 +66,6 @@
         include('./core/pages/nofound.php');
         exit;
     }
+
 
 ?>
