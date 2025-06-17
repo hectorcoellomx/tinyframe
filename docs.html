@@ -337,7 +337,62 @@
         <p>Puedes crear servicios ejecutando este comando desde la terminal: <span class="color-main">php create s Post</span></p>
 
         <p>Para usar este servicio en un controlador, debes hacer usarlo con <span
-                class="color-main">use App\Services\PostService</span>.</p>
+                class="color-main">use App\Services\PostService</span>. A continuación un ejemplo de uso de un servicio desde un controlador:</p>
+            
+        <div class="code">
+            namespace App\Controllers;
+
+            use Core\Controller;
+            use Core\Request;
+
+            use App\Services\PostService;
+            use App\Services\CommentService;
+
+            class HomeController extends Controller
+            {
+
+                public function __construct(){
+
+                    // Ejemplo instanciando un solo servicio (lo ideal) desde el constructor
+
+                    $this->service = new PostService();
+
+
+                    // Ejemplo instanciando varios servicios 
+
+                    $this->service = [ 
+                        "post" => new PostService(),
+                        "comment" => new CommentService(),
+                    ]
+
+                }
+
+
+                // Ejemplo recibiendo parámetros
+
+                public function show(Request $req){
+
+                    $post_id = $req->url('post_id'); 
+
+
+                    // Usando un servicio cuando solo se ha instanciado un servicio en el constructor
+
+                    $post = $this->service->find($post_id);
+
+
+                    // Usando un servicio cuando se ha instanciado varios servicios en el constructor
+
+                    $post = $this->service["post"]->find($post_id);
+                    $comments $this->service["comment"]->getAllById($post_id);
+
+
+                }
+
+            }
+
+            <footer>app/controllers/HomeController.php</footer>
+        </div>
+
     </section>
 
     <section id="vistas" class="section">
@@ -392,17 +447,18 @@
             <footer>app/views/home.php</footer>
         </div>
 
-        <p>Ejemplos de vista que son plantillas:</p>
+        <p>Ejemplos de vistas que son plantillas y uso de <span class="color-main">$content_view</span>:</p>
 
         <div class="code">
             
             // PLANTILLA DE VISTAS CON HTML 
 
-            // HTML: Código HTML de la cabecera
+            // HTML: Código HTML
 
-            // PHP: echo $content_view;
+            // Importante: Las plantillas deben imprimir el $content_view para colocar ahí el render la vista llamada
+            echo $content_view; 
 
-            // HTML: Código HTML de la cabecera
+            // HTML: Código HTML 
 
             <footer>app/views/layout/main.php</footer>
         </div>
