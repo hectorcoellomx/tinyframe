@@ -18,6 +18,18 @@ class UserController extends Controller
         $users = User::orderBy('name', 'asc')->paginate(10);
         return view('users.index', compact('users'));
     }
+
+    public function login()
+    {
+        $user = array("id" => 10, "name" => "Juan Pérez", "email" => "juanito@unach.mx");
+
+        return response()->json([
+            "success" => true,
+            "data" => $user,
+            "message" => "OK"
+        ]
+        );
+    }
     
 
     // Mostrar formulario para crear un usuario

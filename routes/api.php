@@ -10,7 +10,7 @@ use App\Http\Controllers\ShelvesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-
+Route::post('/auth/login', [UserController::class, 'login']);
 Route::post('/users', [UserController::class, 'store']);
 Route::get('/books',[BookController::class, 'book']);
 Route::get('/books/{id}/{user_id}',[BookController::class, 'show']);
