@@ -11,12 +11,14 @@ class JWT {
         self::$secretKey = $key;
     }
 
-    public static function generateToken($data, $expiration = null)
+    public static function generateToken($data, $expiration_minutes = 5)
     {
         $header = json_encode(['alg' => 'HS256', 'typ' => 'JWT']);
         
-        if ($expiration !== null) {
-            $data['exp'] = time() + $expiration;
+        if ($expiration_minutes !== null) {
+            if (is_numeric($expiration_minutes) && $expiration_minutes >= 0) {
+                $data['exp'] = time() + ($expiration_minutes * 60); 
+            }
         }
         
         $payload = json_encode($data);
