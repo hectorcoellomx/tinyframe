@@ -152,6 +152,16 @@
 
         <p>Para recibir y leer los parámetros de las rutas, por ejemplo la variable "id" de la ruta "student/{id}", debes hacerlo con el método $req->url('id') en el respectivo controlador. En la siguiente sección se detalla el uso de controladores y la forma de recibir parámetros. </p>
 
+        <p>Para los formularios web de tipo <span class="color-main">PUT, PATCH y DELETE</span>, el method del form debe ser de tipo 'post' y se debe agregar un <span class="color-main">input hidden</span> llamado <span class="color-main">_method</span> con el valor respectivo: put, patch o delete, según corresponda la ruta a donde se desea enviar el formulario.</p>
+    
+        <div class="code">
+            ..form action="login" method="post" enctype="multipart/form-data">
+                ..input type="hidden" name="_method" value="put">
+    
+
+            <footer>app/controllers/HomeController.php</footer>
+        </div>
+
     </section>
 
     <section id="controladores" class="section">
@@ -1060,7 +1070,7 @@
         // Función para aplicar el resaltado de sintaxis
         function highlightPHPCode(code) {
 
-            const keywords = ['CREATE', 'DATABASE', 'INSERT', 'USE', 'TABLE', 'INTO', 'VALUES', 'public', 'include', 'class', 'STATUS_PROJECT', 'LOAD_SESSION', 'SESSION_ID', 'LOAD_UPLOAD_FILES', 'DATABASES_DRIVER', 'DB_MYSQL_TYPE', 'DB_MYSQL_HOST', 'DB_MYSQL_USER', 'DB_MYSQL_PASSWORD', 'DB_MYSQL_NAME', 'DB_ORACLE_TYPE', 'DB_ORACLE_HOST', 'DB_ORACLE_PORT', 'DB_ORACLE_USER', 'DB_ORACLE_PASSWORD', 'DB_ORACLE_PASSWORD', 'DB_ORACLE_SERVICE_NAME', 'DB_DATABASEPROD_TYPE', 'DB_DATABASEPROD_HOST', 'DB_DATABASEPROD_USER', 'DB_DATABASEPROD_PASSWORD', 'DB_DATABASEPROD_NAME', 'BASE_URL', 'use', 'namespace', 'array', 'renderView', 'require_once', 'route_group', 'route_post', 'route_get', 'route_put', 'route_patch', 'route_delete', 'extends', 'assets', 'base', 'get_version', 'redir', 'get_errors', 'set_errors', 'back', 'File::upload', 'Validator::check', 'static', 'echo', 'if', 'else', 'for', 'while', 'return', 'function'];
+            const keywords = ['CREATE', 'DATABASE', 'INSERT', 'USE', 'TABLE', 'INTO', 'VALUES', 'public', 'include', 'class', 'STATUS_PROJECT', 'LOAD_SESSION', 'SESSION_ID', 'LOAD_UPLOAD_FILES', 'DATABASES_DRIVER', 'DB_MYSQL_TYPE', 'DB_MYSQL_HOST', 'DB_MYSQL_USER', 'DB_MYSQL_PASSWORD', 'DB_MYSQL_NAME', 'DB_ORACLE_TYPE', 'DB_ORACLE_HOST', 'DB_ORACLE_PORT', 'DB_ORACLE_USER', 'DB_ORACLE_PASSWORD', 'DB_ORACLE_PASSWORD', 'DB_ORACLE_SERVICE_NAME', 'DB_DATABASEPROD_TYPE', 'DB_DATABASEPROD_HOST', 'DB_DATABASEPROD_USER', 'DB_DATABASEPROD_PASSWORD', 'DB_DATABASEPROD_NAME', 'BASE_URL', 'use', 'namespace', 'array', 'renderView', 'require_once', 'route_group', 'route_post', 'route_get', 'route_put', 'route_patch', 'route_delete', '_method', 'put', 'extends', 'assets', 'base', 'get_version', 'redir', 'get_errors', 'set_errors', 'back', 'File::upload', 'Validator::check', 'static', 'echo', 'if', 'else', 'for', 'while', 'return', 'function'];
             const keywordRegex = new RegExp(`\\b(${keywords.join('|')})\\b`, 'g');
             code = code.replace(keywordRegex, '<span class="keyword">$1</span>');
 

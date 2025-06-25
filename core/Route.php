@@ -47,7 +47,10 @@ class Route
             }
         }
 
-        if ($finally_route_pattern == $get_route && strtolower($_SERVER['REQUEST_METHOD']) == strtolower($type)) {
+        $request_method = strtolower($_SERVER['REQUEST_METHOD']);
+        $request_method = ($request_method == "post" && isset($_POST["_method"]) && in_array(trim($_POST["_method"]), array("put", "patch", "delete")) ) ? trim($_POST["_method"]) : $request_method;
+
+        if ($finally_route_pattern == $get_route && $request_method == strtolower($type)) {
 
             if (count($middlewares) > 0) {
                 foreach ($middlewares as $middleware) {
