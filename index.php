@@ -32,7 +32,7 @@
     if($tinyframe_bd_driver=="ORACLE"){
         require './core/databases/DB_ORACLE.php';
     }else{
-        require './core/databases/DB_MYSQLI.php';
+        require './core/databases/DB_MYSQL.php';
     }
 
     if($tinyframe_status_project=="pro"){
