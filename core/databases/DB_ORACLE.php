@@ -4,7 +4,7 @@ namespace Core\Databases;
 
 require_once './core/databases/DB.php'; 
 
-class DB_ORACLE extends DB_CONFIG
+class DB extends DB_CONFIG
 {
     private static $instance;
     private $db = null;
@@ -38,7 +38,7 @@ class DB_ORACLE extends DB_CONFIG
     public static function init($database_name = "")
     {
         if (!self::$instance) {
-            self::$instance = new DB_ORACLE($database_name);
+            self::$instance = new DB($database_name);
         }
         return self::$instance;
     }

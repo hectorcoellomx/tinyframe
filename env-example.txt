@@ -3,7 +3,7 @@ BASE_URL=http://localhost/tinyframe/
 
 SESSION_ID=your_session_id
 
-DATABASES_DRIVER=Mysqli
+DATABASES_DRIVER=mysql
 
 DB_MYSQL_TYPE=mysql
 DB_MYSQL_HOST=localhost

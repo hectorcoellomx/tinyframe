@@ -29,10 +29,8 @@
     $tinyframe_bd_driver = ($tinyframe_config->databases_driver!=null) ? strtoupper($tinyframe_config->databases_driver) : $tinyframe_config->databases_driver;
     $tinyframe_status_project = ($tinyframe_config->status_project!=null) ? strtoupper($tinyframe_config->status_project) : $tinyframe_config->status_project;
 
-    if($tinyframe_bd_driver=="PDO"){
-        require './core/databases/DB_PDO.php';
-    }elseif($tinyframe_bd_driver=="OCI"){
-        require './core/databases/DB_OCI.php';
+    if($tinyframe_bd_driver=="ORACLE"){
+        require './core/databases/DB_ORACLE.php';
     }else{
         require './core/databases/DB_MYSQLI.php';
     }
