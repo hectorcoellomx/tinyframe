@@ -1,15 +1,13 @@
 <?php
 
-namespace Core\Databases;
-
-require_once './core/databases/DB.php'; 
+namespace Core\Databases; 
 
 class DB extends DB_CONFIG
 {
     private static $instance;
     private $db = null;
 
-    private function __construct($database_name = "")
+    private function __construct($database_name = "mysql")
     {
         $database_name = ($database_name == "") ? "mysql" : $database_name;
         $db_config = $this->get_config($database_name);

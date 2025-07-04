@@ -2,8 +2,6 @@
 
 namespace Core\Databases;
 
-require_once './core/databases/DB.php';
-
 class DB extends DB_CONFIG
 {
     private static $instance;
