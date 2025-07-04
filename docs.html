@@ -520,17 +520,16 @@
         <p>La configuración inicial de tus bases de datos debes realizarla en el archivo <span class="color-main">.env</span>. En la propiedad <span class="color-main">DATABASES_DRIVER</span> debes colocar el driver de base de datos a utilizar en tu proyecto:</p>
         <p>
             <ul>
-                <li>Mysqli: Para uso únicamente de bases de datos MySQL</li>
-                <li>OCI: Para uso únicamente de bases de datos Oracle</li>
-                <li>PDO: Para uso de bases de datos MySQL y Oracle (Requiere el plugin PDO).</li>
+                <li>mysql: Para uso únicamente de bases de datos MySQL con Mysqli</li>
+                <li>oracle: Para uso únicamente de bases de datos Oracle con OCI</li>
             </ul>
         </p>
 
         <div class="code">
 
-            // Driver a utilizar: Mysqli, OCI, PDO
+            // Driver a utilizar: mysql o oracle
 
-            DATABASES_DRIVER=Mysqli
+            DATABASES_DRIVER=mysql
 
 
             // Conexiones 
@@ -606,7 +605,7 @@
         <br>
         <span>EJEMPLOS CRUD</span>
 
-        <p>A continuación se presenta un CRUD de ejemplo con los drivers <span class="color-main">Mysqli</span> y <span class="color-main">PDO</span>.</p>
+        <p>A continuación se presenta un CRUD de ejemplo.</p>
 
         <div class="code">
             namespace App\Models;
@@ -651,33 +650,7 @@
             <footer>app/models/User.php</footer>
         </div>
 
-        <p>Para el driver <span class="color-main">OCI</span> los parámetros se deben pasar de diferente manera:</p>
-
-        <div class="code">
-            namespace App\Models;
-
-            use Core\Databases\DB;
-
-            class User
-            {
-
-                public function find($id){
-                    $db = DB::init();
-                    return $db->db_select_row("SELECT * FROM users WHERE id = :id", [ "id" => $id ]);
-                }
-
-                public function create($name, $ocupation){
-                    $db = DB::init();
-                    $sql = "INSERT INTO users (name, ocupation) VALUES (:name, :ocupation)";
-                    return $db->db_insert($sql, [ "name" => $name, "ocupation" => $ocupation]);
-                }
-
-            }
-
-            <footer>app/models/User.php</footer>
-        </div>
-
-
+    
     </section>
 
 
