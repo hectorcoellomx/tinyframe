@@ -2,7 +2,7 @@
 
 namespace Core\Databases;
 
-require_once './core/databases/DB.php';
+require_once './core/databases/DB.php'; 
 
 class DB extends DB_CONFIG
 {
@@ -11,7 +11,7 @@ class DB extends DB_CONFIG
 
     private function __construct($database_name = "")
     {
-        $database_name = ($database_name=="") ? "mysql" : $database_name;
+        $database_name = ($database_name == "") ? "mysql" : $database_name;
         $db_config = $this->get_config($database_name);
 
         $this->db = new \mysqli(
@@ -22,9 +22,9 @@ class DB extends DB_CONFIG
         );
 
         if ($this->db->connect_error) {
-            die("Error de conexión: " . $this->db->connect_error);
+            error_log("Error de conexión: " . $this->db->connect_error);
+            throw new \Exception("Error al conectar con la base de datos.");
         }
-        
     }
 
     public static function init($database_name = "")
@@ -35,27 +35,51 @@ class DB extends DB_CONFIG
         return self::$instance;
     }
 
-    public function db_select_row($sql, $param=null)
+    private function get_param_types($params)
+    {
+        $types = '';
+        foreach ($params as $param) {
+            if (is_int($param)) {
+                $types .= 'i';
+            } elseif (is_float($param)) {
+                $types .= 'd';
+            } elseif (is_string($param)) {
+                $types .= 's';
+            } else {
+                $types .= 'b'; // blob u otros
+            }
+        }
+        return $types;
+    }
+
+    public function db_select_row($sql, $param = null)
     {
         return $this->db_select($sql, $param, false);
     }
 
-    public function db_select($sql, $param=null, $list = true)
+    public function db_select($sql, $param = null, $list = true)
     {
         $stmt = $this->db->prepare($sql);
 
+        if (!$stmt) {
+            error_log("Error al preparar consulta: " . $this->db->error);
+            throw new \Exception("No se pudo preparar la consulta.");
+        }
+
         if ($param) {
-            $types = str_repeat('s', count($param)); // Assuming all params are strings
+            $types = $this->get_param_types($param);
             $stmt->bind_param($types, ...$param);
         }
 
-        $stmt->execute();
-        $result = $stmt->get_result();
+        if (!$stmt->execute()) {
+            error_log("Error al ejecutar consulta: " . $stmt->error);
+            throw new \Exception("No se pudo ejecutar la consulta.");
+        }
 
-        $output = ($list) ? $result->fetch_all(MYSQLI_ASSOC) : $result->fetch_assoc();
+        $result = $stmt->get_result();
+        $output = $list ? $result->fetch_all(MYSQLI_ASSOC) : $result->fetch_assoc();
 
         $stmt->close();
-
         return $output;
     }
 
@@ -83,19 +107,24 @@ class DB extends DB_CONFIG
     {
         $stmt = $this->db->prepare($sql);
 
+        if (!$stmt) {
+            error_log("Error al preparar consulta: " . $this->db->error);
+            throw new \Exception("No se pudo preparar la consulta.");
+        }
+
         if ($param) {
-            $types = str_repeat('s', count($param)); // Assuming all params are strings
+            $types = $this->get_param_types($param);
             $stmt->bind_param($types, ...$param);
         }
 
-        $result = $stmt->execute();
-
-        if ($lastid) {
-            $result = $this->db->insert_id;
+        if (!$stmt->execute()) {
+            error_log("Error al ejecutar consulta: " . $stmt->error);
+            throw new \Exception("No se pudo ejecutar la consulta.");
         }
 
-        $stmt->close();
+        $result = $lastid ? $this->db->insert_id : $stmt->affected_rows;
 
+        $stmt->close();
         return $result;
     }
 
@@ -104,6 +133,14 @@ class DB extends DB_CONFIG
         if (self::$instance) {
             self::$instance->db->close();
             self::$instance->db = null;
+            self::$instance = null;
+        }
+    }
+
+    public function __destruct()
+    {
+        if ($this->db) {
+            $this->db->close();
         }
     }
 }
