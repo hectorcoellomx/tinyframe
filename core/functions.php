@@ -14,6 +14,18 @@ function base($add=""){
     return $tinyframe_config->base_url . $add;
 }
 
+function env($name){
+    $_ENV = [];
+    $envFilePath = __DIR__ . '/../.env';
+    if (file_exists($envFilePath)) {$lines = file($envFilePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES); if ($lines) {foreach ($lines as $line) {list($key, $value) = explode('=', $line, 2); $key = trim($key); $value = trim($value); if (!empty($key) && !isset($_ENV[$key])) {if ($value === '') {$_ENV[$key] = ''; } else {$_ENV[$key] = $value; } } } } }
+    if(substr($name, 0, 3)!="DB_"){
+        return isset($_ENV[$name]) ? $_ENV[$name] : NULL;
+    }else{
+        return "For security reasons, you cannot obtain environment variables (.env) that start with DB_";
+    }
+    
+}
+
 function get_errors(){
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
