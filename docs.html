@@ -79,6 +79,46 @@
             Para una mejor comprensión del flujo propuesto por este framework, se presenta el siguiente gráfico:
             <br><br><br>
             <img src="./flow.png" style="max-width: 700px;">
+            <br><br><br>
+            Nombres sugeridos para métodos:
+            <br><br>
+            <table border="1" cellpadding="6" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Controlador (Controller)</th>
+                        <th>Servicio (Service)</th>
+                        <th>Modelo (Model)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>index</td>
+                        <td>getAll</td>
+                        <td>findAll()</td>
+                    </tr>
+                    <tr>
+                        <td>show</td>
+                        <td>getById</td>
+                        <td>findById($id)</td>
+                    </tr>
+                    <tr>
+                        <td>store</td>
+                        <td>createEntity</td>
+                        <td>create($data)</td>
+                    </tr>
+                    <tr>
+                        <td>update</td>
+                        <td>updateEntity</td>
+                        <td>update($id, $data)</td>
+                    </tr>
+                    <tr>
+                        <td>destroy</td>
+                        <td>deleteEntity</td>
+                        <td>delete($id)</td>
+                    </tr>
+                </tbody>
+            </table>
+
         </div>
     </section>
     <section id="primerospasos" class="section">
