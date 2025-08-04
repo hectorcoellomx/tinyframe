@@ -615,12 +615,12 @@
             class User
             {
 
-                public function find($id){
+                public function findById($id){
                     $db = DB::init();
                     return $db->db_select_row("SELECT * FROM users WHERE id=?", [ $id ]);
                 }
 
-                public function all(){
+                public function findAll(){
                     $db = DB::init();
                     return $db->db_select("SELECT * FROM users");
                 }
@@ -640,7 +640,7 @@
                     return $db->db_update("UPDATE users SET fullname = ? WHERE id = ?", [ $name, $id ]);
                 }
 
-                public function destroy($id){
+                public function delete($id){
                     $db = DB::init();
                     return $db->db_delete("DELETE from users WHERE id = ?", [ $id ]);
                 }
