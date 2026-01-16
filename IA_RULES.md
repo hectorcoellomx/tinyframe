@@ -70,3 +70,9 @@ app/routes.php
 
 ## Docs
 docs.html
+
+## Extended Documentation
+
+Also read:
+- docs/*.md
+- modules/*/ai.md (if exists)
