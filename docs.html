@@ -150,6 +150,138 @@
 
     </section>
 
+    <section id="ia" class="section">
+        <div class="title">Inteligencia Artificial</div>
+        <p>TinyFrame soporta el uso de archivos Markdown dentro de la carpeta <span class="color-main">/docs</span> para proporcionar contexto adicional a herramientas de IA como Copilot, Claude, Cursor, Antigravity, etc.</p>
+        <strong>¿Para qué sirven?</strong>
+        <ul>
+            <li>Definir arquitectura del proyecto</li>
+            <li>Explicar reglas backend</li>
+            <li>Documentar frontend</li>
+            <li>Especificar reglas de base de datos</li>
+        </ul>
+
+        <p>Estos archivos NO son obligatorios, pero se recomienda crearlos para mejorar la calidad del código generado por IA.</p>
+
+        <strong>Ejemplos recomendados</strong>
+
+        <pre>
+            /docs/architecture.md
+            /docs/backend.md
+            /docs/frontend.md
+            /docs/database.md
+        </pre>
+
+        <p><strong>Ejemplo:</strong> docs/architecture.md</p>
+
+        <div class="code">
+            # Architecture
+
+            Request flow:
+
+            → Route
+            → Middleware
+            → Controller
+            → Service
+            → Model
+            → Database
+            → Service
+            → Controller
+            → View / JSON
+
+            Rules:
+            - Controllers do NOT access DB
+            - Services contain business logic
+            - Models only handle SQL
+        </div>
+
+        <p><strong>Ejemplo:</strong> docs/backend.md</p>
+
+        <div class="code">
+            # Backend Rules
+
+            Controllers:
+            - Extend Core\Controller
+            - Use Services
+            - Validate input with $req->verify()
+
+            Services:
+            - Business logic only
+            - Call models
+
+            Models:
+            - Use Core\Databases\DB
+            - Prepared statements only
+        </div>
+
+        <p><strong>Ejemplo:</strong> docs/database.md</p>
+
+        <div class="code">
+            # Database Context
+
+            This project uses docs/db.sql
+
+            Rules:
+            - Always read bd.sql
+            - Respect table and column names
+            - No raw SQL
+        </div>
+
+        <p>En el ejemplo anterior se hace referencia al archivo <span class="color-main">docs/db.sql</span>. En caso de no usarlo, eliminar la referencia de <span class="color-main">docs/database.md</span>.</p>
+
+        <br>
+
+        <strong>Reglas por módulo</strong>
+
+        <p>Cada módulo del proyecto puede tener su propio archivo de reglas para IA ubicado en:</p>
+
+        <pre>
+            /modules/{module_name}/ai.md
+        </pre>
+
+        <strong>¿Para qué sirve?</strong>
+        <ul>
+        <li>Definir responsabilidades del módulo</li>
+        <li>Listar rutas</li>
+        <li>Especificar servicios</li>
+        <li>Definir validaciones</li>
+        </ul>
+
+        <p><strong>Ejemplo:</strong> modules/users/ai.md</p>
+
+        <div class="code">
+            # Users Module
+
+            Features:
+            - Register
+            - Login
+            - Password recovery
+
+            Controllers:
+            - AuthController
+            - UserController
+
+            Services:
+            - AuthService
+            - UserService
+
+            Models:
+            - User
+
+            Routes:
+            - /login
+            - /register
+
+            Validations:
+            - email
+            - password min(8)
+        </div>
+
+        <p> Cuando un desarrollador trabaje dentro del módulo, las herramientas de IA leerán este archivo automáticamente para generar código acorde al contexto.</p>
+
+
+    </section>
+
     <section id="rutas" class="section">
         <div class="title">Rutas</div>
         <p>Rutas tipo <span class="color-main">GET, POST, PUT, PATCH y DELETE</span>.</p>
