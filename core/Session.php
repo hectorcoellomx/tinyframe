@@ -20,6 +20,7 @@ class Session {
     }
 
     function start($data){
+        session_regenerate_id(true);
         $_SESSION[$this->id] = $data;
     }
 
