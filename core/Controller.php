@@ -22,23 +22,37 @@ class Controller {
         echo json_encode($data);
     }
 
+    private function resolveViewPath(string $name, string $label): string
+    {
+        // Rechaza cualquier secuencia de path traversal o caracteres fuera de lo permitido
+        if (!preg_match('/^[a-zA-Z0-9_\-\/]+$/', $name)) {
+            throw new \Exception("Nombre de $label inválido: $name");
+        }
+
+        $base     = realpath('./app/views');
+        $resolved = realpath($base . '/' . $name . '.php');
+
+        if ($resolved === false || strpos($resolved, $base . DIRECTORY_SEPARATOR) !== 0) {
+            throw new \Exception("$label no encontrado o fuera del directorio permitido: $name");
+        }
+
+        return $resolved;
+    }
+
     public function renderView(string $view, $data = null, string $layout = '') {
 
         if(is_array($data) && count($data)>0){
             extract($data, EXTR_SKIP);
         }
 
+        $viewPath = $this->resolveViewPath($view, 'Vista');
+
         ob_start();
-        include("./app/views/{$view}.php");
+        include($viewPath);
         $content_view = ob_get_clean();
 
         if ($layout) {
-            $layoutPath = "./app/views/{$layout}.php";
-
-            if (!file_exists($layoutPath)) {
-                throw new \Exception("Layout no encontrado: $layout");
-            }
-
+            $layoutPath = $this->resolveViewPath($layout, 'Layout');
             include($layoutPath);
         } else {
             echo $content_view;
