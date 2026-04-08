@@ -6,7 +6,19 @@ function assets($add=""){
 }
 
 function back(){
-    return redir($_SERVER['HTTP_REFERER'], true);
+    global $tinyframe_config;
+    $referer = $_SERVER['HTTP_REFERER'] ?? '';
+
+    if ($referer !== '') {
+        $referer_host = parse_url($referer, PHP_URL_HOST);
+        $base_host    = parse_url($tinyframe_config->base_url, PHP_URL_HOST);
+
+        if ($referer_host !== null && $referer_host === $base_host) {
+            return redir($referer, true);
+        }
+    }
+
+    return redir('/');
 }
 
 function base($add=""){
