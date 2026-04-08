@@ -16,20 +16,6 @@ Fecha: 06/2025
 
 ---
 
-# AI Rules (Important)
-
-This project uses AI assistance (Copilot, Claude, Cursor, etc).
-
-**Global rules for all AI tools:**
-
-- `AI_RULES.md` → Main source of truth  
-- `docs/*.md` → Extended documentation  
-- Module specific rules → `/modules/*/ai.md`  
-
-All AI tools MUST follow these documents before generating code.
-
----
-
 # Aviso de cambio de nombre
 
 Este proyecto ha cambiado oficialmente de nombre:
