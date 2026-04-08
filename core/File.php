@@ -5,6 +5,37 @@ namespace Core;
 class File
 {
 
+    private static $MIME_TO_EXT = [
+        'image/jpeg'                                                                  => 'jpg',
+        'image/png'                                                                   => 'png',
+        'image/gif'                                                                   => 'gif',
+        'image/webp'                                                                  => 'webp',
+        'image/bmp'                                                                   => 'bmp',
+        'application/pdf'                                                             => 'pdf',
+        'text/plain'                                                                  => 'txt',
+        'text/csv'                                                                    => 'csv',
+        'application/zip'                                                             => 'zip',
+        'application/json'                                                            => 'json',
+        'video/mp4'                                                                   => 'mp4',
+        'video/webm'                                                                  => 'webm',
+        'audio/mpeg'                                                                  => 'mp3',
+        'audio/wav'                                                                   => 'wav',
+        'application/msword'                                                          => 'doc',
+        'application/vnd.ms-excel'                                                    => 'xls',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document'    => 'docx',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'          => 'xlsx',
+    ];
+
+    private static $DANGEROUS_EXTENSIONS = [
+        'php', 'php3', 'php4', 'php5', 'php7', 'phtml', 'phar',
+        'asp', 'aspx', 'jsp', 'py', 'rb', 'pl', 'sh', 'bash',
+        'exe', 'bat', 'cmd', 'ps1', 'htaccess', 'htpasswd',
+    ];
+
+    private static function extensionFromMime(string $mime): ?string
+    {
+        return self::$MIME_TO_EXT[$mime] ?? null;
+    }
 
     public static function upload($name, $destination = "", $options = [])
     {
@@ -16,23 +47,27 @@ class File
             ];
         }
 
+        if (empty($options['allowed_types'])) {
+            return [
+                'status' => false,
+                'url' => '',
+                'message' => 'Debe especificar los tipos de archivo permitidos (allowed_types).'
+            ];
+        }
+
         $file = $_FILES[$name];
 
-        $fileName = $file['name'];
         $fileTempName = $file['tmp_name'];
-        $fileError = $file['error'];
+        $fileError    = $file['error'];
+        $fileSize     = $file['size'];
 
-        $fileSize = $file['size'];
-
-        $finfo = finfo_open(FILEINFO_MIME_TYPE);
-        $mime_real = finfo_file($finfo, $fileTempName);
-        finfo_close($finfo);
+        $mime_real = (new \finfo(FILEINFO_MIME_TYPE))->file($fileTempName);
 
         $valid_max_size = $options['max_size'] ?? 0;
-        $valid_types = isset($options['allowed_types']) ? explode("|", $options['allowed_types']) : [];
+        $valid_types    = explode('|', $options['allowed_types']);
 
-        $size_ok = ( $valid_max_size == 0 || $fileSize <= $valid_max_size );
-        $type_ok = (empty($valid_types) || in_array($mime_real, $valid_types));
+        $size_ok = ($valid_max_size == 0 || $fileSize <= $valid_max_size);
+        $type_ok = in_array($mime_real, $valid_types, true);
 
         $error = "";
         $moved = 0;
@@ -45,13 +80,38 @@ class File
                 $error = "El tipo de archivo no es permitido";
             } else {
 
-                $fileNameNew = ( isset($options['file_name']) && trim($options['file_name'])!="" )  ? $options['file_name'] : uniqid('', true);
-                $fileNameNew .= "." . strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+                // La extensión se deriva del MIME real, nunca del nombre provisto por el cliente
+                $ext = self::extensionFromMime($mime_real);
+                if ($ext === null) {
+                    return [
+                        'status'  => false,
+                        'url'     => '',
+                        'message' => 'Tipo de archivo no reconocido: ' . $mime_real,
+                    ];
+                }
+
+                if (in_array($ext, self::$DANGEROUS_EXTENSIONS, true)) {
+                    return [
+                        'status'  => false,
+                        'url'     => '',
+                        'message' => 'El tipo de archivo no está permitido por razones de seguridad.',
+                    ];
+                }
+
+                $baseName    = (isset($options['file_name']) && trim($options['file_name']) !== '')
+                    ? pathinfo(trim($options['file_name']), PATHINFO_FILENAME)
+                    : uniqid('', true);
+                $fileNameNew = $baseName . '.' . $ext;
 
                 $destination = ($destination != "") ? "upload/" . $destination . "/" : "upload/";
 
                 if (!is_dir($destination)) {
-                    mkdir($destination, 0777, true);
+                    mkdir($destination, 0755, true);
+                    // Bloquea la ejecución de scripts en el directorio de subidas
+                    $htaccess = $destination . '.htaccess';
+                    if (!file_exists($htaccess)) {
+                        file_put_contents($htaccess, "php_flag engine off\nOptions -ExecCGI\nRemoveHandler .php .php3 .php4 .php5 .php7 .phtml .phar .asp .aspx .jsp .py .pl .sh\nAddType text/plain .php .php3 .php4 .php5 .php7 .phtml .phar\n");
+                    }
                 }
 
                 $fileDestination = $destination . $fileNameNew;
