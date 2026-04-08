@@ -4,10 +4,38 @@ namespace App\Libraries;
 
 class JWT {
 
-    private static $secretKey = 'your_secret_key_here';
+    private static $secretKey = null;
+
+    private static function getSecretKey(): string
+    {
+        if (self::$secretKey !== null) {
+            return self::$secretKey;
+        }
+
+        $envFilePath = __DIR__ . '/../../.env';
+        if (file_exists($envFilePath)) {
+            $lines = file($envFilePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+            foreach ($lines as $line) {
+                if (strpos($line, '=') === false) continue;
+                [$k, $v] = explode('=', $line, 2);
+                if (trim($k) === 'JWT_SECRET') {
+                    $key = trim($v);
+                    if ($key !== '') {
+                        self::$secretKey = $key;
+                        return self::$secretKey;
+                    }
+                }
+            }
+        }
+
+        throw new \Exception('JWT_SECRET no está definido en el archivo .env');
+    }
 
     public static function setSecretKey($key)
     {
+        if (!is_string($key) || trim($key) === '') {
+            throw new \Exception('JWT_SECRET no puede estar vacío');
+        }
         self::$secretKey = $key;
     }
 
@@ -26,7 +54,7 @@ class JWT {
         $base64Header = self::base64UrlEncode($header);
         $base64Payload = self::base64UrlEncode($payload);
         
-        $signature = hash_hmac('sha256', $base64Header . '.' . $base64Payload, self::$secretKey, true);
+        $signature = hash_hmac('sha256', $base64Header . '.' . $base64Payload, self::getSecretKey(), true);
         $base64Signature = self::base64UrlEncode($signature);
         
         return $base64Header . '.' . $base64Payload . '.' . $base64Signature;
@@ -42,16 +70,16 @@ class JWT {
 
         list($header, $payload, $signature) = $token_divide;
 
+        $decodedHeader = json_decode(self::base64UrlDecode($header), true);
+        if (!is_array($decodedHeader) || ($decodedHeader['alg'] ?? '') !== 'HS256') {
+            return [ "status" => false, "payload" => null, "message" => "Unsupported algorithm" ];
+        }
+
         $decodedSignature = self::base64UrlDecode($signature);
-        $expectedSignature = hash_hmac('sha256', $header . '.' . $payload, self::$secretKey, true);
+        $expectedSignature = hash_hmac('sha256', $header . '.' . $payload, self::getSecretKey(), true);
 
         if (!hash_equals($expectedSignature, $decodedSignature)) {
             return [ "status" => false, "payload" => null, "message" => "Invalid token" ];
-        }
-
-        $decodedHeader = json_decode(self::base64UrlDecode($header), true);
-        if ($decodedHeader['alg'] !== 'HS256') {
-            return [ "status" => false, "payload" => null, "message" => "Unsupported algorithm" ];
         }
 
         $decodedPayload = json_decode(self::base64UrlDecode($payload), true);
