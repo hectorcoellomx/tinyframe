@@ -66,7 +66,7 @@
     Core\Route::loadMany($tinyframe_routes);
 
     if($tinyframe_nofound){
-        http_response_code(400);
+        http_response_code(404);
         include('./core/pages/nofound.php');
         exit;
     }
