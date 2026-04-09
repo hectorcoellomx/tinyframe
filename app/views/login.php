@@ -2,6 +2,7 @@
     <div class="login">
         <span style="font-size: 17px;display: block;margin-bottom: 8px;">Login Example</span>
         <form action="login" method="post" enctype="multipart/form-data">
+            <?php csrf_field(); ?>
             <input type="text" id="email" name="email" placeholder="test@example.com" required><br>
             <input type="password" id="password" name="password" placeholder="123" required><br>
             <?php

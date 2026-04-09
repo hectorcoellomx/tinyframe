@@ -60,6 +60,10 @@ class Route
                 }
             }
 
+            if (in_array($request_method, ['post', 'put', 'patch', 'delete'])) {
+                csrf_verify();
+            }
+
             $controller = explode("::", $controller);
 
             if(count($controller)!=2){
