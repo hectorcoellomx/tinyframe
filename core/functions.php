@@ -143,7 +143,27 @@ function csrf_verify(){
     }
 }
 
+function rate_limit(string $key = '', int $maxAttempts = 5, int $windowSeconds = 60, int $blockSeconds = 300): bool
+{
+    if ($key === '') {
+        $key = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+    }
+    if (!\Core\RateLimiter::attempt($key, $maxAttempts, $windowSeconds, $blockSeconds)) {
+        $retry = \Core\RateLimiter::retryAfter($key);
+        http_response_code(429);
+        echo json_encode(['error' => 'Too many attempts. Try again in ' . $retry . ' seconds.']);
+        exit;
+    }
+    return true;
+}
 
+function rate_limit_clear(string $key = ''): void
+{
+    if ($key === '') {
+        $key = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+    }
+    \Core\RateLimiter::clear($key);
+}
 
 
 

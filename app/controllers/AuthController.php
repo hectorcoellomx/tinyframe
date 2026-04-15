@@ -24,6 +24,8 @@ class AuthController extends Controller {
 
     public function login(Request $req){
 
+        rate_limit('login_' . $_SERVER['REMOTE_ADDR'], 5, 60, 300);
+
         $req->verify([
             [ 'email', [ 'email', 'trim' ] ],
             [ 'password', [ 'min(1)', 'trim' ] ],
@@ -32,6 +34,7 @@ class AuthController extends Controller {
         $login = $this->service->login($req->all());
         
         if($login){
+            rate_limit_clear('login_' . $_SERVER['REMOTE_ADDR']);
             redir('?logged=1');
         }else{
             set_errors(['Claves incorrectas']);
