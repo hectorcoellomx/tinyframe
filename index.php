@@ -1,8 +1,14 @@
 <?php
 
-    /**
-     * TinyFrame es un framework de uso gratuito, propiedad de Héctor de Jesús Coello Gómez (hector_m3@live.com.mx).
-     */
+/**
+ * TinyFrame Framework
+ *
+ * A lightweight PHP framework for rapid application development.
+ *
+ * @author    Héctor de Jesús Coello Gómez <hector_m3@live.com.mx>
+ * @copyright 2026 Héctor de Jesús Coello Gómez
+ * @license   Free to use. The author retains all intellectual property rights.
+ */
 
     //require_once __DIR__ . '/vendor/autoload.php';
     
