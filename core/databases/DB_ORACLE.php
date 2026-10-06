@@ -113,6 +113,10 @@ class DB extends DB_CONFIG
 
     public function db_set($sql, $param, $lastid = false)
     {
+        if ($lastid) {
+            $sql .= " RETURNING ID INTO :last_insert_id";
+        }
+
         $stmt = @oci_parse($this->db, $this->parse_named_sql($sql, $param));
 
         if (!$stmt) {
@@ -125,25 +129,21 @@ class DB extends DB_CONFIG
             $this->bind_params($stmt, $param);
         }
 
+        $last_insert_id = 0;
+        if ($lastid) {
+            oci_bind_by_name($stmt, ":last_insert_id", $last_insert_id, 32, SQLT_INT);
+        }
+
         if (!@oci_execute($stmt, OCI_COMMIT_ON_SUCCESS)) {
             $e = oci_error($stmt);
             error_log("Error al ejecutar OCI: " . $e['message']);
             throw new \Exception("No se pudo ejecutar la consulta.");
         }
 
-        $result = $lastid ? $this->get_last_insert_id() : oci_num_rows($stmt);
+        $result = $lastid ? $last_insert_id : oci_num_rows($stmt);
 
         oci_free_statement($stmt);
         return $result;
-    }
-
-    private function get_last_insert_id()
-    {
-        $stmt = oci_parse($this->db, "SELECT LAST_INSERT_ID FROM DUAL"); // Esto depende de cómo gestionas IDs
-        oci_execute($stmt);
-        $row = oci_fetch_assoc($stmt);
-        oci_free_statement($stmt);
-        return $row['LAST_INSERT_ID'] ?? null;
     }
 
     public static function db_close()
