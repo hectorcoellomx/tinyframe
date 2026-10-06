@@ -147,9 +147,8 @@ function csrf_verify(){
     }
     $token = $_POST['_csrf_token'] ?? $_SERVER['HTTP_X_CSRF_TOKEN'] ?? null;
     if ($token === null ||empty($_SESSION['_csrf_token']) || !hash_equals($_SESSION['_csrf_token'], $token)) {
-        http_response_code(403);
-        echo json_encode(['error' => 'Invalid CSRF token']);
-        exit;
+        set_errors(['Invalid CSRF token']);
+        back();
     }
 }
 
