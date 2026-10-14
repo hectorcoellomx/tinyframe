@@ -80,32 +80,52 @@ function redir($path, $external=false){
     }
     
 }
-function route($type, $url, $controller, $middlewares = []) {
+function route($type, $url, $controller, $middlewares = [], $options = []) {
     global $tinyframe_routes, $tinyframe_group_middlewares;
 
     $all_middlewares = array_unique(array_merge($tinyframe_group_middlewares, $middlewares));
 
-    $tinyframe_routes[] = [$type, $url, $controller, $all_middlewares];
+    $tinyframe_routes[] = [$type, $url, $controller, $all_middlewares, $options];
 }
 
-function route_get($url, $controller, $middlewares = []) {
-    route('get', $url, $controller, $middlewares);
+function route_get($url, $controller, $middlewares = [], $options = []) {
+    route('get', $url, $controller, $middlewares, array_merge(['context' => 'web', 'csrf' => true], $options));
 }
 
-function route_post($url, $controller, $middlewares = []) {
-    route('post', $url, $controller, $middlewares);
+function route_post($url, $controller, $middlewares = [], $options = []) {
+    route('post', $url, $controller, $middlewares, array_merge(['context' => 'web', 'csrf' => true], $options));
 }
 
-function route_put($url, $controller, $middlewares = []) {
-    route('put', $url, $controller, $middlewares);
+function route_put($url, $controller, $middlewares = [], $options = []) {
+    route('put', $url, $controller, $middlewares, array_merge(['context' => 'web', 'csrf' => true], $options));
 }
 
-function route_patch($url, $controller, $middlewares = []) {
-    route('patch', $url, $controller, $middlewares);
+function route_patch($url, $controller, $middlewares = [], $options = []) {
+    route('patch', $url, $controller, $middlewares, array_merge(['context' => 'web', 'csrf' => true], $options));
 }
 
-function route_delete($url, $controller, $middlewares = []) {
-    route('delete', $url, $controller, $middlewares);
+function route_delete($url, $controller, $middlewares = [], $options = []) {
+    route('delete', $url, $controller, $middlewares, array_merge(['context' => 'web', 'csrf' => true], $options));
+}
+
+function route_api_get($url, $controller, $middlewares = [], $options = []) {
+    route('get', $url, $controller, $middlewares, array_merge(['context' => 'api', 'csrf' => false], $options));
+}
+
+function route_api_post($url, $controller, $middlewares = [], $options = []) {
+    route('post', $url, $controller, $middlewares, array_merge(['context' => 'api', 'csrf' => false], $options));
+}
+
+function route_api_put($url, $controller, $middlewares = [], $options = []) {
+    route('put', $url, $controller, $middlewares, array_merge(['context' => 'api', 'csrf' => false], $options));
+}
+
+function route_api_patch($url, $controller, $middlewares = [], $options = []) {
+    route('patch', $url, $controller, $middlewares, array_merge(['context' => 'api', 'csrf' => false], $options));
+}
+
+function route_api_delete($url, $controller, $middlewares = [], $options = []) {
+    route('delete', $url, $controller, $middlewares, array_merge(['context' => 'api', 'csrf' => false], $options));
 }
 
 function route_group(array $middlewares, callable $routes_definition) {
@@ -173,7 +193,6 @@ function rate_limit_clear(string $key = ''): void
     }
     \Core\RateLimiter::clear($key);
 }
-
 
 
 

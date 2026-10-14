@@ -24,13 +24,13 @@ class Route
                 continue;
             }
 
-            [$method, $path, $controller, $middleware] = array_pad($route, 4, []);
+            [$method, $path, $controller, $middleware, $options] = array_pad($route, 5, []);
 
-            self::register($method, $path, $controller, $middleware);
+            self::register($method, $path, $controller, $middleware, $options);
         }
     }
 
-    public static function register($type, $route_pattern, $controller, $middlewares = [])
+    public static function register($type, $route_pattern, $controller, $middlewares = [], $options = [])
     {
         $get_route = (isset($_GET['route'])) ? $_GET['route'] : 'home';
         $get_route = (trim($get_route) === "home" || trim($get_route) === 'index.php' || trim($get_route) === '') ? '/' : "/" . trim($get_route);
@@ -70,7 +70,17 @@ class Route
                 }
             }
 
-            if (in_array($request_method, ['post', 'put', 'patch', 'delete'])) {
+            $context = $options['context'] ?? 'web';
+            if (!in_array($context, ['web', 'api'], true)) {
+                trigger_error("Invalid route context: '$context'. Allowed values are 'web' or 'api'.", E_USER_ERROR);
+            }
+
+            $csrf_enabled = array_key_exists('csrf', $options) ? $options['csrf'] : ($context === 'web');
+            if (!is_bool($csrf_enabled)) {
+                trigger_error("Invalid csrf option. It must be boolean.", E_USER_ERROR);
+            }
+
+            if ($csrf_enabled && in_array($request_method, ['post', 'put', 'patch', 'delete'])) {
                 csrf_verify();
             }
 
