@@ -10,6 +10,10 @@ Options All -Indexes
     Deny from all
 </files>
 
+# Bloquear acceso directo a código interno
+RewriteRule ^app/ - [F,L,NC]
+RewriteRule ^core/ - [F,L,NC]
+
 # Redirigir la raíz del sitio (/) a la ruta 'home'
 RewriteRule ^$ index.php?route=home [QSA,L]
 
