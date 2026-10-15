@@ -67,8 +67,9 @@ class DB extends DB_CONFIG
 
         if (!$stmt) {
             $e = oci_error($this->db);
-            error_log("Error al preparar OCI: " . $e['message']);
-            throw new \Exception("No se pudo preparar la consulta.");
+            $ociMsg = isset($e['message']) ? trim($e['message']) : 'Error OCI desconocido.';
+            error_log("Error al preparar OCI: " . $ociMsg);
+            throw new \Exception("No se pudo preparar la consulta. Oracle: " . $ociMsg);
         }
 
         if ($param) {
@@ -77,8 +78,9 @@ class DB extends DB_CONFIG
 
         if (!@oci_execute($stmt)) {
             $e = oci_error($stmt);
-            error_log("Error al ejecutar OCI: " . $e['message']);
-            throw new \Exception("No se pudo ejecutar la consulta.");
+            $ociMsg = isset($e['message']) ? trim($e['message']) : 'Error OCI desconocido.';
+            error_log("Error al ejecutar OCI: " . $ociMsg);
+            throw new \Exception("No se pudo ejecutar la consulta. Oracle: " . $ociMsg);
         }
 
         $data = [];
@@ -121,8 +123,9 @@ class DB extends DB_CONFIG
 
         if (!$stmt) {
             $e = oci_error($this->db);
-            error_log("Error al preparar OCI: " . $e['message']);
-            throw new \Exception("No se pudo preparar la consulta.");
+            $ociMsg = isset($e['message']) ? trim($e['message']) : 'Error OCI desconocido.';
+            error_log("Error al preparar OCI: " . $ociMsg);
+            throw new \Exception("No se pudo preparar la consulta. Oracle: " . $ociMsg);
         }
 
         if ($param) {
@@ -136,8 +139,9 @@ class DB extends DB_CONFIG
 
         if (!@oci_execute($stmt, OCI_COMMIT_ON_SUCCESS)) {
             $e = oci_error($stmt);
-            error_log("Error al ejecutar OCI: " . $e['message']);
-            throw new \Exception("No se pudo ejecutar la consulta.");
+            $ociMsg = isset($e['message']) ? trim($e['message']) : 'Error OCI desconocido.';
+            error_log("Error al ejecutar OCI: " . $ociMsg);
+            throw new \Exception("No se pudo ejecutar la consulta. Oracle: " . $ociMsg);
         }
 
         $result = $lastid ? $last_insert_id : oci_num_rows($stmt);
