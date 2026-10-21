@@ -85,6 +85,7 @@ class DB extends DB_CONFIG
 
         $data = [];
         while ($row = oci_fetch_assoc($stmt)) {
+            $row = array_change_key_case($row, CASE_LOWER); // Convert keys to lowercase
             $data[] = $row;
         }
 
